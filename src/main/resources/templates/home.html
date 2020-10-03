@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- estilo pagina index(home) -->
+    <link rel="stylesheet" th:href="@{/css/app/index.css}"/>
+
+    <!-- responsividade -->
+    <link rel="stylesheet" th:href="@{/css/app/responsive.css}"/>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" th:href="@{/css/lib/bootstrap.4.5.2.min.css}"/>
+
+    <!-- Lightslider Library -->
+    <link rel="stylesheet" th:href="@{/css/lib/lightslider.min.css}"/>
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" th:href="@{/css/lib/fontawesome5.10.2.css}"/>
+
+    <!-- Bootstrap core JavaScript jQuery first, then Popper.js, then Bootstrap JS -->
+    <script th:src="@{/js/lib/jquery-3.5.1.min.js}"></script>
+    <script th:src="@{/js/lib/popper-2.5.3.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap-4.5.2.min.js}"></script>
+    <script th:src="@{/js/lib/lightslider.min.js}"></script>
+    <script th:src="@{/js/app/carousel.js}"></script>
+
+    <!-- Fontawesome Library -->
+    <script th:src="@{https://kit.fontawesome.com/2c36e9b7b1.js}"></script>
+
+    <title>iCheff - A satisfação em comer bem</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <h2 class="logo">iCheff</h2>
+            <nav>
+                <a href="#">Login</a>
+                <a href="#">Cadastro</a>
+            </nav>
+        </div>
+    </header>
+
+    <ul id="lightSlider">
+        <li>
+            <h3>First Slide</h3>
+            <a th:href="@{/brasileira.html}"><img th:src="@{/img/feijoada.png}" alt="Feijoada"></a>
+        </li>
+        <li>
+            <h3>Second Slide</h3>
+            <img th:src="@{/img/canelone-de-frango.png}" alt="Canelone de Frango">
+        </li>
+        <li>
+            <h3>Terceiro Slide</h3>
+            <img th:src="@{/img/risoto.png}" alt="Risoto">
+        </li>
+        <li>
+            <h3>Quarto Slide</h3>
+            <img th:src="@{/img/camarao-empanado.jpg}" alt="Camarão Empanado">
+        </li>
+        <li>
+            <h3>Quinto Slide</h3>
+            <img th:src="@{/img/Macarronada.jpeg}" alt="Macarronada">
+        </li>
+
+    </ul>
+    <br>
+
+    <div class="container text-center my-3">
+        <h2 class="font-weight-light">Bootstrap 4 Multi Item Carousel</h2>
+        <div class="row mx-auto my-auto">
+            <div id="recipeCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner " role="listbox">
+                    <div class="carousel-item active">
+                        <div class="col-lg-2 col-md-6">
+                            <div class="movie-card m-1"> 
+                                        <div class="movie-img">
+                                            <a href="#"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT9i-t0o_ltZf_c5ZQ4F4kbuETdhNDdxsjIYKaofkjTM3BmHTqc" class="img-fluid"></a>
+                                        </div>
+                                        <div class="movie-title">
+                                        <a href="#"><p class="text-white text-sm-center font-small flex-center">IRON MAN 2</p></a>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-lg-2 col-md-6">
+                           
+                <div class="movie-card m-1"> 
+                            <div class="movie-img">
+                                <a href="#"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT9i-t0o_ltZf_c5ZQ4F4kbuETdhNDdxsjIYKaofkjTM3BmHTqc" class="img-fluid"></a>
+                            </div>
+                            <div class="movie-title">
+                            <a href="#"><p class="text-white text-sm-center font-small flex-center">SUPERMAN</p></a>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-lg-2 col-md-6">
+                <div class="movie-card m-1"> 
+                            <div class="movie-img">
+                                <a href="#"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT9i-t0o_ltZf_c5ZQ4F4kbuETdhNDdxsjIYKaofkjTM3BmHTqc" class="img-fluid"></a>
+                            </div>
+                            <div class="movie-title">
+                            <a href="#"><p class="text-white text-sm-center font-small flex-center">BREAKING BAD</p></a>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-lg-2 col-md-6">
+                          
+                <div class="movie-card m-1"> 
+                            <div class="movie-img">
+                                <a href="#"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT9i-t0o_ltZf_c5ZQ4F4kbuETdhNDdxsjIYKaofkjTM3BmHTqc" class="img-fluid"></a>
+                            </div>
+                            <div class="movie-title">
+                            <a href="#"><p class="text-white text-sm-center font-small flex-center">BRAVEHEART</p></a>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-lg-2 col-md-6">
+                        
+                <div class="movie-card m-1"> 
+                            <div class="movie-img">
+                                <a href="#"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT9i-t0o_ltZf_c5ZQ4F4kbuETdhNDdxsjIYKaofkjTM3BmHTqc" class="img-fluid"></a>
+                            </div>
+                            <div class="movie-title">
+                            <a href="#"><p class="text-white text-sm-center font-small flex-center">UM TIRA DA PESADA</p></a>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-lg-2 col-md-6">
+                           
+                <div class="movie-card m-1"> 
+                            <div class="movie-img">
+                                <a href="#"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT9i-t0o_ltZf_c5ZQ4F4kbuETdhNDdxsjIYKaofkjTM3BmHTqc" class="img-fluid"></a>
+                            </div>
+                            <div class="movie-title">
+                            <a href="#"><p class="text-white text-sm-center font-small flex-center">NORBIT</p></a>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev bg-dark w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next bg-dark w-auto" href="#recipeCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    
+    </div>
+    
+    
+    
+    
+
+
+
+
+
+
+</body>
+
+</html>
