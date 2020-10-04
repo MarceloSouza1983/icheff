@@ -20,7 +20,8 @@ h3 {
 h4 {
 	margin-left: 20px;
 	background-color: #e4e4e4;
-	color: #d10e0e;
+    color: #d10e0e;
+    border-radius: 20px;
 }
 
 .video {
@@ -29,7 +30,7 @@ h4 {
 }
 
 header {
-	background-color: #3B3B3B;
+    background-color: #3B3B3B;
 }
 
 nav {
@@ -68,10 +69,11 @@ header nav a:hover {
 
 .social {
 	background-color: #e4e4e4;
-	
+	border-radius: 20px;
 }
 
 .social img {
+    background-color: #e4e4e4;
 	margin-left: 20px;
 	width: 2%;
 }
