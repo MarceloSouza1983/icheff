@@ -38,18 +38,25 @@
 
     <header>
         <div class="container">
-            <h2 class="logo">iCheff</h2>
+            <h2 class="logo"><img th:src="@{/img/logotipo-icheff.png}" alt="Logotipo icheff" width="25%">iCheff</h2>
             <nav>
                 <a href="#">Login</a>
                 <a href="#">Cadastro</a>
             </nav>
         </div>
     </header>
+    <div class="background-image">
+        <img th:src="@{/img/wallpaper-icheff01.png}" alt="Wallpaper icheff" width="100%">
+      </div>
+      
 	<br>
     <ul id="lightSlider">
         <li>
             <h3>Frutos do Mar</h3>
-            <a th:href="@{/brasileira.html}"><img th:src="@{/img/categoria-frutos-do-mar.png}" alt="Frutos do mar"></a>
+
+<!-- <li><a href="home.html" th:href="@{/home}">Product List</a></li> -->
+
+            <a href="home.html" th:href="@{/home}"><img th:src="@{/img/categoria-frutos-do-mar.png}" alt="Frutos do mar"></a>
         </li>
         <li>
             <h3>Alemã</h3>
@@ -89,7 +96,7 @@
             <img th:src="@{/img/categoria-italiana.png}" alt="Comida Fitness">
         </li>
         <li>
-            <h3>Vegatariana</h3>
+            <h3>Vegetariana</h3>
             <img th:src="@{/img/categoria-brasileira.png}" alt="Vegetariana">
         </li>
 
@@ -101,20 +108,20 @@
 	<br>
     <ul id="lightSlider3">
         <li>
-            <h3>Taco</h3>
-            <a th:href="@{/brasileira.html}"><img th:src="@{/img/categoria-mexicana-grande.png}" alt="Taco"></a>
+            <h3>Taco de carne</h3>
+            <a th:href="@{/brasileira.html}"><img th:src="@{/img/categoria-mexicana-grande.png}" alt="Taco de carne"></a>
         </li>
         <li>
             <h3>Feijoada</h3>
-            <img th:src="@{/img/categoria-brasileira-grande.png}" alt="Comida Brasileira">
+            <img th:src="@{/img/categoria-brasileira-grande.png}" alt="Feijoada">
         </li>
         <li>
             <h3>Camarão</h3>
             <img th:src="@{/img/categoria-frutos-do-mar-grande.png}" alt="Camarão">
         </li>
         <li>
-            <h3>Fitness</h3>
-            <img th:src="@{/img/categoria-italiana-grande.png}" alt="Comida Italiana">
+            <h3>Frango Fitness</h3>
+            <img th:src="@{/img/frango-fitness.png}" alt="Frango fitness">
         </li>
         <li>
             <h3>Eisbein</h3>
@@ -122,7 +129,14 @@
         </li>
 
     </ul>
-
+   
+    <div class="social">
+            <h4>Siga-nos:</h4>
+            <img th:src="@{/img/facebook.png}" alt="Logotipo facebook">
+            <img th:src="@{/img/instagram.png}" alt="Logotipo instagram">
+            <img th:src="@{/img/twitter.png}" alt="Logotipo twitter">
+            <img th:src="@{/img/youtube.png}" alt="Logotipo youtube">
+            </div>
 
 
 

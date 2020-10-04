@@ -1,10 +1,8 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     background-color: rgb(255, 255, 255);
 }
-
 
 body {
     font-family: 'Arial', Times, serif;
@@ -19,12 +17,27 @@ h3 {
 	color: #d10e0e;
 }
 
+h4 {
+	margin-left: 20px;
+	background-color: #e4e4e4;
+	color: #d10e0e;
+}
+
 .video {
 	text-align: center;
 	color: #000000;
 }
 
+header {
+	background-color: #3B3B3B;
+}
+
+nav {
+	background-color: #3B3B3B;
+}
+
 header .container {
+	background-color: #3B3B3B;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -32,13 +45,17 @@ header .container {
 }
 
 header .logo {
-    margin-left: 10px;
+	background-color: #3B3B3B;
+    margin-left: -20px;
+    margin-top: 8px;
     color: #FFC30B;
     font-family: 'Arial Black', Times;
     font-size: 40px;
 }
 
 header nav a {
+	padding: 0px;
+	background-color: #3B3B3B;
     text-decoration: none;
     font-size: 20px;
     color: #AAA;
@@ -47,6 +64,16 @@ header nav a {
 
 header nav a:hover {
     color: #d10e0e;
+}
+
+.social {
+	background-color: #e4e4e4;
+	
+}
+
+.social img {
+	margin-left: 20px;
+	width: 2%;
 }
 
 @media (max-width: 768px) {
