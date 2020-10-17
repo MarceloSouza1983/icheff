@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 255, 255);
+}
+
+body {
+    font-family: 'Arial', Times, serif;
+    color: rgb(44, 41, 41);
+}
+
+h2 {
+	color: #d10e0e;
+}
+
+h3 {
+	color: #d10e0e;
+}
+
+h4 {
+	margin-left: 20px;
+	background-color: #e4e4e4;
+    color: #d10e0e;
+    border-radius: 20px;
+}
+
+.video {
+	text-align: center;
+	color: #000000;
+}
+
+header {
+    background-color: #3B3B3B;
+}
+
+nav {
+	background-color: #3B3B3B;
+}
+
+header .container {
+	background-color: #3B3B3B;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .logo {
+	background-color: #3B3B3B;
+    margin-left: -20px;
+    margin-top: 8px;
+    color: #FFC30B;
+    font-family: 'Arial Black', Times;
+    font-size: 40px;
+}
+
+header nav a {
+	padding: 0px;
+	background-color: #3B3B3B;
+    text-decoration: none;
+    font-size: 20px;
+    color: #AAA;
+    margin-right: 10px;
+}
+
+header nav a:hover {
+    color: #d10e0e;
+}
+
+.social {
+	background-color: #e4e4e4;
+	border-radius: 20px;
+}
+
+.social img {
+    background-color: #e4e4e4;
+	margin-left: 20px;
+	width: 2%;
+	margin-botton: 10px;
+}
+
+.container-fluid .row {
+	padding: 12px;
+}
+
+.container-fluid .row img {
+	background-color: #FFFFFF;
+	width: 12%;
+}
+
+@media (max-width: 768px) {
+    .carousel-inner .carousel-item > div {
+        display: none;
+    }
+    .carousel-inner .carousel-item > div:first-child {
+        display: block;
+    }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+/* medium - display 4  */
+@media (min-width: 768px) {
+
+    .carousel-inner .carousel-item-right.active,
+    .carousel-inner .carousel-item-next {
+      transform: translateX(50%);
+    }
+    
+    .carousel-inner .carousel-item-left.active, 
+    .carousel-inner .carousel-item-prev {
+      transform: translateX(-50%);
+    }
+}
+
+/* large - display 6 */
+@media (min-width: 992px) {
+    
+    .carousel-inner .carousel-item-right.active,
+    .carousel-inner .carousel-item-next {
+      transform: translateX(50%);
+    }
+    
+    .carousel-inner .carousel-item-left.active, 
+    .carousel-inner .carousel-item-prev {
+      transform: translateX(-50%);
+    }
+}
+
+.carousel-inner .carousel-item-right,
+.carousel-inner .carousel-item-left{ 
+  transform: translateX(0);
+}
+
