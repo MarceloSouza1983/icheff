@@ -61,7 +61,7 @@ public class Usuario implements Serializable {
 	
 	@CPF
 	@Column(name= "usu_cpf", length = 14, nullable = false, unique = true)
-	@NotNull(message = "O rg não pode ser nulo")
+	@NotNull(message = "O cpf não pode ser nulo")
 	private String cpf;
 	
 	//@ManyToOne

@@ -5,7 +5,7 @@ $(document).ready(function () {
         mode: 'slide',
         useCSS: true,
         cssEasing: 'ease',
-        item: 4,
+        item: 3,
         auto: true,
         loop: true,
         pauseOnHover: true,
@@ -17,7 +17,7 @@ $(document).ready(function () {
             {
                 breakpoint: 800,
                 settings: {
-                    item: 3,
+                    item: 2,
                     slideMove: 1,
                     slideMargin: 6,
                 }
@@ -25,7 +25,7 @@ $(document).ready(function () {
             {
                 breakpoint: 520,
                 settings: {
-                    item: 2,
+                    item: 1,
                     slideMove: 1
                 }
             }

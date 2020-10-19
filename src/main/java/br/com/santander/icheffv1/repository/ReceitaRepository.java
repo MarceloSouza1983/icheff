@@ -7,6 +7,5 @@ import br.com.santander.icheffv1.model.Receita;
 
 @Repository
 public interface ReceitaRepository extends JpaRepository<Receita, Long>{
-
 	
 }

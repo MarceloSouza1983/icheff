@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,8 +21,9 @@ public class Ingrediente implements Serializable {
 	@Column(name= "ing_id")
 	private Long id;
 	
-	@Column(name= "ing_nome", length = 200, nullable = false)
+	@Column(name= "ing_nome", length = 200, nullable = false, unique = true)
 	@NotNull(message = "O nome não pode ser nulo")
+	@Size(min = 3, max = 200)
 	private String nome;
 	
 	//@Column(name= "ing_unidade_padrao", length = 10, nullable = false)
@@ -35,7 +37,7 @@ public class Ingrediente implements Serializable {
 	@NotNull
 	private int ativo;
 
-	@Column(name= "ing_custo", length = 10, nullable = false, columnDefinition = "decimal(4,2)")
+	@Column(name= "ing_custo", length = 10, nullable = false) // columnDefinition = "decimal(4,2)"
 	@NotNull(message = "O custo não pode ser nulo")
 	@Min(value = 0, message = "O valor do custo não pode ser negativo")
 	private double custo;
@@ -51,14 +53,17 @@ public class Ingrediente implements Serializable {
 	
 	public Ingrediente() { }
 	
-	public Ingrediente(Long id, @NotNull String nome, LocalDateTime dataCadastro,
-			@NotNull int ativo, @NotNull double custo) {
+	public Ingrediente(Long id, @NotNull(message = "O nome não pode ser nulo") @Size(min = 3, max = 200) String nome,
+			LocalDateTime dataCadastro, @NotNull int ativo,
+			@NotNull(message = "O custo não pode ser nulo") @Min(value = 0, message = "O valor do custo não pode ser negativo") double custo,
+			IngredienteUnidade ingredienteUnidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.dataCadastro = dataCadastro;
 		this.ativo = ativo;
 		this.custo = custo;
+		this.ingredienteUnidade = ingredienteUnidade;
 	}
 
 	public Long getId() {
@@ -82,7 +87,11 @@ public class Ingrediente implements Serializable {
 	}
 
 	public void setDataCadastro(LocalDateTime dataCadastro) {
+		
+//		dataCadastro = LocalDateTime.now().minusHours(3);
+//		System.out.println(dataCadastro);
 		this.dataCadastro = dataCadastro;
+		
 	}
 
 	public int getAtivo() {
