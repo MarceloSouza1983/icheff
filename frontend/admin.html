@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/lib/bootstrap.4.5.2.min.css">
+    <link rel="stylesheet" href="css/lib/datatables.css">
+
+    <link rel="stylesheet" href="css/app/admin-style.css">
+
+    <title>iCheff - Administração</title>
+
+</head>
+
+<body>
+
+    <aside>
+        <img class="logo" src="img/logotipo-ichef.png" alt="iCheff">
+
+        <hr>
+
+        <div class="menu">
+            <a href="#dashboard"><img src="img/icons/icon-dot.png">Dashboard</a>
+            <hr>
+            <a href="#ingredientes"><img src="img/icons/icon-dot.png">Ingredientes</a>
+            <a href="#receitas"><img src="img/icons/icon-dot.png">Receitas</a>
+            <a href="#kits"><img src="img/icons/icon-dot.png">Kits</a>
+            <hr>
+            <a href="#usuarios"><img src="img/icons/icon-dot.png">Usuários</a>
+            <hr>
+            <a href="#relatorios"><img src="img/icons/icon-dot.png">Relatórios</a>
+        </div>
+
+        <button class="btn btn-danger btn-sair">Sair</button>
+
+    </aside>
+    
+    <main>
+
+        <div class="admin-titulo">Dashboard iCheff</div>
+        
+        <div class="bread-crumb">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Administração</li>
+                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="admin-content">
+
+            <div class="card card-admin-content">
+
+                <h4>Ingredientes</h4>
+
+                <div class="btn-novo">
+                    <button id="btn-edit-ingrediente" type="button" class="btn btn-success">Novo ingrediente</button>
+                </div>
+    
+                <table class="table table-striped dataTable">
+                    <thead>
+                        <tr>
+                            <th data-toggle="tooltip" title="ID">#</th>
+                            <th>Nome</th>
+                            <th>Quantidade</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Opções</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>Açúcar</td>
+                        <td>1 kg</td>
+                        <td>R$ 3,20</td>
+                        <td>Ativo</td>
+                        <td>
+                            <img class="icon-edit" src="img/icons/icon-edit.png">
+                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Farinha</td>
+                        <td>1 kg</td>
+                        <td>R$ 3,00</td>
+                        <td>Ativo</td>
+                        <td>
+                            <img class="icon-edit" src="img/icons/icon-edit.png">
+                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Macarrão</td>
+                        <td>500 g</td>
+                        <td>R$ 2,55</td>
+                        <td>Ativo</td>
+                        <td>
+                            <img class="icon-edit" src="img/icons/icon-edit.png">
+                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Modal novo/edit ingrediente -->
+                <div class="modal fade" id="modalEditIngrediente" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Novo ingrediente</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="ingrediente-nome" class="col-form-label">Nome do ingrediente</label>
+                                        <input type="text" class="form-control" id="ingrediente-nome">
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col">
+                                            <label for="ingrediente-quantidade" class="col-form-label">Quantidade</label>
+                                            <input type="text" class="form-control" id="ingrediente-quantidade">
+                                        </div>
+                                        <div class="col">
+                                            <label for="ingrediente-unidade" class="col-form-label">Unidade</label>
+                                            <select id="ingrediente-unidade" class="form-control">
+                                                <option value="1">g</option>
+                                                <option value="2">kg</option>
+                                                <option value="3">L</option>
+                                                <option value="4">Colher(es) de sopa</option>
+                                                <option value="5">Colher(es) de chá</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="ingrediente-valor" class="col-form-label">Valor (R$)</label>
+                                            <input type="text" class="form-control" id="ingrediente-valor">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success">Cadastrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="admin-content">
+
+            <div class="card card-admin-content">
+
+                <h4>Receitas</h4>
+
+                <div class="btn-novo">
+                    <button type="button" class="btn btn-success">Nova receita</button>
+                </div>
+    
+                <table class="table table-striped dataTable">
+                    <thead>
+                        <tr>
+                            <th data-toggle="tooltip" title="ID">#</th>
+                            <th>Nome</th>
+                            <th>Qtd ingredientes</th>
+                            <th>Custo</th>
+                            <th>Preço</th>
+                            <th>Status</th>
+                            <th>Opções</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>Feijoada</td>
+                        <td>18</td>
+                        <td>R$ 28,75</td>
+                        <td>R$ 55,90</td>
+                        <td>Ativo</td>
+                        <td>
+                            <img class="icon-edit" src="img/icons/icon-edit.png">
+                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Canelone de frango</td>
+                        <td>6</td>
+                        <td>R$ 13,50</td>
+                        <td>R$ 24,99</td>
+                        <td>Ativo</td>
+                        <td>
+                            <img class="icon-edit" src="img/icons/icon-edit.png">
+                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Risoto de frango</td>
+                        <td>5</td>
+                        <td>R$ 12,50</td>
+                        <td>R$ 19,99</td>
+                        <td>Ativo</td>
+                        <td>
+                            <img class="icon-edit" src="img/icons/icon-edit.png">
+                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="admin-content">
+
+            <div class="card card-admin-content">
+
+                <h4>Usuários</h4>
+
+                <table class="table table-striped dataTable">
+                    <thead>
+                        <tr>
+                            <th data-toggle="tooltip" title="ID">#</th>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                            <th>Data nascimento</th>
+                            <th>Opções</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>João</td>
+                        <td>Admin</td>
+                        <td>joao1@gmail.com</td>
+                        <td>11 99778-0011</td>
+                        <td>12/12/1981</td>
+                        <td>
+                            <img class="icon-edit" src="img/icons/icon-edit.png">
+                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Mônica</td>
+                        <td>Cliente</td>
+                        <td>monica@gmail.com</td>
+                        <td>11 99778-0011</td>
+                        <td>17/10/1983</td>
+                        <td>
+                            <img class="icon-edit" src="img/icons/icon-edit.png">
+                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Márcia</td>
+                        <td>Cliente</td>
+                        <td>marcia19@gmail.com</td>
+                        <td>11 99778-0011</td>
+                        <td>12/06/1988</td>
+                        <td>
+                            <img class="icon-edit" src="img/icons/icon-edit.png">
+                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- Modal delete -->
+        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Deletar linha</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Deseja realmente deletar o item selecionado?</div>
+                    <div class="modal-footer btn-group" role="group">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger">Deletar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>iCheff - Área administrativa</p>
+        </footer>
+
+    </main>
+
+    <!-- JS -->
+    <script src="js/lib/jquery-3.5.1.min.js"></script>
+    <script src="js/lib/bootstrap-4.5.2.min.js"></script>
+    <script src="js/lib/datatables.js"></script>
+
+    <script src="js/app/admin.js"></script>
+    <!-- Fim JS -->
+
+</body>
+
+</html>
