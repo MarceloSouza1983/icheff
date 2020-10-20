@@ -228,3 +228,103 @@ header nav a:hover {
         text-align: center
     }
 }
+
+.form-cadastro{
+    border: 2px solid #e4e4e4;
+    border-radius: 15px;
+    box-shadow: 0 0 10px  #e0e0e0;
+    padding: 15px;
+    margin: 15px 0 15px 0;
+}
+
+.form-cadastro, .form-cadastro .form-group, .form-cadastro .form-group label, .form-cadastro .form-row{
+    background-color: #f8f9fa; 
+}
+
+.titulo-cadastro{
+    margin-top: 20px;
+}
+
+.card {
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
+.card-img-top {
+    border-radius: 15px 15px 0px 0px;
+    height: 250px;
+    width: 100% !important;
+}
+
+#categorias-nav{
+    display: flex;
+    justify-content: center;
+}
+
+.nav-item .nav-link{
+    color: #495057;
+    font-size: 22px;
+    margin-top: 15px;
+}
+
+.nav-item .nav-link.active{
+    font-weight: bold;
+    color: #ff0032;
+    border-color: #fff #fff #ff0032;
+}
+
+.nav-item .nav-link:hover{
+    color: #ff0032;
+    border-color: #fff #fff #ff0032;
+}
+
+.btn-cards{
+    background-color: #ba324f;
+    color: #fff;
+}
+
+.btn-cards:hover{
+    background-color: #85253a;
+    color: #fff;
+}
+
+.modal-receitas-body h4 {
+    color: #000;
+    text-align: center;
+    background-color: #fff;
+}
+
+.modal-receitas-body ul {
+    font-size: 15px;
+    margin-left: 15px;
+}
+
+.modal-footer {
+    justify-content: space-between;
+}
+
+.modal-footer button {
+    padding: 8px;
+    background-color:rgb(37, 35, 35);
+}
+
+.modal-footer button .price {
+    margin-right: 10px;
+}
+
+.btn-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 22px;
+    padding: 0px !important;
+}
+
+.contador-carrinho {
+    font-size: 20px;
+}
+
+.modal-title {
+    color: #000;
+    font-weight: bold;
+}
