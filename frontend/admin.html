@@ -26,12 +26,10 @@
             <a href="#dashboard"><img src="img/icons/icon-dot.png">Dashboard</a>
             <hr>
             <a href="#ingredientes"><img src="img/icons/icon-dot.png">Ingredientes</a>
+            <a href="#categorias"><img src="img/icons/icon-dot.png">Categorias</a>
             <a href="#receitas"><img src="img/icons/icon-dot.png">Receitas</a>
-            <a href="#kits"><img src="img/icons/icon-dot.png">Kits</a>
             <hr>
             <a href="#usuarios"><img src="img/icons/icon-dot.png">Usuários</a>
-            <hr>
-            <a href="#relatorios"><img src="img/icons/icon-dot.png">Relatórios</a>
         </div>
 
         <button class="btn btn-danger btn-sair">Sair</button>
@@ -51,14 +49,49 @@
             </nav>
         </div>
 
-        <div class="admin-content">
+        <div id="icheff-dashboard" class="admin-content dashboard">
+
+            <div class="d-flex justify-content-between">
+                <div class="card p-3">
+                    <img src="img/logotipo-icheff2.png">50 ingredientes cadastrados
+                </div>
+                
+                <div class="card p-3">
+                    <img src="img/logotipo-icheff2.png">25 receitas cadastradas
+                </div>
+
+                <div class="card p-3">
+                    <img src="img/logotipo-icheff2.png">200 clientes cadastrados
+                </div>
+
+                <div class="card p-3">
+                    <img src="img/logotipo-icheff2.png">1152 vendas
+                </div>
+            </div>
+
+            <div class="card dashboard-card-grafico">
+                <h4>Gráficos & Estatísticas</h4>
+                <hr>
+                <div class="row pb-3 pt-2">
+                    <div class="col-7">
+                        <div id="historico-chart"></div>
+                    </div>
+                    <div class="col-5">
+                        <div id="atividades-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="icheff-ingredientes" class="admin-content">
 
             <div class="card card-admin-content">
 
                 <h4>Ingredientes</h4>
 
                 <div class="btn-novo">
-                    <button id="btn-edit-ingrediente" type="button" class="btn btn-success">Novo ingrediente</button>
+                    <button type="button" class="btn btn-success">Novo ingrediente</button>
                 </div>
     
                 <table class="table table-striped dataTable">
@@ -66,7 +99,7 @@
                         <tr>
                             <th data-toggle="tooltip" title="ID">#</th>
                             <th>Nome</th>
-                            <th>Quantidade</th>
+                            <th>Quant. padrão</th>
                             <th>Valor</th>
                             <th>Status</th>
                             <th>Opções</th>
@@ -79,8 +112,8 @@
                         <td>R$ 3,20</td>
                         <td>Ativo</td>
                         <td>
-                            <img class="icon-edit" src="img/icons/icon-edit.png">
-                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
                         </td>
                     </tr>
                     <tr>
@@ -90,8 +123,8 @@
                         <td>R$ 3,00</td>
                         <td>Ativo</td>
                         <td>
-                            <img class="icon-edit" src="img/icons/icon-edit.png">
-                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
                         </td>
                     </tr>
                     <tr>
@@ -101,18 +134,18 @@
                         <td>R$ 2,55</td>
                         <td>Ativo</td>
                         <td>
-                            <img class="icon-edit" src="img/icons/icon-edit.png">
-                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
                         </td>
                     </tr>
                 </table>
 
                 <!-- Modal novo/edit ingrediente -->
-                <div class="modal fade" id="modalEditIngrediente" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Novo ingrediente</h5>
+                                <h5 class="modal-title"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -146,17 +179,109 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-success">Cadastrar</button>
+                                <button type="button" class="btn btn-success"></button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Fim Modal novo/edit -->
 
             </div>
 
         </div>
 
-        <div class="admin-content">
+        <div id="icheff-categorias" class="admin-content">
+
+            <div class="card card-admin-content">
+
+                <h4>Categorias</h4>
+
+                <div class="btn-novo">
+                    <button type="button" class="btn btn-success">Nova categoria</button>
+                </div>
+    
+                <table class="table table-striped dataTable">
+                    <thead>
+                        <tr>
+                            <th data-toggle="tooltip" title="ID">#</th>
+                            <th>Nome da categoria</th>
+                            <th>Vegana</th>
+                            <th>Qtd de receitas</th>
+                            <th>Opções</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>Brasileira</td>
+                        <td>Não</td>
+                        <td>1</td>
+                        <td>
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Asiática</td>
+                        <td>Não</td>
+                        <td>2</td>
+                        <td>
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Fast food</td>
+                        <td>Não</td>
+                        <td>5</td>
+                        <td>
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Modal novo/edit categoria -->
+                <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="cat_nome" class="col-form-label">Nome da categoria</label>
+                                        <input type="text" id="cat_nome" class="form-control">
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-4">
+                                            <label for="cat_vegano" class="col-form-label">Vegana</label>
+                                            <select id="cat_vegano" class="form-control">
+                                                <option value="0">Sim</option>
+                                                <option value="1">Não</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fim Modal novo/edit -->
+
+            </div>
+
+        </div>
+
+        <div id="icheff-receitas" class="admin-content">
 
             <div class="card card-admin-content">
 
@@ -186,8 +311,8 @@
                         <td>R$ 55,90</td>
                         <td>Ativo</td>
                         <td>
-                            <img class="icon-edit" src="img/icons/icon-edit.png">
-                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                            <img item_id="1"  class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
                         </td>
                     </tr>
                     <tr>
@@ -198,8 +323,8 @@
                         <td>R$ 24,99</td>
                         <td>Ativo</td>
                         <td>
-                            <img class="icon-edit" src="img/icons/icon-edit.png">
-                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
                         </td>
                     </tr>
                     <tr>
@@ -210,16 +335,120 @@
                         <td>R$ 19,99</td>
                         <td>Ativo</td>
                         <td>
-                            <img class="icon-edit" src="img/icons/icon-edit.png">
-                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
                         </td>
                     </tr>
                 </table>
+
+                <!-- Modal novo/edit receitas -->
+                <div class="modal fade modal-receitas" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="container row">
+
+                                <div class="modal-body col-5">
+                                    <div class="form-group">
+                                        <label for="rec_nome" class="col-form-label">Nome da receita</label>
+                                        <input type="text" id="rec_nome" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="rec_link_youtube" class="col-form-label">Link do vídeo no YouTube</label>
+                                        <input type="text" id="rec_link_youtube" class="form-control">
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col">
+                                            <label for="rec_id_categoria" class="col-form-label">Categoria</label>
+                                            <select id="rec_id_categoria" class="form-control">
+                                                <option value="1">Categoria 1</option>
+                                                <option value="2">Categoria 2</option>
+                                                <option value="3">Categoria 3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="col-7">
+
+                                    <div class="modal-header">
+                                        <h6 class="modal-title">Ingredientes</h6>
+                                    </div>
+
+                                    <div class="form-group container row">
+                                        <div class="col-3 p-1">
+                                            <input type="text" id="inr_quantidade" placeholder="5" class="form-control">
+                                        </div>
+                                        <div class="col-2 p-1">
+                                            <select id="inr_id_unidade" class="form-control">
+                                                <option value="1">g</option>
+                                                <option value="2">kg</option>
+                                                <option value="3">L</option>
+                                                <option value="4">Colher(es) de sopa</option>
+                                                <option value="5">Colher(es) de chá</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-5 p-1">
+                                            <select id="inr_id_ingrediente" class="form-control">
+                                                <option value="1">Ingerdiente 1</option>
+                                                <option value="2">Ingerdiente 2</option>
+                                                <option value="3">Ingerdiente 3</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-2 p-1">
+                                            <button type="button" class="btn btn-success">Add</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <table class="table-ingredientes">
+                                            <thead>
+                                                <th>Quantidade</th>
+                                                <th>Ingrediente</th>
+                                                <th>Opções</th>
+                                            </thead>
+                                            <tbody></tbody>
+                                            <tr>
+                                                <td>5kg</td>
+                                                <td>Ingerdiente 1</td>
+                                                <td><img class="icon-delete-ingrediente" src="img/icons/icon-delete.png"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>200g</td>
+                                                <td>Ingerdiente 2</td>
+                                                <td><img class="icon-delete-ingrediente" src="img/icons/icon-delete.png"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>0,5kg</td>
+                                                <td>Ingerdiente 3</td>
+                                                <td><img class="icon-delete-ingrediente" src="img/icons/icon-delete.png"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fim Modal novo/edit -->
+
             </div>
 
         </div>
 
-        <div class="admin-content">
+        <div id="icheff-usuarios" class="admin-content">
 
             <div class="card card-admin-content">
 
@@ -245,8 +474,8 @@
                         <td>11 99778-0011</td>
                         <td>12/12/1981</td>
                         <td>
-                            <img class="icon-edit" src="img/icons/icon-edit.png">
-                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
                         </td>
                     </tr>
                     <tr>
@@ -257,8 +486,8 @@
                         <td>11 99778-0011</td>
                         <td>17/10/1983</td>
                         <td>
-                            <img class="icon-edit" src="img/icons/icon-edit.png">
-                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
                         </td>
                     </tr>
                     <tr>
@@ -269,11 +498,12 @@
                         <td>11 99778-0011</td>
                         <td>12/06/1988</td>
                         <td>
-                            <img class="icon-edit" src="img/icons/icon-edit.png">
-                            <img class="icon-delete" src="img/icons/icon-delete.png">
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
                         </td>
                     </tr>
                 </table>
+
             </div>
 
         </div>
@@ -283,19 +513,20 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Deletar linha</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Deletar <span></span></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">Deseja realmente deletar o item selecionado?</div>
+                    <div class="modal-body">Deseja realmente deletar o item <strong>#<span></span></strong>?</div>
                     <div class="modal-footer btn-group" role="group">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger">Deletar</button>
+                        <button type="button" class="btn btn-danger btn-delete">Deletar</button>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Fim Modal delete -->
 
         <footer>
             <p>iCheff - Área administrativa</p>
@@ -307,6 +538,7 @@
     <script src="js/lib/jquery-3.5.1.min.js"></script>
     <script src="js/lib/bootstrap-4.5.2.min.js"></script>
     <script src="js/lib/datatables.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <script src="js/app/admin.js"></script>
     <!-- Fim JS -->

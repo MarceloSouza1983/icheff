@@ -7,18 +7,43 @@
             this.bindBtnsMenu();
             this.bindBtnsAcoes();
             this.bindBotoesModais();
-            //$('#modalEditIngrediente').modal();
+            this.tableDataTable();
+            this.loadCharts();
+
+            //Inicia o dashboard
+            $('aside div.menu a').eq(0).trigger('click');
+
+            //$('#icheff-receitas button').eq(0).trigger('click');
+        },
+
+        //Primeira letra maiúscula
+        primeiraMaiuscula: (s) => {
+            if(typeof s !== 'string')
+                return ''
+            return s.charAt(0).toUpperCase() + s.slice(1)
         },
 
         //Botões menu
         bindBtnsMenu: function(){
 
             //Bind em todos os links
-            $('aside div.menu a').on('click', function(event) {
+            $('aside div.menu a').on('click', (event) => {
                 event.preventDefault();
                 
-                let href = $(this).attr('href').replace('#','');
-                alert('Ir para: ' + href);
+                let secao = $(event.target).attr('href').replace('#','');
+                let _this = this;
+                
+                $('div.admin-content:visible').slideUp(200, () => {
+                    if(!_this)
+                        return;
+
+                    //Async/Await
+                    _this['consultaLista' + _this.primeiraMaiuscula(secao)]();
+
+                    $('#icheff-' + secao).delay(50).slideDown(200);
+
+                    _this = null;
+                });
 
             });
 
@@ -29,43 +54,98 @@
         },
 
         //Botões de ação
-        bindBtnsAcoes: function(){
+        bindBtnsAcoes: () => {
             
             //Edit
-            $('img.icon-delete').on('click', function() {
-                //let db_id = $(this).attr('db_id');
-                $('#modalDelete').modal();
+            $('img.icon-edit').on('click', function() {
+                let item_id = $(this).attr('item_id');
+                let $modalEdit = $(this).parents('.admin-content').find('.modal');
+                $modalEdit.modal();
             });
 
             //Delete
-            $('img.icon-delete').on('click', function() {
-                //let db_id = $(this).attr('db_id');
-                $('#modalDelete').modal();
+            $('img.icon-delete').on('click', function(){
+                let item_id = $(this).attr('item_id');
+                let $modalDelete = $('#modalDelete');
+                let $btnDelete = $modalDelete.find('button.btn-delete');
+                let secao = $(this).parents('div.admin-content').attr('id').replace('icheff-','');
+
+                $btnDelete.attr('item_id', item_id);
+                $btnDelete.attr('acao', 'delete-' + secao);
+
+                $modalDelete.find('h5 span').html(secao);
+                $modalDelete.find('.modal-body span').html(item_id);
+                
+                $modalDelete.modal();
             });
 
+            //Botão confirmar o delete
+            $('button.btn-delete').on('click', function(){
+
+            });
+        },
+
+        //Consultas
+        consultaListaDashboard: function(){
+            console.log('Consulta Dashboard');
+            return {};
+        },
+
+        consultaListaIngredientes: function(){
+            console.log('Consulta ingredientes');
+            return {};
+        },
+
+        consultaListaCategorias: function(){
+            console.log('Consulta Categorias');
+            return {};
+        },
+
+        consultaListaReceitas: function(){
+            console.log('Consulta Receitas');
+            return {};
+        },
+
+        consultaListaUsuarios: function(){
+            console.log('Consulta Usuarios');
+            return {};
         },
 
         //Botões modais
         bindBotoesModais: function(){
-            $('button#btn-edit-ingrediente').on('click', function() {
-                $('#modalEditIngrediente').modal();
+            $('.card-admin-content').on('click', 'div.btn-novo button', function() {
+                let $modal = $(this).parents('.card-admin-content').find('.modal');
+                let $modalButton = $modal.find('.modal-footer button');
+                let secao = $(this).parents('div.admin-content').attr('id').replace('icheff-','');
+                    secao = secao.substring(0, secao.length - 1);
+
+                let novoTxt = (secao=='ingrediente'?'Novo':'Nova');
+
+                $modal.find('h5').html(novoTxt + ' ' + secao);
+                $modalButton.html('Criar');
+                $modalButton.removeAttr('item_id');
+                $modalButton.attr('acao','criar-' + secao);
+
+                $modal.modal();
             });
         },
 
-        /*
-        $('div.admin-content table').DataTable({
-            "paging": false,
-            "info": false,
-            "columnDefs": [
-                { "targets": 0, "width": "50px", className: "text-center" },
-                { "targets": 1, "width": "50px" },
-                { "targets": 2, "orderable": false, className: "text-center" },
-                { "targets": 3, "orderable": false },
-                { "targets": 4, "orderable": false, className: "text-center" },
-                { "targets": 5, "orderable": false, className: "text-center" }
-            ]
-        });
-        */
+        tableDataTable: function(){
+            $('table:not(.table-ingredientes)').DataTable({
+                "paging": false,
+                "info": false,
+                "columnDefs": [
+                    //className: "text-center"
+                    //"orderable": false
+                    { "targets": 0, "width": "50px", className: "text-center" },
+                    { "targets": 1 },
+                    { "targets": 2 },
+                    { "targets": 3 },
+                    { "targets": 4 },
+                    { "targets": -1, className: "text-center" }
+                ]
+            });
+        },
 
         //Redimensiona o tamanho do menu
         menuPrincipalLayout: function() {
@@ -82,6 +162,74 @@
 
             $(document).ready(redimensionaMenu);
             $(window).resize(redimensionaMenu);
+        },
+
+        loadCharts: function(){
+            google.charts.load('current', {packages: ['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            
+            function drawChart() {
+    
+                var data = google.visualization.arrayToDataTable([
+                    ['Ação', 'Quantidade'],
+                    ['Variados', 55],
+                    ['Peixes e frutos do mar', 20],
+                    ['Fitness', 50],
+                    ['Vegetarianos', 20]
+                ]);
+                
+                var options = {
+                    title: 'Distribuição de vendas por categoria',
+                    is3D: true,
+                    chartArea: {width: '93%', height: '80%', left: '0'}
+                };
+                
+                var chart = new google.visualization.PieChart(document.getElementById('atividades-chart'));
+                
+                chart.draw(data, options);
+            }
+
+            google.charts.setOnLoadCallback(drawChart2);
+      
+            function drawChart2() {
+      
+              var data = new google.visualization.DataTable();
+              data.addColumn('date', 'Dia');
+              data.addColumn('number', 'Quantidade de vendas');
+      
+              data.addRows([
+                [new Date(2020, 0, 1), 5],  [new Date(2020, 0, 2), 7],  [new Date(2020, 0, 3), 3],
+                [new Date(2020, 0, 4), 1],  [new Date(2020, 0, 5), 3],  [new Date(2020, 0, 6), 4],
+                [new Date(2020, 0, 7), 3],  [new Date(2020, 0, 8), 4],  [new Date(2020, 0, 9), 2],
+                [new Date(2020, 0, 10), 5], [new Date(2020, 0, 11), 8], [new Date(2020, 0, 12), 6],
+                [new Date(2020, 0, 13), 3], [new Date(2020, 0, 14), 3], [new Date(2020, 0, 15), 5],
+                [new Date(2020, 0, 16), 7], [new Date(2020, 0, 17), 6], [new Date(2020, 0, 18), 6],
+                [new Date(2020, 0, 19), 3], [new Date(2020, 0, 20), 1], [new Date(2020, 0, 21), 2],
+                [new Date(2020, 0, 22), 4], [new Date(2020, 0, 23), 6], [new Date(2020, 0, 24), 5],
+                [new Date(2020, 0, 25), 9], [new Date(2020, 0, 26), 4], [new Date(2020, 0, 27), 9],
+                [new Date(2020, 0, 28), 8], [new Date(2020, 0, 29), 6], [new Date(2020, 0, 30), 4],
+                [new Date(2020, 0, 31), 6], [new Date(2020, 1, 1), 7],  [new Date(2020, 1, 2), 9]
+              ]);
+      
+              var options = {
+                title: 'Histórico de vendas',
+                legend: 'none',
+                hAxis: {
+                  format: 'd/M/yyyy',
+                  gridlines: {count: 15}
+                },
+                vAxis: {
+                  //gridlines: {color: 'none'},
+                  minValue: 0
+                },
+                chartArea: {width: '90%', height: '80%'},
+              };
+      
+              var chart = new google.visualization.LineChart(document.getElementById('historico-chart'));
+      
+              chart.draw(data, options);
+
+            }
         }
 
     }

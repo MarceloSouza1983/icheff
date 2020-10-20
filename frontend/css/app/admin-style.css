@@ -112,6 +112,17 @@ div.admin-content {
     overflow: visible;
 }
 
+div.dashboard .card {
+    width: 280px;
+    text-align: center;
+}
+
+div.dashboard img {
+    width: 50px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
 div.admin-content .card-body img {
     position: absolute;
     top: 20px;
@@ -123,9 +134,28 @@ div.card-admin-content{
 }
 
 div.card-admin-content div.btn-novo{
+    z-index: 500;
     display: inline-flex;
     position: absolute;
-    right: 15px;
+    right: 330px;
+    top: 12px;
+}
+
+div.card h4{
+    position: absolute;
+    top: 18px;
+    left: 20px;
+}
+
+div.dashboard-card-grafico{
+    width: 100% !important;
+    margin-top: 15px;
+}
+
+div.dashboard-card-grafico h4{
+    position: relative;
+    margin-bottom: 18px;
+    margin-top: -5px;
 }
 
 img.icon-edit{
@@ -135,4 +165,43 @@ img.icon-edit{
 
 img.icon-delete{
     cursor: pointer;
+}
+
+table {
+    width: 100% !important;
+}
+
+.dataTables_wrapper {
+    padding-top: 8px;
+    padding-right: 8px;
+}
+
+div.modal-receitas .modal-dialog{
+    max-width: 1000px;
+}
+
+table.table-ingredientes th{
+    text-align: center;
+    border-bottom: 1px solid #888;
+    font-size: 14px;
+}
+
+table.table-ingredientes tr td{
+    text-align: center;
+    border-bottom: 1px solid #c0c0c0;
+    padding: 5px;
+    font-size: 14px;
+}
+
+table.table-ingredientes{
+    border-top: 1px solid #888;
+    border-bottom: 1px solid #888;
+}
+
+table.table-ingredientes tr:last-child td{
+    border-bottom: none;
+}
+
+table.table-ingredientes tr:hover td{
+    background-color: #eee;
 }
