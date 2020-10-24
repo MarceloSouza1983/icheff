@@ -184,7 +184,12 @@ header nav a:hover {
     text-decoration: none;
 }
 
+.index-footer-links img {
+    border-radius: 10px;
+}
+
 .index-footer-links {
+    
     background-color:#3B3B3B;
     padding-left: 0;
     list-style: none

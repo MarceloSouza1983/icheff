@@ -4,14 +4,14 @@ $(document).ready(function () {
 
         // PREPARE FORM DATA
         let formData = {
-            usu_nome: $("#usu_nome").value,
-            usu_data_nascimento: $("#usu_data_nascimento").value,
-            usu_data_cadastro: $("#usu_data_cadastro").value,
-            usu_cpf: $("#usu_cpf").value,
-            usu_rg: $("#usu_rg").value,
-            usu_tipo: $("#usu_tipo").value,
-            usu_login: $("#usu_login").value,
-            usu_senha: $("#usu_senha").value
+            usu_nome: $("#usu_nome").val(),
+            usu_data_nascimento: $("#usu_data_nascimento").val(),
+            usu_data_cadastro: $("#usu_data_cadastro").val(),
+            usu_cpf: $("#usu_cpf").val(),
+            usu_rg: $("#usu_rg").val(),
+            usu_tipo: $("#usu_tipo").val(),
+            usu_login: $("#usu_login").val(),
+            usu_senha: $("#usu_senha").val()
         }
 
         $.ajax({
