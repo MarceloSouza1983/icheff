@@ -205,3 +205,8 @@ table.table-ingredientes tr:last-child td{
 table.table-ingredientes tr:hover td{
     background-color: #eee;
 }
+
+div.lista-ingredientes{
+    overflow-y: scroll;
+    height: 200px;
+}

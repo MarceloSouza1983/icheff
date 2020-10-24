@@ -105,39 +105,7 @@
                             <th>Opções</th>
                         </tr>
                     </thead>
-                    <tr>
-                        <td>1</td>
-                        <td>Açúcar</td>
-                        <td>1 kg</td>
-                        <td>R$ 3,20</td>
-                        <td>Ativo</td>
-                        <td>
-                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
-                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Farinha</td>
-                        <td>1 kg</td>
-                        <td>R$ 3,00</td>
-                        <td>Ativo</td>
-                        <td>
-                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
-                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Macarrão</td>
-                        <td>500 g</td>
-                        <td>R$ 2,55</td>
-                        <td>Ativo</td>
-                        <td>
-                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
-                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
-                        </td>
-                    </tr>
+                    <tbody></tbody>
                 </table>
 
                 <!-- Modal novo/edit ingrediente -->
@@ -154,13 +122,9 @@
                                 <form>
                                     <div class="form-group">
                                         <label for="ingrediente-nome" class="col-form-label">Nome do ingrediente</label>
-                                        <input type="text" class="form-control" id="ingrediente-nome">
+                                        <input type="text" autocomplete="off" class="form-control" id="ingrediente-nome">
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col">
-                                            <label for="ingrediente-quantidade" class="col-form-label">Quantidade</label>
-                                            <input type="text" class="form-control" id="ingrediente-quantidade">
-                                        </div>
                                         <div class="col">
                                             <label for="ingrediente-unidade" class="col-form-label">Unidade</label>
                                             <select id="ingrediente-unidade" class="form-control">
@@ -172,8 +136,15 @@
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <label for="ingrediente-valor" class="col-form-label">Valor (R$)</label>
-                                            <input type="text" class="form-control" id="ingrediente-valor">
+                                            <label for="ingrediente-custo" class="col-form-label">Valor (R$)</label>
+                                            <input type="text" autocomplete="off" class="form-control" id="ingrediente-custo">
+                                        </div>
+                                        <div class="col">
+                                            <label for="ingrediente-ativo" class="col-form-label">Ativo</label>
+                                            <select id="ingrediente-ativo" class="form-control">
+                                                <option value="1">Sim</option>
+                                                <option value="0">Não</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </form>
@@ -256,7 +227,7 @@
                                 <form>
                                     <div class="form-group">
                                         <label for="cat_nome" class="col-form-label">Nome da categoria</label>
-                                        <input type="text" id="cat_nome" class="form-control">
+                                        <input type="text" autocomplete="off" id="cat_nome" class="form-control">
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-4">
@@ -357,11 +328,11 @@
                                 <div class="modal-body col-5">
                                     <div class="form-group">
                                         <label for="rec_nome" class="col-form-label">Nome da receita</label>
-                                        <input type="text" id="rec_nome" class="form-control">
+                                        <input type="text" autocomplete="off" id="rec_nome" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="rec_link_youtube" class="col-form-label">Link do vídeo no YouTube</label>
-                                        <input type="text" id="rec_link_youtube" class="form-control">
+                                        <input type="text" autocomplete="off" id="rec_link_youtube" class="form-control">
                                     </div>
                                     <div class="form-group row">
                                         <div class="col">
@@ -383,7 +354,7 @@
 
                                     <div class="form-group container row">
                                         <div class="col-3 p-1">
-                                            <input type="text" id="inr_quantidade" placeholder="5" class="form-control">
+                                            <input type="text" autocomplete="off" id="inr_quantidade" placeholder="5" class="form-control">
                                         </div>
                                         <div class="col-2 p-1">
                                             <select id="inr_id_unidade" class="form-control">
@@ -406,7 +377,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="modal-body">
+                                    <div class="modal-body lista-ingredientes">
                                         <table class="table-ingredientes">
                                             <thead>
                                                 <th>Quantidade</th>
@@ -434,6 +405,13 @@
 
                                 </div>
 
+                            </div>
+
+                            <div class="modal-body pt-0">
+                                <div class="form-group">
+                                    <label for="rec_descricao" class="col-form-label">Descrição da receita</label>
+                                    <textarea id="rec_descricao" rows="6" class="form-control"></textarea>
+                                </div>
                             </div>
 
                             <div class="modal-footer">
@@ -538,6 +516,7 @@
     <script src="js/lib/jquery-3.5.1.min.js"></script>
     <script src="js/lib/bootstrap-4.5.2.min.js"></script>
     <script src="js/lib/datatables.js"></script>
+    
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <script src="js/app/admin.js"></script>
