@@ -20,9 +20,9 @@ body {
 
 .index-h4 {
     margin-left: 20px;
+    margin-top: 15px;
     background-color: #e4e4e4;
     color: #d10e0e;
-    border-radius: 20px;
 }
 
 header {
@@ -71,8 +71,30 @@ header nav a:hover {
 .index-social img {
     background-color: #e4e4e4;
     margin-left: 20px;
-    width: 2%;
+    width: 4%;
     margin-bottom: 10px;
+}
+
+.form-group.col-md-7.social {
+    padding: 0%;
+    background-color: #e4e4e4;
+    border-radius: 20px;
+}
+
+.form-group.col-md-4.newsletter {
+    padding: 0%;
+    background-color: #e4e4e4;
+}
+
+.form-inline.newsletter {
+    margin-left: 20px;
+    background-color: #e4e4e4;
+}
+
+.form-row.social {
+    border-radius: 20px;
+    margin: 0px;
+    background-color: #e4e4e4;
 }
 
 .index-video {
@@ -148,7 +170,7 @@ header nav a:hover {
 
 .index-site-footer {
     background-color: #3B3B3B;
-    padding: 45px 0 20px;
+    padding: 15px;
     font-size: 15px;
     line-height: 24px;
     color: #737373;
@@ -263,7 +285,7 @@ header nav a:hover {
 
 .card {
     border-radius: 15px;
-    margin-top: 10px;
+    margin-top: 25px;
 }
 
 .card-img-top {
@@ -300,6 +322,7 @@ header nav a:hover {
 }
 
 .btn-cards:hover {
+    font-weight: bold;
     background-color: #85253a;
     color: #fff;
 }
