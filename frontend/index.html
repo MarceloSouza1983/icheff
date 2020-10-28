@@ -26,6 +26,8 @@
 	<script src="/js/lib/bootstrap-4.5.2.min.js"></script>
 	<script src="/js/lib/lightslider.min.js"></script>
 	<script src="/js/app/carousel.js"></script>
+	<script src="/js/app/get_news.js"></script>
+	<script src="/js/app/post_news.js"></script>
 
 	<!-- Fontawesome Library -->
 	<script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script>
@@ -67,7 +69,8 @@
 		</div>
 		<div class="index-column-image">
 			<h3 class="index-h3">Vegetarianos</h3>
-			<a href="categorias.html#vegetarianos"><img src="/img/categoria-vegetariana.png" alt="Refeições vegetarianas"></a>
+			<a href="categorias.html#vegetarianos"><img src="/img/categoria-vegetariana.png"
+					alt="Refeições vegetarianas"></a>
 		</div>
 	</div>
 	<br>
@@ -80,8 +83,7 @@
 	<br>
 	<ul id="lightSlider3">
 		<li>
-			<h3 class="index-h3">Taco de carne</h3><img src="/img/categoria-mexicana-grande.png"
-					alt="Taco de carne">
+			<h3 class="index-h3">Taco de carne</h3><img src="/img/categoria-mexicana-grande.png" alt="Taco de carne">
 		</li>
 		<li>
 			<h3 class="index-h3">Feijoada</h3>
@@ -98,85 +100,96 @@
 		</li>
 
 	</ul>
-	
-	<div class="index-social">
-		
-        <div class="form-row social">
-					
-            <div class="form-group col-md-7 social">
-                <h4 class="index-h4">Siga-nos:</h4>
-				<a href="https://www.facebook.com/Lojas.icheff"><img src="/img/icons/facebook.png" alt="Logotipo facebook"></a>
-				<a href="https://www.instagram.com/icheff/"><img src="/img/icons/instagram.png" alt="Logotipo instagram"></a>
+
+	<div class="index-social" id="newsletterSocial">
+
+		<div class="form-row social">
+
+			<div class="form-group col-md-7 social">
+				<h4 class="index-h4">Siga-nos:</h4>
+				<a href="https://www.facebook.com/Lojas.icheff"><img src="/img/icons/facebook.png"
+						alt="Logotipo facebook"></a>
+				<a href="https://www.instagram.com/icheff/"><img src="/img/icons/instagram.png"
+						alt="Logotipo instagram"></a>
 				<a href="https://twitter.com/icheff"><img src="/img/icons/twitter.png" alt="Logotipo twitter"></a>
-				<a href="https://www.youtube.com/user/lojasicheff"><img src="/img/icons/youtube.png" alt="Logotipo youtube"></a>
+				<a href="https://www.youtube.com/user/lojasicheff"><img src="/img/icons/youtube.png"
+						alt="Logotipo youtube"></a>
 				<a href="https://www.linkedin.com/"><img src="/img/icons/linkedin.png" alt="Logotipo linkedin"></a>
 			</div>
-							
-            <div class="form-group col-md-4 newsletter">
+
+			<div class="form-group col-md-4 newsletter">
 				<h4 class="index-h4">Assine nossa Newsletter:</h4>
-					<form class="form-inline newsletter">
-						<input type="text" class="form-control col-md-9" placeholder="Digite seu email">
-						<button type="submit" id="cadastrar" class="btn btn-primary">Cadastrar</button>
-					</form>
+				<form class="form-inline newsletter" method="post" ajax="true">
+					<input type="text" id="email" class="form-control col-md-9" placeholder="Digite seu email">
+					<button type="submit" id="cadastrar" class="btn btn-primary">Cadastrar</button>
+				</form>
 			</div>
-        </div>
-		
+		</div>
+
 	</div>
 	<hr>
 
-		<footer class="index-site-footer">
-			<div class="index-container-footer">
-				<div class="row">
-					<div class="col-sm-12 col-md-3">
-						<img src="/img/logotipo-icheff-original.png" alt="Logotipo icheff" width=90%>
+	<div class="container-success" id="divSuccess" style=overflow:hidden>
+		<div class="row justify-content-center success">
+			<div class="col-sm-7" id="showDivSuccess">
+				
+				<h4 class=sucess>Sucesso!!! Obrigado por cadastrar seu email em nossa newsletter.</h4>
+			</div>
+		</div>
+	</div>
 
-					</div>
-
-					<div class="col-xs-6 col-md-3">
-						<ul class="index-footer-links">
-							<li>
-								<h5><a href="./sobre.html">Sobre</a></h5>
-							</li>
-							<li>
-								<h5><a href="./contatos.html">Contatos</a></h5>
-							</li>
-						</ul>
-					</div>
-
-					<div class="col-xs-6 col-md-3">
-						<ul class="index-footer-links">
-							<li>
-								<h5><a href="./perguntas.html">Perguntas Frequentes</a></h5>
-							</li>
-							<li>
-								<h5><a href="./termos.html">Termos e Condições</a></h5>
-							</li>
-							<li>
-								<h5><a href="./politica.html">Política de Privacidade</a></h5>
-							</li>
-						</ul>
-					</div>
-
-					<div class="col-xs-6 col-md-3">
-						<h6>Formas de Pagamento</h6>
-						<ul class="index-footer-links">
-							<li><img src="/img/icons/visa.png" alt="Visa" width="20%">
-								<img src="/img/icons/mastercard.png" alt="Mastercard" width="20%">
-								<img src="/img/icons/maestro.png" alt="Maestro" width="20%">
-								<img src="/img/icons/paypal.png" alt="Paypal" width="20%">
-							</li>
-						</ul>
-					</div>
-					<hr>
+	<footer class="index-site-footer">
+		<div class="index-container-footer">
+			<div class="row">
+				<div class="col-sm-12 col-md-3">
+					<img src="/img/logotipo-icheff-original.png" alt="Logotipo icheff" width=90%>
 				</div>
 
-				<div class="index-site-footer-2">
-					Copyright &copy; 2020 - Todos os direitos reservados - iChef S.A.
+				<div class="col-xs-6 col-md-3">
+					<ul class="index-footer-links">
+						<li>
+							<h5><a href="./sobre.html">Sobre</a></h5>
+						</li>
+						<li>
+							<h5><a href="./contatos.html">Contatos</a></h5>
+						</li>
+					</ul>
 				</div>
 
+				<div class="col-xs-6 col-md-3">
+					<ul class="index-footer-links">
+						<li>
+							<h5><a href="./perguntas.html">Perguntas Frequentes</a></h5>
+						</li>
+						<li>
+							<h5><a href="./termos.html">Termos e Condições</a></h5>
+						</li>
+						<li>
+							<h5><a href="./politica.html">Política de Privacidade</a></h5>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-xs-6 col-md-3">
+					<h6>Formas de Pagamento</h6>
+					<ul class="index-footer-links">
+						<li><img src="/img/icons/visa.png" alt="Visa" width="20%">
+							<img src="/img/icons/mastercard.png" alt="Mastercard" width="20%">
+							<img src="/img/icons/maestro.png" alt="Maestro" width="20%">
+							<img src="/img/icons/paypal.png" alt="Paypal" width="20%">
+						</li>
+					</ul>
+				</div>
+				<hr>
 			</div>
 
-		</footer>
+			<div class="index-site-footer-2">
+				Copyright &copy; 2020 - Todos os direitos reservados - iChef S.A.
+			</div>
+
+		</div>
+
+	</footer>
 
 </body>
 
