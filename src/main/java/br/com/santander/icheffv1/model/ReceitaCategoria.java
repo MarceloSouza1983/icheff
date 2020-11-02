@@ -16,7 +16,7 @@ public class ReceitaCategoria implements Serializable {
 	@Column(name= "cat_id")
 	private Long id;
 	
-	@Column(name= "ing_nome", length = 100, nullable = false)
+	@Column(name= "cat_nome", length = 100, nullable = false)
 	@NotNull(message = "O nome não pode ser nulo")
 	private String nome;
 	

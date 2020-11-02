@@ -1,4 +1,12 @@
 
+$( document ).ready(function() {
+    var categoria = window.location.hash.substr(1)
+    categoria = categoria ? categoria : 'variados'
+    
+    $('#'+categoria+'-tab').addClass('active')
+    $('#'+categoria).addClass('show active in')
+});
+
 function criaCard(idCategoria, idModal, titulo, texto, imagem, descricaoImagem) {
     var card = document.createElement("div");
     card.className = "col-12 col-md-6 col-lg-4";
