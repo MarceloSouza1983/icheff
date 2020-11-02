@@ -26,7 +26,7 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1264482886062073151L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name= "usu_id")
 	private Long id;
 	
@@ -41,7 +41,7 @@ public class Usuario implements Serializable {
 	
 	@Column(name= "usu_senha", length = 255, nullable = false)
 	@Length(min = 5, max = 255)
-	@NotNull(message = "O login não pode ser nulo e precisa ter no mínimo 5 caracteres")
+	@NotNull(message = "A senha não pode ser nula e precisa ter no mínimo 5 caracteres")
 	private String senha;
 	
 	@Column(name= "usu_tipo", length = 20, nullable = false)
