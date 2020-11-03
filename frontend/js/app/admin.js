@@ -11,7 +11,7 @@
             this.bindBotoesInternosModais();
 
             //Inicia o dashboard
-            $('aside div.menu a').eq(3).trigger('click');
+            $('aside div.menu a').eq(2).trigger('click');
 
             //$('#icheff-receitas button').eq(0).trigger('click');
         },
@@ -127,16 +127,21 @@
             $form.find('select#ingrediente-ativo option[value="' + json.ing_ativo + '"]').attr('selected', '');
         },
 
-        preencheEditModalCategorias: function ($form, $json) {
+        preencheEditModalCategorias: function ($form, json) {
+            $form.find('input#cat_nome').val(json.cat_nome);
 
+            $form.find('select#cat_vegano option:selected').removeAttr('selected');
+            $form.find('select#cat_vegano option[value="' + json.cat_vegana + '"]').attr('selected', '');
         },
 
-        preencheEditModalReceitas: function ($form, $json) {
+        preencheEditModalReceitas: function ($form, json) {
 
         },
 
         //Consultas
         consultaListaDashboard: function () {
+
+            $('ol.breadcrumb li.active').html('Dashboard');
 
             let respostaAjax = {
                 sucesso: 1,
@@ -212,6 +217,8 @@
 
         consultaListaIngredientes: function () {
 
+            $('ol.breadcrumb li.active').html('Ingredientes');
+
             //ing_unidade_padrao
             //ichef.com.br/api/listaingredientes
             let respostaAjax = {
@@ -273,10 +280,10 @@
                     $tr.append('<td>' + $ing['ing_ativo'] + '</td>');
 
                     $edit.attr('item_id', $ing['ing_id']);
-                    $tdOpcoes.append($edit)
+                    $tdOpcoes.append($edit);
 
                     $delete.attr('item_id', $ing['ing_id']);
-                    $tdOpcoes.append($delete)
+                    $tdOpcoes.append($delete);
 
                     $tr.append($tdOpcoes);
 
@@ -291,17 +298,92 @@
         },
 
         consultaListaCategorias: function () {
-            console.log('Consulta Categorias');
-            return {};
+
+            $('ol.breadcrumb li.active').html('Categorias');
+
+            //ichef.com.br/api/listacategorias
+            let respostaAjax = {
+                sucesso: 1,
+                listaCategorias: [
+                    {
+                        cat_id: 1,
+                        cat_nome: 'Brasileira',
+                        cat_vegana: 0,
+                        cat_qtd_receitas: 3
+                    },
+                    {
+                        cat_id: 2,
+                        cat_nome: 'Asiática',
+                        cat_vegana: 0,
+                        cat_qtd_receitas: 2
+                    },
+                    {
+                        cat_id: 3,
+                        cat_nome: 'Fast food',
+                        cat_vegana: 1,
+                        cat_qtd_receitas: 5
+                    }
+                ]
+            }
+
+            let data = respostaAjax;
+            //Ajax success:
+            if (data.sucesso == 1) {
+
+                //Carregar os dados na tela
+
+                let $tabelaBody = $('div#icheff-categorias table tbody');
+
+                $tabelaBody.html('');
+
+                for (let i in data.listaCategorias) {
+
+                    let $edit = $('<img class="icon-edit" src="img/icons/icon-edit.png">');
+                    let $delete = $('<img class="icon-delete" src="img/icons/icon-delete.png">');
+
+                    let $ing = data.listaCategorias[i];
+
+                    $edit.attr('data', JSON.stringify($ing));
+
+                    let $tr = $('<tr>');
+                    let $tdOpcoes = $('<td>');
+
+                    $tr.append('<td>' + $ing['cat_id'] + '</td>');
+                    $tr.append('<td>' + $ing['cat_nome'] + '</td>');
+                    $tr.append('<td>' + ($ing['cat_vegana']?'Sim':'Não') + '</td>');
+                    $tr.append('<td>' + $ing['cat_qtd_receitas'] + '</td>');
+
+                    $edit.attr('item_id', $ing['cat_id']);
+                    $tdOpcoes.append($edit);
+
+                    $delete.attr('item_id', $ing['cat_id']);
+                    $tdOpcoes.append($delete);
+
+                    $tr.append($tdOpcoes);
+
+                    $tabelaBody.append($tr);
+
+                }
+
+            } else {
+                alert('Deu erro no ajax!')
+            }
+
         },
 
         consultaListaReceitas: function () {
+
+            $('ol.breadcrumb li.active').html('Receitas');
+
             console.log('Consulta Receitas');
             return {};
         },
 
         consultaListaUsuarios: function () {
-            console.log('Consulta Usuarios');
+
+            $('ol.breadcrumb li.active').html('Usuários');
+
+            console.log('Consulta Usuários');
             return {};
         },
 
@@ -333,12 +415,13 @@
             $('.card-admin-content').on('click', 'div.modal-footer button', (event) => {
 
                 let $divContent = $(event.target).parents('div.admin-content');
+                let acao = $(event.target).attr('acao');
                 let secao = $divContent.attr('id').replace('icheff-', '');
                 let $form = $divContent.find('div.modal form');
                 let _this = this;
 
                 //Async/Await
-                _this['submeterModal' + _this.primeiraMaiuscula(secao)]($form);
+                _this['submeterModal' + _this.primeiraMaiuscula(secao)]($form, acao);
 
             });
         },
@@ -376,7 +459,7 @@
             });
         },
 
-        submeterModalIngredientes: function ($form) {
+        submeterModalIngredientes: function ($form, acao) {
 
             //ichef.com.br/api/ingredientes/cadastar
             //ichef.com.br/api/ingredientes/editar/{id}
@@ -387,17 +470,34 @@
                 ing_ativo: $form.find('input#ingrediente-custo').val()
             }
 
+            //Ação
+            console.log(acao);
+
             //Ajax
 
             console.log(formData);
 
         },
 
-        submeterModalCategorias: function ($form) {
-            console.log('Categorias');
+        submeterModalCategorias: function ($form, acao) {
+            
+            //ichef.com.br/api/categorias/cadastar
+            //ichef.com.br/api/categorias/editar/{id}
+            let formData = {
+                cat_nome: $form.find('input#cat_nome').val(),
+                cat_vegano: $form.find('select#cat_vegano option:selected').val(),
+            }
+
+            //Ação
+            console.log(acao);
+
+            //Ajax
+
+            console.log(formData);
+
         },
 
-        submeterModalReceitas: function ($form) {
+        submeterModalReceitas: function ($form, acao) {
             console.log('Receitas');
         },
 
