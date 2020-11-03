@@ -51,21 +51,25 @@
 
         <div id="icheff-dashboard" class="admin-content dashboard">
 
-            <div class="d-flex justify-content-between">
-                <div class="card p-3">
-                    <img src="img/logotipo-icheff2.png">50 ingredientes cadastrados
+            <div id="dash-estatisticas" class="d-flex justify-content-between">
+                <div class="card p-3 text-wrap">
+                    <img src="img/logotipo-icheff2.png">
+                    <span></span>
                 </div>
                 
                 <div class="card p-3">
-                    <img src="img/logotipo-icheff2.png">25 receitas cadastradas
+                    <img src="img/logotipo-icheff2.png">
+                    <span></span>
                 </div>
 
                 <div class="card p-3">
-                    <img src="img/logotipo-icheff2.png">200 clientes cadastrados
+                    <img src="img/logotipo-icheff2.png">
+                    <span></span>
                 </div>
 
                 <div class="card p-3">
-                    <img src="img/logotipo-icheff2.png">1152 vendas
+                    <img src="img/logotipo-icheff2.png">
+                    <span></span>
                 </div>
             </div>
 
@@ -354,7 +358,7 @@
 
                                     <div class="form-group container row">
                                         <div class="col-3 p-1">
-                                            <input type="text" autocomplete="off" id="inr_quantidade" placeholder="5" class="form-control">
+                                            <input type="text" autocomplete="off" id="inr_quantidade" class="form-control">
                                         </div>
                                         <div class="col-2 p-1">
                                             <select id="inr_id_unidade" class="form-control">
@@ -373,7 +377,7 @@
                                             </select>
                                         </div>
                                         <div class="col-2 p-1">
-                                            <button type="button" class="btn btn-success">Add</button>
+                                            <button id="add-ingrediente" type="button" class="btn btn-success">Add</button>
                                         </div>
                                     </div>
 
@@ -385,21 +389,6 @@
                                                 <th>Opções</th>
                                             </thead>
                                             <tbody></tbody>
-                                            <tr>
-                                                <td>5kg</td>
-                                                <td>Ingerdiente 1</td>
-                                                <td><img class="icon-delete-ingrediente" src="img/icons/icon-delete.png"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>200g</td>
-                                                <td>Ingerdiente 2</td>
-                                                <td><img class="icon-delete-ingrediente" src="img/icons/icon-delete.png"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0,5kg</td>
-                                                <td>Ingerdiente 3</td>
-                                                <td><img class="icon-delete-ingrediente" src="img/icons/icon-delete.png"></td>
-                                            </tr>
                                         </table>
                                     </div>
 
@@ -410,7 +399,7 @@
                             <div class="modal-body pt-0">
                                 <div class="form-group">
                                     <label for="rec_descricao" class="col-form-label">Descrição da receita</label>
-                                    <textarea id="rec_descricao" rows="6" class="form-control"></textarea>
+                                    <textarea id="rec_descricao" rows="5" class="form-control"></textarea>
                                 </div>
                             </div>
 

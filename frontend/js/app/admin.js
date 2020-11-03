@@ -1,41 +1,40 @@
-(function() {
+(function () {
 
     return {
 
-        init: function() {
+        init: function () {
             this.menuPrincipalLayout();
             this.bindBtnsMenu();
             this.bindBtnsAcoes(this);
             this.bindBotoesModais();
             this.bindBotoesSubmeterModais();
-            //this.tableDataTable();
-            this.loadCharts();
+            this.bindBotoesInternosModais();
 
             //Inicia o dashboard
-            $('aside div.menu a').eq(1).trigger('click');
+            $('aside div.menu a').eq(3).trigger('click');
 
             //$('#icheff-receitas button').eq(0).trigger('click');
         },
 
         //Primeira letra maiúscula
         primeiraMaiuscula: (s) => {
-            if(typeof s !== 'string')
+            if (typeof s !== 'string')
                 return ''
             return s.charAt(0).toUpperCase() + s.slice(1)
         },
 
         //Botões menu
-        bindBtnsMenu: function(){
+        bindBtnsMenu: function () {
 
             //Bind em todos os links
             $('aside div.menu a').on('click', (event) => {
                 event.preventDefault();
-                
-                let secao = $(event.target).attr('href').replace('#','');
+
+                let secao = $(event.target).attr('href').replace('#', '');
                 let _this = this;
-                
+
                 $('div.admin-content:visible').slideUp(200, () => {
-                    if(!_this)
+                    if (!_this)
                         return;
 
                     //Async/Await
@@ -49,13 +48,13 @@
             });
 
             //Botão de sair
-            $('aside button.btn-sair').on('click', function() {
+            $('aside button.btn-sair').on('click', function () {
                 alert('Sair!');
             });
         },
 
         //Função limpar todas os inputs/selects
-        limparForm: function($form){
+        limparForm: function ($form) {
             $form.find('input').val('');
             $form.find('select option:selected').removeAttr('selected');
         },
@@ -68,11 +67,11 @@
                 let item_id = $(event.target).attr('item_id');
                 let $modalEdit = $(event.target).parents('.admin-content').find('.modal');
                 let $form = $modalEdit.find('form');
-                let secao = $(event.target).parents('div.admin-content').attr('id').replace('icheff-','');
+                let secao = $(event.target).parents('div.admin-content').attr('id').replace('icheff-', '');
                 let json = JSON.parse($(event.target).attr('data'));
 
                 $modalEdit.find('h5').html('Editar ' + secao);
-                
+
                 //Async/Await
                 _this['preencheEditModal' + _this.primeiraMaiuscula(secao)]($form, json);
 
@@ -84,23 +83,23 @@
             });
 
             //Delete
-            $('main').on('click','img.icon-delete', function(){
+            $('main').on('click', 'img.icon-delete', function () {
                 let item_id = $(this).attr('item_id');
                 let $modalDelete = $('#modalDelete');
                 let $btnDelete = $modalDelete.find('button.btn-delete');
-                let secao = $(this).parents('div.admin-content').attr('id').replace('icheff-','');
+                let secao = $(this).parents('div.admin-content').attr('id').replace('icheff-', '');
 
                 $btnDelete.attr('item_id', item_id);
                 $btnDelete.attr('secao', secao);
 
                 $modalDelete.find('h5 span').html(secao);
                 $modalDelete.find('.modal-body span').html(item_id);
-                
+
                 $modalDelete.modal();
             });
 
             //Botão confirmar o delete
-            $('button.btn-delete').on('click', function(){
+            $('button.btn-delete').on('click', function () {
                 let item_id = $(this).attr('item_id');
                 let secao = $(this).attr('secao');
 
@@ -116,34 +115,103 @@
         },
 
         //Preencher campos do modal
-        preencheEditModalIngredientes: function($form, json){
+        preencheEditModalIngredientes: function ($form, json) {
             $form.find('input#ingrediente-nome').val(json.ing_nome);
 
             $form.find('select#ingrediente-unidade option:selected').removeAttr('selected');
-            $form.find('select#ingrediente-unidade option[value="' + json.ing_unidade_padrao + '"]').attr('selected','');
+            $form.find('select#ingrediente-unidade option[value="' + json.ing_unidade_padrao + '"]').attr('selected', '');
 
-            $form.find('input#ingrediente-custo').val(json.ing_custo.toString().replace('.',','));
+            $form.find('input#ingrediente-custo').val(json.ing_custo.toString().replace('.', ','));
 
             $form.find('select#ingrediente-ativo option:selected').removeAttr('selected');
-            $form.find('select#ingrediente-ativo option[value="' + json.ing_ativo + '"]').attr('selected','');
+            $form.find('select#ingrediente-ativo option[value="' + json.ing_ativo + '"]').attr('selected', '');
         },
 
-        preencheEditModalCategorias: function($form, $json){
-            
+        preencheEditModalCategorias: function ($form, $json) {
+
         },
 
-        preencheEditModalReceitas: function($form, $json){
-            
+        preencheEditModalReceitas: function ($form, $json) {
+
         },
 
         //Consultas
-        consultaListaDashboard: function(){
-            console.log('Consulta Dashboard');
-            return {};
+        consultaListaDashboard: function () {
+
+            let respostaAjax = {
+                sucesso: 1,
+                estatisticas: {
+                    total_ingredientes: 44,
+                    total_receitas: 30,
+                    total_clientes: 202,
+                    total_vendas: 1250,
+                },
+                historico_de_vendas: [
+                    { data: '2020/1/1', quantidade: 5 },
+                    { data: '2020/1/2', quantidade: 7 },
+                    { data: '2020/1/3', quantidade: 3 },
+                    { data: '2020/1/4', quantidade: 1 },
+                    { data: '2020/1/5', quantidade: 3 },
+                    { data: '2020/1/6', quantidade: 4 },
+                    { data: '2020/1/7', quantidade: 3 },
+                    { data: '2020/1/8', quantidade: 4 },
+                    { data: '2020/1/9', quantidade: 2 },
+                    { data: '2020/1/10', quantidade: 5 },
+                    { data: '2020/1/11', quantidade: 8 },
+                    { data: '2020/1/12', quantidade: 6 },
+                    { data: '2020/1/13', quantidade: 3 },
+                    { data: '2020/1/14', quantidade: 3 },
+                    { data: '2020/1/15', quantidade: 5 },
+                    { data: '2020/1/16', quantidade: 7 },
+                    { data: '2020/1/17', quantidade: 6 },
+                    { data: '2020/1/18', quantidade: 6 },
+                    { data: '2020/1/19', quantidade: 3 },
+                    { data: '2020/1/20', quantidade: 1 },
+                    { data: '2020/1/21', quantidade: 2 },
+                    { data: '2020/1/22', quantidade: 4 },
+                    { data: '2020/1/23', quantidade: 6 },
+                    { data: '2020/1/24', quantidade: 5 },
+                    { data: '2020/1/25', quantidade: 9 },
+                    { data: '2020/1/26', quantidade: 4 },
+                    { data: '2020/1/27', quantidade: 9 },
+                    { data: '2020/1/28', quantidade: 8 },
+                    { data: '2020/1/29', quantidade: 6 },
+                    { data: '2020/1/30', quantidade: 4 },
+                    { data: '2020/1/31', quantidade: 6 },
+                    { data: '2020/2/1', quantidade: 7 },
+                    { data: '2020/2/2', quantidade: 9 }
+                ],
+                distribuicao_de_vendas: [
+                    //Ação / Quantidade
+                    ['Variados', 55],
+                    ['Peixes e frutos do mar', 20],
+                    ['Fitness', 50],
+                    ['Vegetarianos', 20]
+                ]
+            };
+
+            let data = respostaAjax;
+            //Ajax success:
+            if (data.sucesso == 1) {
+
+                //Carregar os dados na tela
+                let $divsDash = $('div#dash-estatisticas div');
+
+                $divsDash.eq(0).find('span').html(data.estatisticas.total_ingredientes + ' ingredientes cadastrados');
+                $divsDash.eq(1).find('span').html(data.estatisticas.total_receitas + ' receitas cadastradas');
+                $divsDash.eq(2).find('span').html(data.estatisticas.total_clientes + ' clientes cadastrados');
+                $divsDash.eq(3).find('span').html(data.estatisticas.total_vendas + ' vendas');
+
+                this.loadCharts(data.distribuicao_de_vendas, data.historico_de_vendas);
+
+            } else {
+                alert('Deu erro no ajax!')
+            }
+
         },
 
-        consultaListaIngredientes: function(){
-            
+        consultaListaIngredientes: function () {
+
             //ing_unidade_padrao
             //ichef.com.br/api/listaingredientes
             let respostaAjax = {
@@ -175,18 +243,18 @@
                     }
                 ]
             }
-            
+
             let data = respostaAjax;
             //Ajax success:
-            if(data.sucesso==1){
-                
+            if (data.sucesso == 1) {
+
                 //Carregar os dados na tela
-                
+
                 let $tabelaBody = $('div#icheff-ingredientes table tbody');
 
                 $tabelaBody.html('');
 
-                for(let i in data.listaIngredientes){
+                for (let i in data.listaIngredientes) {
 
                     let $edit = $('<img class="icon-edit" src="img/icons/icon-edit.png">');
                     let $delete = $('<img class="icon-delete" src="img/icons/icon-delete.png">');
@@ -213,61 +281,42 @@
                     $tr.append($tdOpcoes);
 
                     $tabelaBody.append($tr);
-                
+
                 }
-
-                /*
-                $('div#icheff-ingredientes table').DataTable().destroy(true);
-
-                $('div#icheff-ingredientes table').DataTable({
-                    "paging": false,
-                    "info": false,
-                    "columnDefs": [
-                        //className: "text-center"
-                        //"orderable": false
-                        { "targets": 0, "width": "50px", className: "text-center" },
-                        { "targets": 1 },
-                        { "targets": 2 },
-                        { "targets": 3 },
-                        { "targets": 4 },
-                        { "targets": -1, className: "text-center" }
-                    ]
-                });
-                */
 
             } else {
                 alert('Deu erro no ajax!')
-            }            
+            }
 
         },
 
-        consultaListaCategorias: function(){
+        consultaListaCategorias: function () {
             console.log('Consulta Categorias');
             return {};
         },
 
-        consultaListaReceitas: function(){
+        consultaListaReceitas: function () {
             console.log('Consulta Receitas');
             return {};
         },
 
-        consultaListaUsuarios: function(){
+        consultaListaUsuarios: function () {
             console.log('Consulta Usuarios');
             return {};
         },
 
         //Botões modais
-        bindBotoesModais: function(){
+        bindBotoesModais: function () {
 
             let _this = this;
 
-            $('.card-admin-content').on('click', 'div.btn-novo button', function() {
+            $('.card-admin-content').on('click', 'div.btn-novo button', function () {
                 let $modal = $(this).parents('.card-admin-content').find('.modal');
                 let $modalButton = $modal.find('.modal-footer button');
-                let secaoPlural = $(this).parents('div.admin-content').attr('id').replace('icheff-','');
+                let secaoPlural = $(this).parents('div.admin-content').attr('id').replace('icheff-', '');
                 let secao = secaoPlural.substring(0, secaoPlural.length - 1);
 
-                let novoTxt = (secao=='ingrediente'?'Novo':'Nova');
+                let novoTxt = (secao == 'ingrediente' ? 'Novo' : 'Nova');
 
                 _this.limparForm($modal.find('form'));
 
@@ -280,11 +329,11 @@
             });
         },
 
-        bindBotoesSubmeterModais: function(){
+        bindBotoesSubmeterModais: function () {
             $('.card-admin-content').on('click', 'div.modal-footer button', (event) => {
-                
+
                 let $divContent = $(event.target).parents('div.admin-content');
-                let secao = $divContent.attr('id').replace('icheff-','');
+                let secao = $divContent.attr('id').replace('icheff-', '');
                 let $form = $divContent.find('div.modal form');
                 let _this = this;
 
@@ -294,7 +343,40 @@
             });
         },
 
-        submeterModalIngredientes: function($form){
+        bindBotoesInternosModais: function() {
+            $('table.table-ingredientes').on('click','.icon-delete-ingrediente', function(){
+                $(this).parents('tr').remove();
+            });
+
+            $('div.modal-receitas button#add-ingrediente').on('click', function(){
+
+                let qtd = $('input#inr_quantidade').val();
+
+                let unidade = $('select#inr_id_unidade option:selected').html();
+                let unidade_id = $('select#inr_id_unidade option:selected').val();
+
+                let ingrediente = $('select#inr_id_ingrediente option:selected').html();
+                let ingrediente_id = $('select#inr_id_ingrediente option:selected').val();
+
+                let $tr = $('<tr>');
+                
+                $tr.append($('<td>').html(qtd + ' ' + unidade));
+                $tr.append($('<td>').html(ingrediente));
+                $tr.append($('<td>').html($('<img class="icon-delete-ingrediente" src="img/icons/icon-delete.png">')));
+
+                let jsonIngrediente = JSON.stringify({
+                    ingrediente: ingrediente_id,
+                    unidade: unidade_id,
+                    quantidade: qtd
+                });
+
+                $tr.attr('data', jsonIngrediente);
+
+                $('table.table-ingredientes tbody').append($tr);
+            });
+        },
+
+        submeterModalIngredientes: function ($form) {
 
             //ichef.com.br/api/ingredientes/cadastar
             //ichef.com.br/api/ingredientes/editar/{id}
@@ -311,15 +393,15 @@
 
         },
 
-        submeterModalCategorias: function($form){
+        submeterModalCategorias: function ($form) {
             console.log('Categorias');
         },
 
-        submeterModalReceitas: function($form){
+        submeterModalReceitas: function ($form) {
             console.log('Receitas');
         },
 
-        tableDataTable: function(){
+        tableDataTable: function () {
             $('table:not(.table-ingredientes)').DataTable({
                 "paging": false,
                 "info": false,
@@ -337,14 +419,14 @@
         },
 
         //Redimensiona o tamanho do menu
-        menuPrincipalLayout: function() {
-            let redimensionaObj = function(nome) {
+        menuPrincipalLayout: function () {
+            let redimensionaObj = function (nome) {
                 let $obj = $(nome);
                 let totalPadding = parseInt($obj.css('padding-top')) + parseInt($obj.css('padding-bottom'));
                 $obj.height($(window).height() - totalPadding);
             }
 
-            let redimensionaMenu = function() {
+            let redimensionaMenu = function () {
                 redimensionaObj('aside');
                 redimensionaObj('main');
             }
@@ -353,70 +435,65 @@
             $(window).resize(redimensionaMenu);
         },
 
-        loadCharts: function(){
-            google.charts.load('current', {packages: ['corechart']});
+        loadCharts: function (dataDistribuicao, dataHistorico) {
+
+            google.charts.load('current', { packages: ['corechart'] });
             google.charts.setOnLoadCallback(drawChart);
-            
+
             function drawChart() {
-    
+
                 var data = google.visualization.arrayToDataTable([
                     ['Ação', 'Quantidade'],
-                    ['Variados', 55],
-                    ['Peixes e frutos do mar', 20],
-                    ['Fitness', 50],
-                    ['Vegetarianos', 20]
+                    ...dataDistribuicao
                 ]);
-                
+
                 var options = {
                     title: 'Distribuição de vendas por categoria',
                     is3D: true,
-                    chartArea: {width: '93%', height: '80%', left: '0'}
+                    chartArea: { width: '93%', height: '80%', left: '0' }
                 };
-                
+
                 var chart = new google.visualization.PieChart(document.getElementById('atividades-chart'));
-                
+
                 chart.draw(data, options);
             }
 
             google.charts.setOnLoadCallback(drawChart2);
-      
+
             function drawChart2() {
-      
-              var data = new google.visualization.DataTable();
-              data.addColumn('date', 'Dia');
-              data.addColumn('number', 'Quantidade de vendas');
-      
-              data.addRows([
-                [new Date(2020, 0, 1), 5],  [new Date(2020, 0, 2), 7],  [new Date(2020, 0, 3), 3],
-                [new Date(2020, 0, 4), 1],  [new Date(2020, 0, 5), 3],  [new Date(2020, 0, 6), 4],
-                [new Date(2020, 0, 7), 3],  [new Date(2020, 0, 8), 4],  [new Date(2020, 0, 9), 2],
-                [new Date(2020, 0, 10), 5], [new Date(2020, 0, 11), 8], [new Date(2020, 0, 12), 6],
-                [new Date(2020, 0, 13), 3], [new Date(2020, 0, 14), 3], [new Date(2020, 0, 15), 5],
-                [new Date(2020, 0, 16), 7], [new Date(2020, 0, 17), 6], [new Date(2020, 0, 18), 6],
-                [new Date(2020, 0, 19), 3], [new Date(2020, 0, 20), 1], [new Date(2020, 0, 21), 2],
-                [new Date(2020, 0, 22), 4], [new Date(2020, 0, 23), 6], [new Date(2020, 0, 24), 5],
-                [new Date(2020, 0, 25), 9], [new Date(2020, 0, 26), 4], [new Date(2020, 0, 27), 9],
-                [new Date(2020, 0, 28), 8], [new Date(2020, 0, 29), 6], [new Date(2020, 0, 30), 4],
-                [new Date(2020, 0, 31), 6], [new Date(2020, 1, 1), 7],  [new Date(2020, 1, 2), 9]
-              ]);
-      
-              var options = {
-                title: 'Histórico de vendas',
-                legend: 'none',
-                hAxis: {
-                  format: 'd/M/yyyy',
-                  gridlines: {count: 15}
-                },
-                vAxis: {
-                  //gridlines: {color: 'none'},
-                  minValue: 0
-                },
-                chartArea: {width: '90%', height: '80%'},
-              };
-      
-              var chart = new google.visualization.LineChart(document.getElementById('historico-chart'));
-      
-              chart.draw(data, options);
+
+                var data = new google.visualization.DataTable();
+                data.addColumn('date', 'Dia');
+                data.addColumn('number', 'Quantidade de vendas');
+
+                let datas = [];
+
+                for(i in dataHistorico) {
+                    let d = dataHistorico[i].data.split('/');
+                    let qtd = dataHistorico[i].quantidade;
+                    let dt = [new Date(d[0], d[1] - 1, d[2]), qtd];
+                    datas.push(dt);
+                }
+
+                data.addRows(datas);
+
+                var options = {
+                    title: 'Histórico de vendas',
+                    legend: 'none',
+                    hAxis: {
+                        format: 'd/M/yyyy',
+                        gridlines: { count: 15 }
+                    },
+                    vAxis: {
+                        //gridlines: {color: 'none'},
+                        minValue: 0
+                    },
+                    chartArea: { width: '90%', height: '80%' },
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('historico-chart'));
+
+                chart.draw(data, options);
 
             }
         }
