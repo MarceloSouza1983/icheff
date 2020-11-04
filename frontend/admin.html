@@ -131,16 +131,10 @@
                                     <div class="form-group row">
                                         <div class="col">
                                             <label for="ingrediente-unidade" class="col-form-label">Unidade</label>
-                                            <select id="ingrediente-unidade" class="form-control">
-                                                <option value="1">g</option>
-                                                <option value="2">kg</option>
-                                                <option value="3">L</option>
-                                                <option value="4">Colher(es) de sopa</option>
-                                                <option value="5">Colher(es) de chá</option>
-                                            </select>
+                                            <select id="ingrediente-unidade" class="form-control"></select>
                                         </div>
                                         <div class="col">
-                                            <label for="ingrediente-custo" class="col-form-label">Valor (R$)</label>
+                                            <label for="ingrediente-custo" class="col-form-label">Custo (R$)</label>
                                             <input type="text" autocomplete="off" class="form-control" id="ingrediente-custo">
                                         </div>
                                         <div class="col">
@@ -235,8 +229,8 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-4">
-                                            <label for="cat_vegano" class="col-form-label">Vegana</label>
-                                            <select id="cat_vegano" class="form-control">
+                                            <label for="cat_vegana" class="col-form-label">Vegana</label>
+                                            <select id="cat_vegana" class="form-control">
                                                 <option value="0">Não</option>
                                                 <option value="1">Sim</option>
                                             </select>
@@ -274,46 +268,11 @@
                             <th>Qtd ingredientes</th>
                             <th>Custo</th>
                             <th>Preço</th>
-                            <th>Status</th>
+                            <th>Ativa</th>
                             <th>Opções</th>
                         </tr>
                     </thead>
-                    <tr>
-                        <td>1</td>
-                        <td>Feijoada</td>
-                        <td>18</td>
-                        <td>R$ 28,75</td>
-                        <td>R$ 55,90</td>
-                        <td>Ativo</td>
-                        <td>
-                            <img item_id="1"  class="icon-edit" src="img/icons/icon-edit.png">
-                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Canelone de frango</td>
-                        <td>6</td>
-                        <td>R$ 13,50</td>
-                        <td>R$ 24,99</td>
-                        <td>Ativo</td>
-                        <td>
-                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
-                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Risoto de frango</td>
-                        <td>5</td>
-                        <td>R$ 12,50</td>
-                        <td>R$ 19,99</td>
-                        <td>Ativo</td>
-                        <td>
-                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
-                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
-                        </td>
-                    </tr>
+                    <tbody></tbody>
                 </table>
 
                 <!-- Modal novo/edit receitas -->
@@ -327,81 +286,82 @@
                                 </button>
                             </div>
 
-                            <div class="container row">
+                            <form>
+                            
+                                <div class="container row">
 
-                                <div class="modal-body col-5">
+                                    <div class="modal-body col-5 my-0 pb-0 pt-2">
+                                        <div class="form-group my-0 py-0">
+                                            <label for="rec_nome" class="col-form-label">Nome da receita</label>
+                                            <input type="text" autocomplete="off" id="rec_nome" class="form-control">
+                                        </div>
+                                        <div class="form-group my-0 py-0">
+                                            <label for="rec_imagem" class="col-form-label">URL da imagem da receita</label>
+                                            <input type="text" autocomplete="off" id="rec_imagem" class="form-control">
+                                        </div>
+                                        <div class="form-group my-0 py-0">
+                                            <label for="rec_link_youtube" class="col-form-label">Link do vídeo no YouTube</label>
+                                            <input type="text" autocomplete="off" id="rec_link_youtube" class="form-control">
+                                        </div>
+                                        <div class="row my-0 py-0">
+                                            <div class="form-group col-8">
+                                                <label for="rec_id_categoria" class="col-form-label">Categoria</label>
+                                                <select id="rec_id_categoria" class="form-control"></select>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="rec_ativa" class="col-form-label">Ativa</label>
+                                                <select id="rec_ativa" class="form-control">
+                                                    <option value="1">Sim</option>
+                                                    <option value="0">Não</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-7">
+
+                                        <div class="modal-header mb-3 pb-2">
+                                            <h6 class="modal-title">Ingredientes</h6>
+                                        </div>
+
+                                        <div class="form-group container row">
+                                            <div class="col-3 p-1 ml-2">
+                                                <input type="text" autocomplete="off" id="inr_quantidade" class="form-control">
+                                            </div>
+                                            <div class="col-2 p-1 ml-2">
+                                                <select id="inr_id_unidade" class="form-control"></select>
+                                            </div>
+                                            <div class="col-5 p-1 ml-2">
+                                                <select id="inr_id_ingrediente" class="form-control"></select>
+                                            </div>
+                                            <div class="col-1 p-1 ml-2">
+                                                <button id="add-ingrediente" type="button" class="btn btn-success">Add</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-body lista-ingredientes">
+                                            <table class="table-ingredientes">
+                                                <thead>
+                                                    <th>Quantidade</th>
+                                                    <th>Ingrediente</th>
+                                                    <th>Opções</th>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-body pt-0">
                                     <div class="form-group">
-                                        <label for="rec_nome" class="col-form-label">Nome da receita</label>
-                                        <input type="text" autocomplete="off" id="rec_nome" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="rec_link_youtube" class="col-form-label">Link do vídeo no YouTube</label>
-                                        <input type="text" autocomplete="off" id="rec_link_youtube" class="form-control">
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col">
-                                            <label for="rec_id_categoria" class="col-form-label">Categoria</label>
-                                            <select id="rec_id_categoria" class="form-control">
-                                                <option value="1">Categoria 1</option>
-                                                <option value="2">Categoria 2</option>
-                                                <option value="3">Categoria 3</option>
-                                            </select>
-                                        </div>
+                                        <label for="rec_descricao" class="col-form-label">Descrição da receita</label>
+                                        <textarea id="rec_descricao" rows="5" class="form-control"></textarea>
                                     </div>
                                 </div>
-    
-                                <div class="col-7">
 
-                                    <div class="modal-header">
-                                        <h6 class="modal-title">Ingredientes</h6>
-                                    </div>
-
-                                    <div class="form-group container row">
-                                        <div class="col-3 p-1">
-                                            <input type="text" autocomplete="off" id="inr_quantidade" class="form-control">
-                                        </div>
-                                        <div class="col-2 p-1">
-                                            <select id="inr_id_unidade" class="form-control">
-                                                <option value="1">g</option>
-                                                <option value="2">kg</option>
-                                                <option value="3">L</option>
-                                                <option value="4">Colher(es) de sopa</option>
-                                                <option value="5">Colher(es) de chá</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-5 p-1">
-                                            <select id="inr_id_ingrediente" class="form-control">
-                                                <option value="1">Ingerdiente 1</option>
-                                                <option value="2">Ingerdiente 2</option>
-                                                <option value="3">Ingerdiente 3</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-2 p-1">
-                                            <button id="add-ingrediente" type="button" class="btn btn-success">Add</button>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal-body lista-ingredientes">
-                                        <table class="table-ingredientes">
-                                            <thead>
-                                                <th>Quantidade</th>
-                                                <th>Ingrediente</th>
-                                                <th>Opções</th>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="modal-body pt-0">
-                                <div class="form-group">
-                                    <label for="rec_descricao" class="col-form-label">Descrição da receita</label>
-                                    <textarea id="rec_descricao" rows="5" class="form-control"></textarea>
-                                </div>
-                            </div>
+                            </form>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-success"></button>
@@ -429,33 +389,11 @@
                             <th>Tipo</th>
                             <th>E-mail</th>
                             <th>Telefone</th>
-                            <th>Data nascimento</th>
+                            <th>Anivesário</th>
+                            <th>Cadastro</th>
                         </tr>
                     </thead>
-                    <tr>
-                        <td>1</td>
-                        <td>João</td>
-                        <td>Admin</td>
-                        <td>joao1@gmail.com</td>
-                        <td>11 99778-0011</td>
-                        <td>12/12/1981</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Mônica</td>
-                        <td>Cliente</td>
-                        <td>monica@gmail.com</td>
-                        <td>11 99778-0011</td>
-                        <td>17/10/1983</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Márcia</td>
-                        <td>Cliente</td>
-                        <td>marcia19@gmail.com</td>
-                        <td>11 99778-0011</td>
-                        <td>12/06/1988</td>
-                    </tr>
+                    <tbody></tbody>
                 </table>
 
             </div>

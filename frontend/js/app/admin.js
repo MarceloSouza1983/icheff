@@ -11,7 +11,7 @@
             this.bindBotoesInternosModais();
 
             //Inicia o dashboard
-            $('aside div.menu a').eq(2).trigger('click');
+            $('aside div.menu a').eq(0).trigger('click');
 
             //$('#icheff-receitas button').eq(0).trigger('click');
         },
@@ -56,7 +56,9 @@
         //Função limpar todas os inputs/selects
         limparForm: function ($form) {
             $form.find('input').val('');
+            $form.find('textarea').val('');
             $form.find('select option:selected').removeAttr('selected');
+            $form.find('table.table-ingredientes tbody').html('');
         },
 
         //Botões de ação
@@ -102,6 +104,7 @@
             $('button.btn-delete').on('click', function () {
                 let item_id = $(this).attr('item_id');
                 let secao = $(this).attr('secao');
+                let $modalDelete = $('#modalDelete');
 
                 //ichef.com.br/api/{secao}/{id}
 
@@ -110,6 +113,8 @@
                 console.log(url);
 
                 //Ajax
+
+                $modalDelete.modal('hide');
 
             });
         },
@@ -130,12 +135,46 @@
         preencheEditModalCategorias: function ($form, json) {
             $form.find('input#cat_nome').val(json.cat_nome);
 
-            $form.find('select#cat_vegano option:selected').removeAttr('selected');
-            $form.find('select#cat_vegano option[value="' + json.cat_vegana + '"]').attr('selected', '');
+            $form.find('select#cat_vegana option:selected').removeAttr('selected');
+            $form.find('select#cat_vegana option[value="' + json.cat_vegana + '"]').attr('selected', '');
         },
 
         preencheEditModalReceitas: function ($form, json) {
+            $form.find('input#rec_nome').val(json.rec_nome);
+            $form.find('input#rec_imagem').val(json.rec_imagem);
+            $form.find('input#rec_link_youtube').val(json.rec_link_youtube);
 
+            $form.find('select#rec_id_categoria option[value="' + json.rec_id_categoria + '"]').attr('selected', '');
+            $form.find('select#rec_ativa option[value="' + json.rec_ativa + '"]').attr('selected', '');
+
+            $form.find('textarea#rec_descricao').val(json.rec_descricao);
+
+            //Preenche a lista os ingredientes
+
+            let $tbodyIngredientes = $form.find('table.table-ingredientes');
+
+            $tbodyIngredientes.find('tbody').html('');
+
+            for(let i in json.ingredientes){
+                let ing = json.ingredientes[i];
+                
+                let $tr = $('<tr>');
+                
+                $tr.append($('<td>').html(ing.ingrediente_quantidade + ' ' + ing.ingrediente_unidade));
+                $tr.append($('<td>').html(ing.ingrediente_nome));
+                $tr.append($('<td>').html('<img class="icon-delete-ingrediente" src="img/icons/icon-delete.png">'));
+                
+                let objJson = {
+                    ingrediente: ing.ingrediente_id,
+                    unidade: ing.ingrediente_unidade_id,
+                    quantidade: ing.ingrediente_quantidade
+                }
+
+                $tr.attr('data', JSON.stringify(objJson));
+
+                $tbodyIngredientes.append($tr);
+                
+            }
         },
 
         //Consultas
@@ -251,6 +290,16 @@
                 ]
             }
 
+            //Preencher as unidades padrão
+            let unidades = this.loadListaUnidades();
+            let $selectUnidades = $('div#icheff-ingredientes select#ingrediente-unidade').html('');
+
+            for(let i in unidades){
+                let $option = $('<option>').val(unidades[i].iun_id).html(unidades[i].iun_sigla);
+                $selectUnidades.append($option)
+            }
+            //Fim unidades padrão
+
             let data = respostaAjax;
             //Ajax success:
             if (data.sucesso == 1) {
@@ -266,23 +315,23 @@
                     let $edit = $('<img class="icon-edit" src="img/icons/icon-edit.png">');
                     let $delete = $('<img class="icon-delete" src="img/icons/icon-delete.png">');
 
-                    let $ing = data.listaIngredientes[i];
+                    let d = data.listaIngredientes[i];
 
-                    $edit.attr('data', JSON.stringify($ing));
+                    $edit.attr('data', JSON.stringify(d));
 
                     let $tr = $('<tr>');
                     let $tdOpcoes = $('<td>');
 
-                    $tr.append('<td>' + $ing['ing_id'] + '</td>');
-                    $tr.append('<td>' + $ing['ing_nome'] + '</td>');
-                    $tr.append('<td>' + $ing['iun_unidade_sigla'] + '</td>');
-                    $tr.append('<td>' + $ing['ing_custo'] + '</td>');
-                    $tr.append('<td>' + $ing['ing_ativo'] + '</td>');
+                    $tr.append('<td>' + d['ing_id'] + '</td>');
+                    $tr.append('<td>' + d['ing_nome'] + '</td>');
+                    $tr.append('<td>' + d['iun_unidade_sigla'] + '</td>');
+                    $tr.append('<td>' + d['ing_custo'] + '</td>');
+                    $tr.append('<td>' + d['ing_ativo'] + '</td>');
 
-                    $edit.attr('item_id', $ing['ing_id']);
+                    $edit.attr('item_id', d['ing_id']);
                     $tdOpcoes.append($edit);
 
-                    $delete.attr('item_id', $ing['ing_id']);
+                    $delete.attr('item_id', d['ing_id']);
                     $tdOpcoes.append($delete);
 
                     $tr.append($tdOpcoes);
@@ -341,22 +390,22 @@
                     let $edit = $('<img class="icon-edit" src="img/icons/icon-edit.png">');
                     let $delete = $('<img class="icon-delete" src="img/icons/icon-delete.png">');
 
-                    let $ing = data.listaCategorias[i];
+                    let d = data.listaCategorias[i];
 
-                    $edit.attr('data', JSON.stringify($ing));
+                    $edit.attr('data', JSON.stringify(d));
 
                     let $tr = $('<tr>');
                     let $tdOpcoes = $('<td>');
 
-                    $tr.append('<td>' + $ing['cat_id'] + '</td>');
-                    $tr.append('<td>' + $ing['cat_nome'] + '</td>');
-                    $tr.append('<td>' + ($ing['cat_vegana']?'Sim':'Não') + '</td>');
-                    $tr.append('<td>' + $ing['cat_qtd_receitas'] + '</td>');
+                    $tr.append('<td>' + d['cat_id'] + '</td>');
+                    $tr.append('<td>' + d['cat_nome'] + '</td>');
+                    $tr.append('<td>' + (d['cat_vegana']?'Sim':'Não') + '</td>');
+                    $tr.append('<td>' + d['cat_qtd_receitas'] + '</td>');
 
-                    $edit.attr('item_id', $ing['cat_id']);
+                    $edit.attr('item_id', d['cat_id']);
                     $tdOpcoes.append($edit);
 
-                    $delete.attr('item_id', $ing['cat_id']);
+                    $delete.attr('item_id', d['cat_id']);
                     $tdOpcoes.append($delete);
 
                     $tr.append($tdOpcoes);
@@ -375,16 +424,261 @@
 
             $('ol.breadcrumb li.active').html('Receitas');
 
-            console.log('Consulta Receitas');
-            return {};
+            //ichef.com.br/api/listacategorias
+            let respostaAjax = {
+                sucesso: 1,
+                listaReceitas: [
+                    {
+                        rec_id: 1,
+                        rec_nome: 'Feijoada',
+                        qtd_ingredientes: 18,
+                        custo: 28.75,
+                        preco: 55.9,
+                        rec_ativa: 1,
+                        rec_imagem: 'http://ichef.com.br/imagens/img-rec.jpg',
+                        rec_link_youtube: 'http://youtube.com.br',
+                        rec_descricao: 'Descrição da receita!',
+                        ingredientes: [
+                            {
+                                ingrediente_id: 1,
+                                ingrediente_nome: 'Ingrediente 1',
+                                ingrediente_unidade_id: 1,
+                                ingrediente_unidade: 'g',
+                                ingrediente_quantidade: 5,
+                            },
+                            {
+                                ingrediente_id: 2,
+                                ingrediente_nome: 'Ingrediente 2',
+                                ingrediente_unidade_id: 2,
+                                ingrediente_unidade: 'kg',
+                                ingrediente_quantidade: 5,
+                            },
+                            {
+                                ingrediente_id: 3,
+                                ingrediente_nome: 'Ingrediente 3',
+                                ingrediente_unidade_id: 3,
+                                ingrediente_unidade: 'L',
+                                ingrediente_quantidade: 2,
+                            },
+                        ]
+                    },
+                    {
+                        rec_id: 2,
+                        rec_nome: 'Canelone de frango',
+                        qtd_ingredientes: 6,
+                        custo: 13.50,
+                        preco: 24.99,
+                        rec_ativa: 1,
+                        rec_imagem: 'http://ichef.com.br/imagens/img-rec.jpg',
+                        rec_link_youtube: 'http://youtube.com.br',
+                        rec_descricao: 'Descrição da receita!',
+                        ingredientes: [
+                            {
+                                ingrediente_id: 1,
+                                ingrediente_nome: 'Ingrediente 1',
+                                ingrediente_unidade_id: 1,
+                                ingrediente_unidade: 'g',
+                                ingrediente_quantidade: 5,
+                            },
+                            {
+                                ingrediente_id: 2,
+                                ingrediente_nome: 'Ingrediente 2',
+                                ingrediente_unidade_id: 2,
+                                ingrediente_unidade: 'kg',
+                                ingrediente_quantidade: 5,
+                            },
+                            {
+                                ingrediente_id: 3,
+                                ingrediente_nome: 'Ingrediente 3',
+                                ingrediente_unidade_id: 3,
+                                ingrediente_unidade: 'L',
+                                ingrediente_quantidade: 2,
+                            },
+                        ]
+                    },
+                    {
+                        rec_id: 3,
+                        rec_nome: 'Risoto de frango',
+                        qtd_ingredientes: 5,
+                        custo: 12.50,
+                        preco: 19.99,
+                        rec_ativa: 0,
+                        rec_imagem: 'http://ichef.com.br/imagens/img-rec.jpg',
+                        rec_link_youtube: 'http://youtube.com.br',
+                        rec_descricao: 'Descrição da receita!',
+                        ingredientes: [
+                            {
+                                ingrediente_id: 1,
+                                ingrediente_nome: 'Ingrediente 1',
+                                ingrediente_unidade_id: 1,
+                                ingrediente_unidade: 'g',
+                                ingrediente_quantidade: 5,
+                            },
+                            {
+                                ingrediente_id: 2,
+                                ingrediente_nome: 'Ingrediente 2',
+                                ingrediente_unidade_id: 2,
+                                ingrediente_unidade: 'kg',
+                                ingrediente_quantidade: 5,
+                            },
+                            {
+                                ingrediente_id: 3,
+                                ingrediente_nome: 'Ingrediente 3',
+                                ingrediente_unidade_id: 3,
+                                ingrediente_unidade: 'L',
+                                ingrediente_quantidade: 2,
+                            },
+                        ]
+                    },
+                ]
+            }
+
+            //Load do modal de edição/novo
+            let $selectCategorias = $('select#rec_id_categoria').html('');
+            let $selectIngredientes = $('select#inr_id_ingrediente').html('');
+            let $selectUnidades = $('select#inr_id_unidade').html('');
+
+            let categorias = this.loadListaCategorias();
+
+            for(let i in categorias){
+                let cat_nome = categorias[i].cat_nome + (categorias[i].cat_vegana?' (vegana)':'');
+                let $option = $('<option>').val(categorias[i].cat_id).html(cat_nome);
+                $selectCategorias.append($option)
+            }
+            
+            let ingredientes = this.loadListaIngredientes();
+
+            for(let i in ingredientes){
+                let $option = $('<option>').val(ingredientes[i].ing_id).html(ingredientes[i].ing_nome);
+                $selectIngredientes.append($option)
+            }
+            
+            let unidades = this.loadListaUnidades();
+
+            for(let i in unidades){
+                let $option = $('<option>').val(unidades[i].iun_id).html(unidades[i].iun_sigla);
+                $selectUnidades.append($option)
+            }
+            //Fim do load do modal
+
+            let data = respostaAjax;
+            //Ajax success:
+            if (data.sucesso == 1) {
+
+                //Carregar os dados na tela
+
+                let $tabelaBody = $('div#icheff-receitas table tbody').eq(0);
+
+                $tabelaBody.html('');
+
+                for (let i in data.listaReceitas) {
+
+                    let $edit = $('<img class="icon-edit" src="img/icons/icon-edit.png">');
+                    let $delete = $('<img class="icon-delete" src="img/icons/icon-delete.png">');
+
+                    let d = data.listaReceitas[i];
+
+                    let $tr = $('<tr>');
+                    let $tdOpcoes = $('<td>');
+
+                    $tr.append('<td>' + d['rec_id'] + '</td>');
+                    $tr.append('<td>' + d['rec_nome'] + '</td>');
+                    $tr.append('<td>' + d['qtd_ingredientes'] + '</td>');
+                    $tr.append('<td>' + d['custo'] + '</td>');
+                    $tr.append('<td>' + d['preco'] + '</td>');
+                    $tr.append('<td>' + (d['rec_ativa']?'Sim':'Não') + '</td>');
+
+                    let ingredientesJson = JSON.stringify(d);
+
+                    $edit.attr('data', ingredientesJson);
+                    $edit.attr('item_id', d['rec_id']);
+                    $tdOpcoes.append($edit);
+
+                    $delete.attr('item_id', d['rec_id']);
+                    $tdOpcoes.append($delete);
+
+                    $tr.append($tdOpcoes);
+
+                    $tabelaBody.append($tr);
+
+                }
+
+            } else {
+                alert('Deu erro no ajax!')
+            }
+
         },
 
-        consultaListaUsuarios: function () {
+        consultaListaUsuarios: function (){
 
             $('ol.breadcrumb li.active').html('Usuários');
 
-            console.log('Consulta Usuários');
-            return {};
+            //ichef.com.br/api/usuarios
+            let respostaAjax = {
+                sucesso: 1,
+                listaUsuarios: [
+                    {
+                        usu_id: 1,
+                        usu_nome: 'João',
+                        usu_tipo: 'Admin',
+                        usu_login: 'joao1@gmail.com', //e-mail
+                        usu_telefone: '(11) 99778-0011',
+                        usu_data_nascimento: '12/12/1981',
+                        usu_data_cadastro: '15/10/2020 20:11'
+                    },
+                    {
+                        usu_id: 2,
+                        usu_nome: 'Mônica',
+                        usu_tipo: 'Cliente',
+                        usu_login: 'monica@gmail.com', //e-mail
+                        usu_telefone: '(11) 99778-0011',
+                        usu_data_nascimento: '17/10/1983',
+                        usu_data_cadastro: '12/10/2020 10:10'
+                    },
+                    {
+                        usu_id: 3,
+                        usu_nome: 'Márcia',
+                        usu_tipo: 'Cliente',
+                        usu_login: 'marcia19@gmail.com', //e-mail
+                        usu_telefone: '(11) 99778-0011',
+                        usu_data_nascimento: '12/06/1988',
+                        usu_data_cadastro: '5/09/2020 5:01'
+                    }
+                ]
+            }
+
+            let data = respostaAjax;
+            //Ajax success:
+            if (data.sucesso == 1) {
+
+                //Carregar os dados na tela
+
+                let $tabelaBody = $('div#icheff-usuarios table tbody').eq(0);
+
+                $tabelaBody.html('');
+
+                for (let i in data.listaUsuarios) {
+
+                    let d = data.listaUsuarios[i];
+
+                    let $tr = $('<tr>');
+
+                    $tr.append('<td>' + d['usu_id'] + '</td>');
+                    $tr.append('<td>' + d['usu_nome'] + '</td>');
+                    $tr.append('<td>' + d['usu_tipo'] + '</td>');
+                    $tr.append('<td>' + d['usu_login'] + '</td>');
+                    $tr.append('<td>' + d['usu_telefone'] + '</td>');
+                    $tr.append('<td>' + d['usu_data_nascimento'] + '</td>');
+                    $tr.append('<td>' + d['usu_data_cadastro'] + '</td>');
+
+                    $tabelaBody.append($tr);
+
+                }
+
+            } else {
+                alert('Deu erro no ajax!')
+            }
+            
         },
 
         //Botões modais
@@ -465,10 +759,22 @@
             //ichef.com.br/api/ingredientes/editar/{id}
             let formData = {
                 ing_nome: $form.find('input#ingrediente-nome').val(),
-                ing_unidade_padrao: $form.find('input#ingrediente-quantidade').val(),
-                ing_custo: $form.find('select#ingrediente-unidade option:selected').val(),
-                ing_ativo: $form.find('input#ingrediente-custo').val()
+                ing_unidade_padrao: $form.find('input#ingrediente-unidade').val(),
+                ing_custo: $form.find('input#ingrediente-custo').val(),
+                ing_ativo: $form.find('select#ingrediente-ativo option:selected').val()
             }
+
+            //Verificações
+            if(formData.ing_nome.trim().length === 0){
+                alert('Preencha o nome do ingrediente!');
+                return;
+            }
+
+            if(formData.ing_custo.trim().length === 0){
+                alert('Preencha o custo do ingrediente!');
+                return;
+            }
+            //Fim verificações
 
             //Ação
             console.log(acao);
@@ -476,6 +782,9 @@
             //Ajax
 
             console.log(formData);
+
+            //Fechar modal
+            $form.parents('div.admin-content').find('div.modal').modal('hide');
 
         },
 
@@ -485,8 +794,15 @@
             //ichef.com.br/api/categorias/editar/{id}
             let formData = {
                 cat_nome: $form.find('input#cat_nome').val(),
-                cat_vegano: $form.find('select#cat_vegano option:selected').val(),
+                cat_vegana: $form.find('select#cat_vegana option:selected').val(),
             }
+
+            //Verificações
+            if(formData.cat_nome.trim().length === 0){
+                alert('Preencha o nome da categoria!');
+                return;
+            }
+            //Fim verificações
 
             //Ação
             console.log(acao);
@@ -495,10 +811,70 @@
 
             console.log(formData);
 
+            //Fechar modal
+            $form.parents('div.admin-content').find('div.modal').modal('hide');
+
         },
 
         submeterModalReceitas: function ($form, acao) {
-            console.log('Receitas');
+            
+            //ichef.com.br/api/receitas/cadastar
+            //ichef.com.br/api/receitas/editar/{id}
+            let formData = {
+                rec_nome: $form.find('input#rec_nome').val(),
+                rec_imagem: $form.find('input#rec_imagem').val(),
+                rec_link_youtube: $form.find('input#rec_link_youtube').val(),
+                rec_descricao: $form.find('textarea#rec_descricao').val(),
+
+                rec_id_categoria: $form.find('select#rec_id_categoria option:selected').val(),
+
+                ingredientes: []
+            }
+
+            //Ingredientes selecionados
+            $('table.table-ingredientes tbody tr').each(function(){
+                let dataJson = $(this).attr('data');
+                let jsonIngrediente = JSON.parse(dataJson);
+                formData.ingredientes.push(jsonIngrediente);
+            });
+
+            //Verificações
+            if(formData.rec_nome.trim().length === 0){
+                alert('Preencha o nome da receita!');
+                return;
+            }
+
+            if(formData.rec_imagem.trim().length === 0){
+                alert('Preencha a imagem da receita!');
+                return;
+            }
+
+            if(formData.rec_link_youtube.trim().length === 0){
+                alert('Preencha o link para o YouTube da receita!');
+                return;
+            }
+
+            if(formData.rec_descricao.trim().length === 0){
+                alert('Preencha a descrição da receita!');
+                return;
+            }
+
+            if(typeof formData.ingredientes[0] === 'undefined'){
+                alert('Inclua pelo menos um ingrediente para a receita!');
+                return;
+            }
+            //Fim verificações
+
+            //Ação
+            console.log(acao);
+
+            //Ajax
+
+            console.log(formData);
+
+            //Fechar modal
+            $form.parents('div.admin-content').find('div.modal').modal('hide');
+
         },
 
         tableDataTable: function () {
@@ -535,6 +911,41 @@
             $(window).resize(redimensionaMenu);
         },
 
+        loadListaCategorias: function(){
+            //Ajax
+            let lista = [
+                { cat_id: 1, cat_nome: 'Categoria 1', cat_vegana: 0 },
+                { cat_id: 2, cat_nome: 'Categoria 2', cat_vegana: 0 },
+                { cat_id: 3, cat_nome: 'Categoria 3', cat_vegana: 1 }
+            ];
+
+            return lista;
+        },
+
+        loadListaIngredientes: function(){
+            //Ajax
+            let lista = [
+                { ing_id: 1, ing_nome: 'Ingrediente 1' },
+                { ing_id: 2, ing_nome: 'Ingrediente 2' },
+                { ing_id: 3, ing_nome: 'Ingrediente 3' }
+            ];
+
+            return lista;
+        },
+
+        loadListaUnidades: function(){
+            //Ajax
+            let lista = [
+                { iun_id: 1, iun_sigla: 'g' },
+                { iun_id: 2, iun_sigla: 'kg' },
+                { iun_id: 3, iun_sigla: 'L' },
+                { iun_id: 4, iun_sigla: 'Colher de sopa' },
+                { iun_id: 5, iun_sigla: 'Colher de chá' },
+            ];
+
+            return lista;
+        },
+
         loadCharts: function (dataDistribuicao, dataHistorico) {
 
             google.charts.load('current', { packages: ['corechart'] });
@@ -568,7 +979,7 @@
 
                 let datas = [];
 
-                for(i in dataHistorico) {
+                for(let i in dataHistorico) {
                     let d = dataHistorico[i].data.split('/');
                     let qtd = dataHistorico[i].quantidade;
                     let dt = [new Date(d[0], d[1] - 1, d[2]), qtd];
