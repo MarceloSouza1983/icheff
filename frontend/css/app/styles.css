@@ -1,0 +1,164 @@
+/* geral */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Helvetica, sans-serif;
+  border: none;
+}
+
+input, label {
+  display: block;
+  outline: none;
+  width: 100%;
+}
+
+body {
+  /* padding-top: 5vh;
+  /*background-image: url('../img/bg-register-page.jpg');*/
+  /*background-image: url('/img/iCheff.jpg'); */
+  background-size: cover;
+  background-position-y: -150px;
+}
+
+/* form */
+#main-container {
+  width: 40%;
+  position: absolute;
+  top: 22.5%;
+  margin-left: 30%;
+  margin-right: 30%;
+  background-color: #FFF;
+  border-radius: 20px;
+  padding: 25px;
+}
+
+#main-container h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.6rem;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.full-box {
+  flex: 1 1 100%;
+  position: relative;
+}
+
+.half-box {
+  flex: 1 1 45%;
+  position: relative;
+}
+
+.spacing {
+  margin-right: 2.5%;
+}
+
+label {
+  font-weight: bold;
+  font-size: .8rem;
+}
+
+input {
+  border-bottom: 2px solid #323232;
+  padding: 10px;
+  font-size: .9rem;
+  margin-bottom: 40px;
+}
+
+input:focus {
+  border-color: #E60084;
+}
+
+input[type="submit"] {
+  background-color: #4F4F4F;
+  color: #FFF;
+  border: none;
+  border-radius: 20px;
+  height: 40px;
+  cursor: pointer;
+}
+
+#agreement {
+  margin-right: 5px;
+}
+
+#agreement, #agreement-label {
+  display: inline-block;
+  width: auto;
+}
+
+.error-validation {
+  color: #ff1a1a;
+  position: absolute;
+  top: 57px;
+  font-size: 12px;
+}
+
+.template {
+  display: none;
+}
+
+.center-aligment {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header {
+  background-color: #3B3B3B;
+}
+
+nav {
+  background-color: #3B3B3B;
+}
+
+header .index-container {
+  background-color: #3B3B3B;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header .index-logo {
+  background-color: #3B3B3B;
+  margin-left: 20px;
+  margin-top: 8px;
+  color: #FFC30B;
+  font-family: 'Arial Black', Times;
+  font-size: 40px;
+}
+
+header nav a {
+  padding: 0px;
+  background-color: #3B3B3B;
+  text-decoration: none;
+  font-size: 20px;
+  color: #AAA;
+  margin-right: 20px;
+}
+
+header nav a:hover {
+  color: #d10e0e;
+}
+
+/* Muda cor do autocompletar do chrome */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  
+  box-shadow: #FFF;
+  -webkit-box-shadow: 0 0 0px 1000px #FFF inset;
+}

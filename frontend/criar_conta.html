@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Registro iCheff</title>
+
+  <!-- estilo pagina (criar_conta) -->
+  <link rel="stylesheet" href="/css/app/styles.css">
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/lib/bootstrap.4.5.2.min.css" />
+  
+  <!-- Fontawesome -->
+  <link rel="stylesheet" href="/css/lib/fontawesome.all.5.15.1.css" />
+  
+</head>
+
+<header>
+  <div class="index-container">
+    <h2 class="index-logo">
+      <img src="/img/logotipo-icheff.png" alt="Logotipo icheff" width="25%">iCheff
+    </h2>
+    <nav>
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+			<a href="categorias.html"><i class="fas fa-book"></i> Categorias</a>
+			<a href="login.html"><i class="fas fa-user-lock"></i> Login</a>
+			<a href="cadastro.html"><i class="fas fa-user-plus"></i> Cadastro</a>
+    </nav>
+  </div>
+</header>
+
+<body>
+
+  <div class="index-background-image">
+    <img src="/img/wallpaper-icheff02.jpg" alt="Wallpaper icheff" width="100%">
+  </div>
+  
+  <div id="main-container">
+    <h1>Criar conta</h1>
+  </br>
+    <form id="register-form" action="">
+      <div class="full-box">
+        <label for="email">E-mail</label>
+        <input type="email" name="email" id="email" placeholder="Digite seu e-mail" data-min-length="2"
+          data-email-validate>
+      </div>
+      <div class="half-box spacing">
+        <label for="name">Nome</label>
+        <input type="text" name="name" id="name" placeholder="Digite seu nome" data-required data-min-length="3"
+          data-max-length="100">
+      </div>
+      <div class="half-box">
+        <label for="lastname">Sobrenome</label>
+        <input type="text" name="lastname" id="lastname" placeholder="Digite seu sobrenome" data-required
+          data-only-letters>
+      </div>
+      <div class="half-box spacing">
+        <label for="senha">Senha</label>
+        <input type="password" name="password" id="password" placeholder="Digite sua senha" data-password-validate
+          data-required>
+      </div>
+      <div class="half-box">
+        <label for="passconfirmation">Confirmação de senha</label>
+        <input type="password" name="passconfirmation" id="passwordconfirmation"
+          placeholder="Digite novamente sua senha" data-equal="password">
+      </div>
+      <!--<div>
+        <input type="checkbox" name="agreement" id="agreement">
+        <label for="agreement" id="agreement-label">Eu li e aceito os <a href="index - Copia.html" target="_blank">termos de uso</a></label>
+      </div>-->
+
+      
+      <div class="center-aligment">
+        <br>
+        <input id="btn-submit" type="submit" value="Registrar">
+      </div>
+    </form>
+  
+  <p class="error-validation template"></p>
+
+</div>
+
+  <script src="/js/lib/jquery-3.5.1.min.js"></script>
+  <script src="/js/lib/popper-2.5.3.min.js"></script>
+  <script src="/js/lib/bootstrap-4.5.2.min.js"></script>
+  <script src="/js/lib/fontawesome.all.5.15.1.js"></script>
+  <script src="/js/app/scripts.js"></script>
+</body>
+
+</html>

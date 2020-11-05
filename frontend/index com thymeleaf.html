@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- estilo pagina index(home) -->
+<link rel="stylesheet" th:href="@{/css/app/index.css}" />
+
+<!-- responsividade -->
+<link rel="stylesheet" th:href="@{/css/app/responsive.css}" />
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" th:href="@{/css/lib/bootstrap.4.5.2.min.css}" />
+
+<!-- Lightslider Library -->
+<link rel="stylesheet" th:href="@{/css/lib/lightslider.min.css}" />
+
+<!-- Fontawesome -->
+<link rel="stylesheet" th:href="@{/css/lib/fontawesome5.10.2.css}" />
+
+<!-- Bootstrap core JavaScript jQuery first, then Popper.js, then Bootstrap JS -->
+<script th:src="@{/js/lib/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/js/lib/popper-2.5.3.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap-4.5.2.min.js}"></script>
+<script th:src="@{/js/lib/lightslider.min.js}"></script>
+<script th:src="@{/js/app/carousel.js}"></script>
+
+<!-- Fontawesome Library -->
+<script th:src="@{https://kit.fontawesome.com/2c36e9b7b1.js}"></script>
+
+<title>iCheff - A satisfação em comer bem</title>
+</head>
+
+<body>
+
+	<header>
+		<div class="container">
+			<h2 class="logo">
+				<img th:src="@{/img/logotipo-icheff.png}" alt="Logotipo icheff"
+					width="25%">iCheff
+			</h2>
+			<nav>
+				<a href="#">Login</a> <a href="#">Cadastro</a>
+			</nav>
+		</div>
+	</header>
+	<div class="background-image">
+		<img th:src="@{/img/wallpaper-icheff01.png}" alt="Wallpaper icheff"
+			width="100%">
+	</div>
+
+	<br>
+	<ul id="lightSlider">
+		<li>
+			<h3>Frutos do Mar</h3> <!-- <li><a href="home.html" th:href="@{/home}">Product List</a></li> -->
+
+			<a href="home.html" th:href="@{/home}"><img
+				th:src="@{/img/categoria-frutos-do-mar.png}" alt="Frutos do mar"></a>
+		</li>
+		<li>
+			<h3>Alemã</h3> <img th:src="@{/img/categoria-alema.png}"
+			alt="Comida Alemã">
+		</li>
+		<li>
+			<h3>Japonesa</h3> <img th:src="@{/img/categoria-japonesa.png}"
+			alt="Comida Japonesa">
+		</li>
+		<li>
+			<h3>Italiana</h3> <img th:src="@{/img/categoria-italiana.png}"
+			alt="Comida Italiana">
+		</li>
+		<li>
+			<h3>Vegana</h3> <img th:src="@{/img/categoria-vegana.png}"
+			alt="Vegana">
+		</li>
+
+	</ul>
+	<br>
+	<br>
+	<ul id="lightSlider2">
+		<li>
+			<h3>Mexicana</h3> <a th:href="@{/brasileira.html}"><img
+				th:src="@{/img/categoria-mexicana.png}" alt="Comida Mexicana"></a>
+		</li>
+		<li>
+			<h3>Brasileira</h3> <img th:src="@{/img/categoria-brasileira.png}"
+			alt="Comida Brasileira">
+		</li>
+		<li>
+			<h3>Árabe</h3> <img th:src="@{/img/categoria-arabe.png}"
+			alt="Comida Árabe">
+		</li>
+		<li>
+			<h3>Fitness</h3> <img th:src="@{/img/categoria-fitness.png}"
+			alt="Comida Fitness">
+		</li>
+		<li>
+			<h3>Vegetariana</h3> <img th:src="@{/img/categoria-vegetariana.png}"
+			alt="Vegetariana">
+		</li>
+
+	</ul>
+	<br>
+	<div class="video">
+		<p>
+		<h2>Como preparar sua refeição</h2>
+		</p>
+	</div>
+	<br>
+	<ul id="lightSlider3">
+		<li>
+			<h3>Taco de carne</h3> <a th:href="@{/brasileira.html}"><img
+				th:src="@{/img/categoria-mexicana-grande.png}" alt="Taco de carne"></a>
+		</li>
+		<li>
+			<h3>Feijoada</h3> <img
+			th:src="@{/img/categoria-brasileira-grande.png}" alt="Feijoada">
+		</li>
+		<li>
+			<h3>Camarão</h3> <img
+			th:src="@{/img/categoria-frutos-do-mar-grande.png}" alt="Camarão">
+		</li>
+		<li>
+			<h3>Frango Fitness</h3> <img th:src="@{/img/frango-fitness.png}"
+			alt="Frango fitness">
+		</li>
+		<li>
+			<h3>Eisbein</h3> <img th:src="@{/img/categoria-alema-grande.png}"
+			alt="Eisbein">
+		</li>
+
+	</ul>
+
+	<div class="social">
+		<hr>
+		<h4>Siga-nos:</h4>
+			<a th:href="@{https://www.facebook.com/Lojas.icheff}"><img th:src="@{/img/facebook.png}" alt="Logotipo facebook"></a>
+			<a th:href="@{https://www.instagram.com/icheff/}"><img th:src="@{/img/instagram.png}" alt="Logotipo instagram"></a>
+			<a th:href="@{https://twitter.com/icheff}"><img th:src="@{/img/twitter.png}" alt="Logotipo twitter"></a>
+			<a th:href="@{https://www.youtube.com/user/lojasicheff}"><img th:src="@{/img/youtube.png}" alt="Logotipo youtube"></a>
+
+		<hr>
+	</div>
+	<hr>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-3"><a th:href="@{/sobre.html}">Sobre</a></div>
+			<div class="col-sm-3"><a th:href="@{/perguntas.html}">Perguntas Frequentes</a></div>
+			<div class="col-sm-3"><b>FORMAS DE PAGAMENTO</b></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-3"><a th:href="@{/contatos.html}">Contatos</a></div>
+			<div class="col-sm-3"><a th:href="@{/termos.html}">Termos e condições</a></div>
+			<div class="col-sm-3">
+				<img th:src="@{/img/visa.png}" alt="Visa">
+				<img th:src="@{/img/mastercard.png}" alt="Mastercard">
+				<img th:src="@{/img/maestro.png}" alt="Maestro">
+				<img th:src="@{/img/paypal.png}" alt="Paypal">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-3"></div>
+			<div class="col-sm-3"><a th:href="@{/politica.html}">Política de Privacidade</a></div>
+			<div class="col-sm-3"></div>
+		</div>
+	</div>
+
+
+
+
+</body>
+
+</html>

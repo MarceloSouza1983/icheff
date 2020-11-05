@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/lib/bootstrap.4.5.2.min.css">
+    <link rel="stylesheet" href="css/lib/datatables.css">
+
+    <link rel="stylesheet" href="css/app/admin-style.css">
+
+    <title>iCheff - Administração</title>
+
+</head>
+
+<body>
+
+    <aside>
+        <img class="logo" src="img/logotipo-icheff-original.png" alt="iCheff">
+
+        <hr>
+
+        <div class="menu">
+            <a href="#dashboard"><img src="img/icons/icon-dot.png">Dashboard</a>
+            <hr>
+            <a href="#ingredientes"><img src="img/icons/icon-dot.png">Ingredientes</a>
+            <a href="#categorias"><img src="img/icons/icon-dot.png">Categorias</a>
+            <a href="#receitas"><img src="img/icons/icon-dot.png">Receitas</a>
+            <hr>
+            <a href="#usuarios"><img src="img/icons/icon-dot.png">Usuários</a>
+        </div>
+
+        <button class="btn btn-danger btn-sair">Sair</button>
+
+    </aside>
+    
+    <main>
+
+        <div class="admin-titulo">Dashboard iCheff</div>
+        
+        <div class="bread-crumb">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Administração</li>
+                    <li class="breadcrumb-item active" aria-current="page"></li>
+                </ol>
+            </nav>
+        </div>
+
+        <div id="icheff-dashboard" class="admin-content dashboard">
+
+            <div id="dash-estatisticas" class="d-flex justify-content-between">
+                <div class="card p-3 text-wrap">
+                    <img src="img/logotipo-icheff2.png">
+                    <span></span>
+                </div>
+                
+                <div class="card p-3">
+                    <img src="img/logotipo-icheff2.png">
+                    <span></span>
+                </div>
+
+                <div class="card p-3">
+                    <img src="img/logotipo-icheff2.png">
+                    <span></span>
+                </div>
+
+                <div class="card p-3">
+                    <img src="img/logotipo-icheff2.png">
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="card dashboard-card-grafico">
+                <h4>Gráficos & Estatísticas</h4>
+                <hr>
+                <div class="row pb-3 pt-2">
+                    <div class="col-7">
+                        <div id="historico-chart"></div>
+                    </div>
+                    <div class="col-5">
+                        <div id="atividades-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="icheff-ingredientes" class="admin-content">
+
+            <div class="card card-admin-content">
+
+                <h4>Ingredientes</h4>
+
+                <div class="btn-novo">
+                    <button type="button" class="btn btn-success">Novo ingrediente</button>
+                </div>
+    
+                <table class="table table-striped dataTable">
+                    <thead>
+                        <tr>
+                            <th data-toggle="tooltip" title="ID">#</th>
+                            <th>Nome</th>
+                            <th>Quant. padrão</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Opções</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <!-- Modal novo/edit ingrediente -->
+                <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="ingrediente-nome" class="col-form-label">Nome do ingrediente</label>
+                                        <input type="text" autocomplete="off" class="form-control" id="ingrediente-nome">
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col">
+                                            <label for="ingrediente-unidade" class="col-form-label">Unidade</label>
+                                            <select id="ingrediente-unidade" class="form-control"></select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="ingrediente-custo" class="col-form-label">Custo (R$)</label>
+                                            <input type="text" autocomplete="off" class="form-control" id="ingrediente-custo">
+                                        </div>
+                                        <div class="col">
+                                            <label for="ingrediente-ativo" class="col-form-label">Ativo</label>
+                                            <select id="ingrediente-ativo" class="form-control">
+                                                <option value="1">Sim</option>
+                                                <option value="0">Não</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fim Modal novo/edit -->
+
+            </div>
+
+        </div>
+
+        <div id="icheff-categorias" class="admin-content">
+
+            <div class="card card-admin-content">
+
+                <h4>Categorias</h4>
+
+                <div class="btn-novo">
+                    <button type="button" class="btn btn-success">Nova categoria</button>
+                </div>
+    
+                <table class="table table-striped dataTable">
+                    <thead>
+                        <tr>
+                            <th data-toggle="tooltip" title="ID">#</th>
+                            <th>Nome da categoria</th>
+                            <th>Vegana</th>
+                            <th>Qtd de receitas</th>
+                            <th>Opções</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>Brasileira</td>
+                        <td>Não</td>
+                        <td>1</td>
+                        <td>
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Asiática</td>
+                        <td>Não</td>
+                        <td>2</td>
+                        <td>
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Fast food</td>
+                        <td>Não</td>
+                        <td>5</td>
+                        <td>
+                            <img item_id="1" class="icon-edit" src="img/icons/icon-edit.png">
+                            <img item_id="1" class="icon-delete" src="img/icons/icon-delete.png">
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Modal novo/edit categoria -->
+                <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="cat_nome" class="col-form-label">Nome da categoria</label>
+                                        <input type="text" autocomplete="off" id="cat_nome" class="form-control">
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-4">
+                                            <label for="cat_vegana" class="col-form-label">Vegana</label>
+                                            <select id="cat_vegana" class="form-control">
+                                                <option value="0">Não</option>
+                                                <option value="1">Sim</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fim Modal novo/edit -->
+
+            </div>
+
+        </div>
+
+        <div id="icheff-receitas" class="admin-content">
+
+            <div class="card card-admin-content">
+
+                <h4>Receitas</h4>
+
+                <div class="btn-novo">
+                    <button type="button" class="btn btn-success">Nova receita</button>
+                </div>
+    
+                <table class="table table-striped dataTable">
+                    <thead>
+                        <tr>
+                            <th data-toggle="tooltip" title="ID">#</th>
+                            <th>Nome</th>
+                            <th>Qtd ingredientes</th>
+                            <th>Custo</th>
+                            <th>Preço</th>
+                            <th>Ativa</th>
+                            <th>Opções</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <!-- Modal novo/edit receitas -->
+                <div class="modal fade modal-receitas" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <form>
+                            
+                                <div class="container row">
+
+                                    <div class="modal-body col-5 my-0 pb-0 pt-2">
+                                        <div class="form-group my-0 py-0">
+                                            <label for="rec_nome" class="col-form-label">Nome da receita</label>
+                                            <input type="text" autocomplete="off" id="rec_nome" class="form-control">
+                                        </div>
+                                        <div class="form-group my-0 py-0">
+                                            <label for="rec_imagem" class="col-form-label">URL da imagem da receita</label>
+                                            <input type="text" autocomplete="off" id="rec_imagem" class="form-control">
+                                        </div>
+                                        <div class="form-group my-0 py-0">
+                                            <label for="rec_link_youtube" class="col-form-label">Link do vídeo no YouTube</label>
+                                            <input type="text" autocomplete="off" id="rec_link_youtube" class="form-control">
+                                        </div>
+                                        <div class="row my-0 py-0">
+                                            <div class="form-group col-8">
+                                                <label for="rec_id_categoria" class="col-form-label">Categoria</label>
+                                                <select id="rec_id_categoria" class="form-control"></select>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="rec_ativa" class="col-form-label">Ativa</label>
+                                                <select id="rec_ativa" class="form-control">
+                                                    <option value="1">Sim</option>
+                                                    <option value="0">Não</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-7">
+
+                                        <div class="modal-header mb-3 pb-2">
+                                            <h6 class="modal-title">Ingredientes</h6>
+                                        </div>
+
+                                        <div class="form-group container row">
+                                            <div class="col-3 p-1 ml-2">
+                                                <input type="text" autocomplete="off" id="inr_quantidade" class="form-control">
+                                            </div>
+                                            <div class="col-2 p-1 ml-2">
+                                                <select id="inr_id_unidade" class="form-control"></select>
+                                            </div>
+                                            <div class="col-5 p-1 ml-2">
+                                                <select id="inr_id_ingrediente" class="form-control"></select>
+                                            </div>
+                                            <div class="col-1 p-1 ml-2">
+                                                <button id="add-ingrediente" type="button" class="btn btn-success">Add</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-body lista-ingredientes">
+                                            <table class="table-ingredientes">
+                                                <thead>
+                                                    <th>Quantidade</th>
+                                                    <th>Ingrediente</th>
+                                                    <th>Opções</th>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-body pt-0">
+                                    <div class="form-group">
+                                        <label for="rec_descricao" class="col-form-label">Descrição da receita</label>
+                                        <textarea id="rec_descricao" rows="5" class="form-control"></textarea>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fim Modal novo/edit -->
+
+            </div>
+
+        </div>
+
+        <div id="icheff-usuarios" class="admin-content">
+
+            <div class="card card-admin-content">
+
+                <h4>Usuários</h4>
+
+                <table class="table table-striped dataTable">
+                    <thead>
+                        <tr>
+                            <th data-toggle="tooltip" title="ID">#</th>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                            <th>Anivesário</th>
+                            <th>Cadastro</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- Modal delete -->
+        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Deletar <span></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Deseja realmente deletar o item <strong>#<span></span></strong>?</div>
+                    <div class="modal-footer btn-group" role="group">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger btn-delete">Deletar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim Modal delete -->
+
+        <footer>
+            <p>iCheff - Área administrativa</p>
+        </footer>
+
+    </main>
+
+    <!-- JS -->
+    <script src="js/lib/jquery-3.5.1.min.js"></script>
+    <script src="js/lib/bootstrap-4.5.2.min.js"></script>
+    <script src="js/lib/datatables.js"></script>
+    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script src="js/app/admin.js"></script>
+    <!-- Fim JS -->
+
+</body>
+
+</html>
