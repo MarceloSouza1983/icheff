@@ -30,9 +30,10 @@ public class UsuarioController {
 		this.usuarioService = usuarioService;
 	}
 	
-	@PostMapping
+	@PostMapping(value = "/save")
 	@Transactional
 	public ResponseEntity<Void> create(@Valid @RequestBody Usuario usuario) {
+	
 		
 		usuario = this.usuarioService.create(usuario);
 		
@@ -62,12 +63,12 @@ public class UsuarioController {
 		return ResponseEntity.ok(usuario);
 	}
 	
-	@GetMapping
+	@GetMapping(value="/all")
 	public ResponseEntity<List<Usuario>> findAll() {
 		
-		List<Usuario> ingrediente = this.usuarioService.findAll();
+		List<Usuario> usuario = this.usuarioService.findAll();
 		
-		return ResponseEntity.ok(ingrediente);
+		return ResponseEntity.ok(usuario);
 	}
 	
 	@DeleteMapping("/{id}")

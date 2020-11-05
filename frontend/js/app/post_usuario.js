@@ -1,11 +1,12 @@
 $(document).ready(function() {
 
     document.getElementById("divSuccess").classList.add("hide");
+
 	$("#userForm").submit(function(event) {
 
     event.preventDefault();
     
-    var dataAtual = DateTimeNow();
+    var dataAtual = dateTimeNow();
 
     let formData = {
         cpf :  $("#usu_cpf").val(),
@@ -16,6 +17,16 @@ $(document).ready(function() {
         senha : $("#usu_senha").val()
     }
 
+    let data1 = document.getElementById("usu_nome").value;
+    let data2 = document.getElementById("usu_cpf").value;
+    let data3 = document.getElementById("usu_login").value;
+    let data4 = document.getElementById("usu_rg").value;
+    let data5 = document.getElementById("usu_senha").value;
+
+    if (data1.length == 0 || data2.length == 0 || data3.length == 0 || data4.length == 0 || data5.length < 5) {
+        alert("Por favor preencha todos os campos e tente novamente.")
+    } else {
+
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -25,26 +36,27 @@ $(document).ready(function() {
         success: function (response) {
 
         }
-            
+        
     });
 
-        resetData();
-		mostrarDiv();
+    reset();
+    mostrarDiv();
+
+    }
     
     });
-
+    
 });
 
-function resetData() {
+function reset() {
     $("#usu_cpf").val("");
     $("#usu_login").val("");
     $("#usu_nome").val("");
     $("#usu_rg").val("");
     $("#usu_senha").val("");
-    $("#usu_data_nascimento").val("");
 }
 
-function DateTimeNow() {
+function dateTimeNow() {
 
     let currentDate = new Date();
     let currentDateBrazil = new Date(currentDate.valueOf() - currentDate.getTimezoneOffset() * 60000);

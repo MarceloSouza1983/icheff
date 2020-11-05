@@ -44,13 +44,13 @@ public class Usuario implements Serializable {
 	@NotNull(message = "A senha não pode ser nula e precisa ter no mínimo 5 caracteres")
 	private String senha;
 	
-	@Column(name= "usu_tipo", length = 20, nullable = false)
-	@ColumnDefault("1")
-	@NotNull
-	private Tipo tipo;
+	//@Column(name= "usu_tipo", length = 20, nullable = false)
+	//@ColumnDefault("1")
+	//@NotNull
+	//private Tipo tipo;
 	
-	@Column(name= "usu_data_nascimento", length = 50, nullable = false)
-	private LocalDate dataNascimento;
+	//@Column(name= "usu_data_nascimento", length = 50, nullable = false)
+	//private LocalDate dataNascimento;
 	
 	@Column(name= "usu_data_cadastro", length = 100, nullable = false)
 	private LocalDateTime dataCadastro;
@@ -70,20 +70,32 @@ public class Usuario implements Serializable {
 	
 	public Usuario() { }
 	
-	public Usuario(Long id, @NotNull String nome, @NotNull @Length(min = 5, max = 100) String login,
-			@Length(min = 5, max = 255) @NotNull String senha, @NotNull Tipo tipo, LocalDate dataNascimento,
-			LocalDateTime dataCadastro, @NotNull String rg, @CPF @NotNull String cpf) {
+	public Usuario(Long id, @NotNull(message = "O nome não pode ser nulo") String nome,
+			@NotNull(message = "O login não pode ser nulo e precisa ter no mínimo 5 caracteres") @Length(min = 5, max = 100) String login,
+			@Length(min = 5, max = 255) @NotNull(message = "A senha não pode ser nula e precisa ter no mínimo 5 caracteres") String senha,
+			 LocalDateTime dataCadastro,
+			@NotNull(message = "O rg não pode ser nulo") String rg,
+			@CPF @NotNull(message = "O cpf não pode ser nulo") String cpf) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.login = login;
 		this.senha = senha;
-		this.tipo = tipo;
-		this.dataNascimento = dataNascimento;
 		this.dataCadastro = dataCadastro;
 		this.rg = rg;
 		this.cpf = cpf;
 	}
+
+	/* public Usuario(Long id, @NotNull String nome, @NotNull @Length(min = 5, max = 100) String login,
+			@Length(min = 5, max = 255) @NotNull String senha, @NotNull String rg, @CPF @NotNull String cpf) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.login = login;
+		this.senha = senha;
+		this.rg = rg;
+		this.cpf = cpf;
+	} */
 
 	public Long getId() {
 		return id;
@@ -117,21 +129,21 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	public Tipo getTipo() {
+	/* public Tipo getTipo() {
 		return tipo;
 	}
 
 	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
-	}
+	} */
 
-	public LocalDate getDataNascimento() {
+	/*public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
+	}*/
 	
 	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
