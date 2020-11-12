@@ -1,3 +1,5 @@
+const BASE_URL = 'http://localhost:8080';
+
 (function () {
 
     return {
@@ -79,7 +81,7 @@
 
                 let $btn = $modalEdit.find('.modal-footer button');
                 $btn.html('Salvar')
-                $btn.attr('acao', secao + '/editar/' + item_id);
+                $btn.attr('acao', item_id);
 
                 $modalEdit.modal();
             });
@@ -121,15 +123,15 @@
 
         //Preencher campos do modal
         preencheEditModalIngredientes: function ($form, json) {
-            $form.find('input#ingrediente-nome').val(json.ing_nome);
+            $form.find('input#ingrediente-nome').val(json.nome);
 
             $form.find('select#ingrediente-unidade option:selected').removeAttr('selected');
-            $form.find('select#ingrediente-unidade option[value="' + json.ing_unidade_padrao + '"]').attr('selected', '');
+            $form.find('select#ingrediente-unidade option[value="' + json.unidade_padrao + '"]').attr('selected', '');
 
-            $form.find('input#ingrediente-custo').val(json.ing_custo.toString().replace('.', ','));
+            $form.find('input#ingrediente-custo').val(json.custo.toString().replace('.', ','));
 
             $form.find('select#ingrediente-ativo option:selected').removeAttr('selected');
-            $form.find('select#ingrediente-ativo option[value="' + json.ing_ativo + '"]').attr('selected', '');
+            $form.find('select#ingrediente-ativo option[value="' + json.ativo + '"]').attr('selected', '');
         },
 
         preencheEditModalCategorias: function ($form, json) {
@@ -258,34 +260,52 @@
 
             $('ol.breadcrumb li.active').html('Ingredientes');
 
-            //ing_unidade_padrao
+            $.ajax({
+                url: BASE_URL + '/api/ingredientes',
+                type: 'GET',
+                dataType: 'json',
+                cache: false,
+                success: function(data){
+                    console.log(data)
+                    if(data.status){
+                        
+                    }else{
+                        //alert(data.message);
+                    }
+                },
+                error: function( data ){
+                    alert( data.message );
+                }
+            });
+
+            //unidade_padrao
             //ichef.com.br/api/listaingredientes
             let respostaAjax = {
                 sucesso: 1,
                 listaIngredientes: [
                     {
-                        ing_id: 1,
-                        ing_nome: 'Açúcar',
-                        iun_unidade_sigla: 'kg',
-                        ing_unidade_padrao: 2,
-                        ing_custo: 3.2,
-                        ing_ativo: 1
+                        id: 1,
+                        nome: 'Açúcar',
+                        unidade_sigla: 'kg',
+                        unidade_padrao: 2,
+                        custo: 3.2,
+                        ativo: 1
                     },
                     {
-                        ing_id: 2,
-                        ing_nome: 'Farinha',
-                        iun_unidade_sigla: 'kg',
-                        ing_unidade_padrao: 2,
-                        ing_custo: 3,
-                        ing_ativo: 1
+                        id: 2,
+                        nome: 'Farinha',
+                        unidade_sigla: 'kg',
+                        unidade_padrao: 2,
+                        custo: 3,
+                        ativo: 1
                     },
                     {
-                        ing_id: 3,
-                        ing_nome: 'Macarrão',
-                        iun_unidade_sigla: 'g',
-                        ing_unidade_padrao: 1,
-                        ing_custo: 2.55,
-                        ing_ativo: 1
+                        id: 3,
+                        nome: 'Macarrão',
+                        unidade_sigla: 'g',
+                        unidade_padrao: 1,
+                        custo: 2.55,
+                        ativo: 1
                     }
                 ]
             }
@@ -322,16 +342,16 @@
                     let $tr = $('<tr>');
                     let $tdOpcoes = $('<td>');
 
-                    $tr.append('<td>' + d['ing_id'] + '</td>');
-                    $tr.append('<td>' + d['ing_nome'] + '</td>');
-                    $tr.append('<td>' + d['iun_unidade_sigla'] + '</td>');
-                    $tr.append('<td>' + d['ing_custo'] + '</td>');
-                    $tr.append('<td>' + d['ing_ativo'] + '</td>');
+                    $tr.append('<td>' + d['id'] + '</td>');
+                    $tr.append('<td>' + d['nome'] + '</td>');
+                    $tr.append('<td>' + d['unidade_sigla'] + '</td>');
+                    $tr.append('<td>' + d['custo'] + '</td>');
+                    $tr.append('<td>' + d['ativo'] + '</td>');
 
-                    $edit.attr('item_id', d['ing_id']);
+                    $edit.attr('item_id', d['id']);
                     $tdOpcoes.append($edit);
 
-                    $delete.attr('item_id', d['ing_id']);
+                    $delete.attr('item_id', d['id']);
                     $tdOpcoes.append($delete);
 
                     $tr.append($tdOpcoes);
@@ -424,7 +444,7 @@
 
             $('ol.breadcrumb li.active').html('Receitas');
 
-            //ichef.com.br/api/listacategorias
+            //ichef.com.br/api/listareceitas
             let respostaAjax = {
                 sucesso: 1,
                 listaReceitas: [
@@ -549,7 +569,7 @@
             let ingredientes = this.loadListaIngredientes();
 
             for(let i in ingredientes){
-                let $option = $('<option>').val(ingredientes[i].ing_id).html(ingredientes[i].ing_nome);
+                let $option = $('<option>').val(ingredientes[i].id).html(ingredientes[i].nome);
                 $selectIngredientes.append($option)
             }
             
@@ -699,7 +719,7 @@
                 $modal.find('h5').html(novoTxt + ' ' + secao);
                 $modalButton.html('Criar');
                 $modalButton.removeAttr('item_id');
-                $modalButton.attr('acao', secaoPlural + '/cadastrar');
+                $modalButton.attr('acao', 'cadastrar');
 
                 $modal.modal();
             });
@@ -758,28 +778,37 @@
             //ichef.com.br/api/ingredientes/cadastar
             //ichef.com.br/api/ingredientes/editar/{id}
             let formData = {
-                ing_nome: $form.find('input#ingrediente-nome').val(),
-                ing_unidade_padrao: $form.find('input#ingrediente-unidade').val(),
-                ing_custo: $form.find('input#ingrediente-custo').val(),
-                ing_ativo: $form.find('select#ingrediente-ativo option:selected').val()
+                id: 0,
+                nome: $form.find('input#ingrediente-nome').val(),
+                unidade_padrao: $form.find('input#ingrediente-unidade').val(),
+                custo: $form.find('input#ingrediente-custo').val(),
+                ativo: $form.find('select#ingrediente-ativo option:selected').val()
             }
 
             //Verificações
-            if(formData.ing_nome.trim().length === 0){
+            if(formData.nome.trim().length === 0){
                 alert('Preencha o nome do ingrediente!');
                 return;
             }
 
-            if(formData.ing_custo.trim().length === 0){
+            if(formData.custo.trim().length === 0){
                 alert('Preencha o custo do ingrediente!');
                 return;
             }
             //Fim verificações
 
-            //Ação
-            console.log(acao);
-
-            //Ajax
+            $.ajax({
+                url: BASE_URL + '/api/ingredientes',
+                method: acao=='cadastrar'?'POST':'PUT',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function(data){
+                    
+                },
+                error: function(data){
+                    alert(data.message);
+                }
+            });
 
             console.log(formData);
 
@@ -925,9 +954,9 @@
         loadListaIngredientes: function(){
             //Ajax
             let lista = [
-                { ing_id: 1, ing_nome: 'Ingrediente 1' },
-                { ing_id: 2, ing_nome: 'Ingrediente 2' },
-                { ing_id: 3, ing_nome: 'Ingrediente 3' }
+                { id: 1, nome: 'Ingrediente 1' },
+                { id: 2, nome: 'Ingrediente 2' },
+                { id: 3, nome: 'Ingrediente 3' }
             ];
 
             return lista;
