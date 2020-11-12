@@ -21,7 +21,7 @@ $(document).ready(function (e) {
 				data: JSON.stringify(formData),
 				dataType: 'json',
 				success: function() {
-
+					
 				}
 			});
 
@@ -45,6 +45,6 @@ function mostrarDiv() {
 
 	setTimeout(function () {
 		document.getElementById("divSuccess").classList.add("hide");
-	}, 1500);
+	}, 2000);
 
 }

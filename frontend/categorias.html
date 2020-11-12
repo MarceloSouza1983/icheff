@@ -25,10 +25,10 @@
         <img src="./img/logotipo-icheff.png" alt="Logotipo icheff" width="25%">iCheff
       </h2>
       <nav>
-        <a href="index.html">Home</a>
-        <a href="categorias.html">Categorias</a>
-        <a href="#">Login</a>
-        <a href="cadastro.html">Cadastro</a>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+				<a href="#"><i class="fas fa-book"></i> Categorias</a>
+				<a href="login.html"><i class="fas fa-user-lock"></i> Login</a>
+				<a href="cadastro.html"><i class="fas fa-user-plus"></i> Cadastro</a>
       </nav>
     </div>
   </header>
@@ -101,16 +101,26 @@
       </div>
 
       <div class="form-group col-md-4 newsletter">
-        <h4 class="index-h4">Assine nossa Newsletter:</h4>
-        <form class="form-inline newsletter">
-          <input type="text" class="form-control col-md-9" placeholder="Digite seu email">
-          <button type="submit" id="cadastrar" class="btn btn-primary">Cadastrar</button>
-        </form>
-      </div>
-    </div>
+				<h4 class="index-h4">Assine nossa Newsletter:</h4>
+				<form class="form-inline newsletter" method="post" ajax="true">
+					<input type="text" id="email" class="form-control col-md-9" placeholder="Digite seu email">
+					<button type="submit" id="cadastrar" class="btn btn-primary">Cadastrar</button>
+				</form>
+			</div>
+		</div>
 
-  </div>
-  <hr>
+	</div>
+	<hr>
+
+	<div class="container-success" id="divSuccess" style=overflow:hidden>
+		<div class="row justify-content-center success">
+			<div class="col-sm-7" id="showDivSuccess">
+				
+				<h4 class=sucess>Sucesso!!! Obrigado por cadastrar seu email em nossa newsletter.</h4>
+			</div>
+		</div>
+		<br>
+	</div>
 
   <footer class="index-site-footer">
     <div class="index-container-footer">
@@ -172,10 +182,11 @@
   <script src="./js/lib/bootstrap-4.5.2.min.js"></script>
 
   <!-- Fontawesome Library -->
-  <script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script>
+  <script src="/js/lib/fontawesome.all.5.15.1.js"></script>
 
   <!-- Funções cards -->
-  <script src="./js/app/categorias.js"></script>
+  <script src="/js/app/categorias.js"></script>
+  <script src="/js/app/post_news.js"></script>
 </body>
 
 </html>

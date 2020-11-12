@@ -135,14 +135,12 @@ div.card-admin-content{
 
 div.card-admin-content div.btn-novo{
     z-index: 500;
-    display: inline-flex;
     position: absolute;
-    right: 330px;
-    top: 12px;
+    right: 7px;
+    top: 7px;
 }
 
 div.card h4{
-    position: absolute;
     top: 18px;
     left: 20px;
 }
@@ -209,4 +207,8 @@ table.table-ingredientes tr:hover td{
 div.lista-ingredientes{
     overflow-y: scroll;
     height: 200px;
+}
+
+table.table-ingredientes .icon-delete-ingrediente {
+    cursor: pointer;
 }
