@@ -2,8 +2,8 @@ package br.com.santander.icheffv1.model;
 
 public enum Tipo {
 
-	CLIENTE(1, "Cliente"), 
-	ADMINISTRADOR(2, "Administrador");	
+	CLIENTE(0, "Cliente"), 
+	ADMINISTRADOR(1, "Administrador");	
 
 	private int id;
 	private String descricao;

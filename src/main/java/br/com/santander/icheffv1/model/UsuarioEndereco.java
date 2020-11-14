@@ -7,24 +7,16 @@ import javax.persistence.*;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-//@Embeddable
 @Table(name = "usuarios_enderecos")
 public class UsuarioEndereco implements Serializable {
 	
 	private static final long serialVersionUID = -8914530627690509526L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name= "end_id")
 	private Long id;
-	
-	
-	@Column(name= "end_id_usuario", length = 100, nullable = false)
-	@NotNull
-	private Long usuarioEnd;
 	
 	@Column(name= "end_apelido", length = 50, nullable = false)
 	@NotNull(message = "O apelido do endereço não pode ser nulo")
@@ -65,10 +57,6 @@ public class UsuarioEndereco implements Serializable {
 	@JoinColumn(name = "ven_id")
     @OneToOne
     private Venda venda;
-
-    //@JoinColumn(name = "usu_id")
-    //@OneToOne
-    //private Usuario usuario;
 	
     @ManyToOne
 	@JoinColumn(name = "endereco_usuario")
@@ -84,14 +72,6 @@ public class UsuarioEndereco implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getUsuarioEnd() {
-		return usuarioEnd;
-	}
-
-	public void setUsuarioEnd(Long usuarioEnd) {
-		this.usuarioEnd = usuarioEnd;
 	}
 
 	public String getApelido() {
@@ -158,9 +138,12 @@ public class UsuarioEndereco implements Serializable {
 		this.dataCadastro = dataCadastro;
 	}
 
-	
-	
-	
-	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 }

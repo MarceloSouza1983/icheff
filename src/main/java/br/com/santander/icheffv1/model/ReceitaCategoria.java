@@ -12,7 +12,7 @@ public class ReceitaCategoria implements Serializable {
 	private static final long serialVersionUID = -2335692164902111799L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name= "cat_id")
 	private Long id;
 	

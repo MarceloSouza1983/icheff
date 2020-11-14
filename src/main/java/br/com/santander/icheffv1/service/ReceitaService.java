@@ -29,6 +29,9 @@ public class ReceitaService {
 		Receita receitaAntiga = this.findById(receitaNova.getId());
 
 		receitaAntiga.setNome(receitaNova.getNome());
+		receitaAntiga.setDescricao(receitaNova.getDescricao());
+		receitaAntiga.setLink(receitaNova.getLink());
+		receitaAntiga.setPreco(receitaNova.getPreco());
 		
 		return this.receitaRepository.save(receitaAntiga);
 
