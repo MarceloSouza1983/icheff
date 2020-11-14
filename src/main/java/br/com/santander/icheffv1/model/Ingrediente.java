@@ -17,7 +17,7 @@ public class Ingrediente implements Serializable {
 	private static final long serialVersionUID = -4435672164902123790L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name= "ing_id")
 	private Long id;
 	

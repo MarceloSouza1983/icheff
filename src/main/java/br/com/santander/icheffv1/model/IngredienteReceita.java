@@ -13,7 +13,7 @@ public class IngredienteReceita implements Serializable {
 	private static final long serialVersionUID = -2435472164992123790L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name= "inr_id_ingrediente")
 	private Long id;
 	

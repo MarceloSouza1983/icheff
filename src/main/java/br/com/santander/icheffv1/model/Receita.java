@@ -17,7 +17,7 @@ public class Receita implements Serializable {
 	private static final long serialVersionUID = 8059465349275819173L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name= "rec_id")
 	private Long id;
 	

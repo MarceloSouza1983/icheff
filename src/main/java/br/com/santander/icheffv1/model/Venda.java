@@ -15,7 +15,7 @@ public class Venda implements Serializable {
 	private static final long serialVersionUID = 9102081472587642363L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name= "ven_id")
 	private Long id;
 	

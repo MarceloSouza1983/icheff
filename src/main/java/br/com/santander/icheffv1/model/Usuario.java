@@ -10,8 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -45,7 +44,7 @@ public class Usuario implements Serializable {
 	private String senha;
 	
 	//@Column(name= "usu_tipo", length = 20, nullable = false)
-	//@ColumnDefault("1")
+	//@ColumnDefault("0")
 	//@NotNull
 	//private Tipo tipo;
 	
@@ -64,9 +63,8 @@ public class Usuario implements Serializable {
 	@NotNull(message = "O cpf não pode ser nulo")
 	private String cpf;
 	
-	//@ManyToOne
-	//@JoinColumn(name = "endereco_usuario")
-	//private UsuarioEndereco usuarioEndereco;
+	@OneToMany(mappedBy = "usuario") // cascade type persist ou save
+	private List <UsuarioEndereco> usuarioEndereco;
 	
 	public Usuario() { }
 	
@@ -85,17 +83,6 @@ public class Usuario implements Serializable {
 		this.rg = rg;
 		this.cpf = cpf;
 	}
-
-	/* public Usuario(Long id, @NotNull String nome, @NotNull @Length(min = 5, max = 100) String login,
-			@Length(min = 5, max = 255) @NotNull String senha, @NotNull String rg, @CPF @NotNull String cpf) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.login = login;
-		this.senha = senha;
-		this.rg = rg;
-		this.cpf = cpf;
-	} */
 
 	public Long getId() {
 		return id;
