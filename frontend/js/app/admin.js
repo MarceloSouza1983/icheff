@@ -871,10 +871,27 @@ const BASE_URL = 'http://localhost:8080';
 
         loadListaUnidades: function(){
             //Ajax
-            let lista = [
-                { iun_id: 1, iun_sigla: 'kg' },
-                { iun_id: 2, iun_sigla: 'g' },
-            ];
+            let lista = []; /* = [
+                { id: 1, sigla: 'kg' },
+                { id: 2, sigla: 'g' },
+            ];*/
+
+            $.ajax({
+                url: BASE_URL + '/api/categorias',
+                type: 'GET',
+                dataType: 'json',
+                cache: false,
+                success: function(data){
+
+                    for (let i in data){
+                        lista.push(data[i]);
+                    }
+
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log(JSON.parse(jqXHR.responseText));
+                }
+            });
 
             return lista;
         },
