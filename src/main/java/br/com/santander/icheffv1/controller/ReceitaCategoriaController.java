@@ -21,11 +21,7 @@ import br.com.santander.icheffv1.model.ReceitaCategoria;
 import br.com.santander.icheffv1.service.ReceitaCategoriaService;
 
 @RestController
-<<<<<<< HEAD
 @RequestMapping("/api/categorias")
-=======
-@RequestMapping("/categorias")
->>>>>>> origin/marcelo
 public class ReceitaCategoriaController {
 	
 	private final ReceitaCategoriaService receitaCategoriaService;
