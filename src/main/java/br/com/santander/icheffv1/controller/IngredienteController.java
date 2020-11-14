@@ -21,7 +21,7 @@ import br.com.santander.icheffv1.model.Ingrediente;
 import br.com.santander.icheffv1.service.IngredienteService;
 
 @RestController
-@RequestMapping("/ingredientes")
+@RequestMapping("/api/ingredientes")
 public class IngredienteController {
 	
 	private final IngredienteService ingredienteService;

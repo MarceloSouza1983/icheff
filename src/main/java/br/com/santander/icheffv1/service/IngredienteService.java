@@ -30,6 +30,8 @@ public class IngredienteService {
 		Ingrediente ingredienteAntigo = this.findById(ingredienteNovo.getId());
 
 		ingredienteAntigo.setNome(ingredienteNovo.getNome());
+		ingredienteAntigo.setCusto(ingredienteNovo.getCusto());
+		ingredienteAntigo.setAtivo(ingredienteNovo.getAtivo());
 		
 		return this.ingredienteRepository.save(ingredienteAntigo);
 
