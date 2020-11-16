@@ -21,7 +21,7 @@ import br.com.santander.icheffv1.model.Usuario;
 import br.com.santander.icheffv1.service.UsuarioService;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 	
 	private final UsuarioService usuarioService;

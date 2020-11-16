@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.santander.icheffv1.dto.ReceitaDto;
 import br.com.santander.icheffv1.model.Receita;
 import br.com.santander.icheffv1.service.ReceitaService;
 
 @RestController
-@RequestMapping("/receitas")
+@RequestMapping("/api/receitas")
 public class ReceitaController {
 	
 	private final ReceitaService receitaService;
@@ -63,9 +65,9 @@ public class ReceitaController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Receita>> findAll() {
+	public ResponseEntity<List<ReceitaDto>> findAll() {
 		
-		List<Receita> receita = this.receitaService.findAll();
+		List<ReceitaDto> receita = this.receitaService.findAll();
 		
 		return ResponseEntity.ok(receita);
 	}

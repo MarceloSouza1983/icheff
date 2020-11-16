@@ -5,17 +5,46 @@ $( document ).ready(function() {
     
     $('#'+categoria+'-tab').addClass('active')
     $('#'+categoria).addClass('show active in')
+
+    $.ajax({
+        type : "GET",
+        url : "http://localhost:8080/receitas",
+        crossDomain: true,
+        contentType: "application/json",
+        success: function(response){
+          console.log(response)
+          response.forEach( (receita, indice) => {
+              console.log(receita)
+            criaCardModal(receita)
+          })
+        }
+    });
 });
 
-function criaCard(idCategoria, idModal, titulo, texto, imagem, descricaoImagem) {
+
+function getIdCategoria(categoria) {
+    switch(categoria){
+        case "Variados":
+            return "cards-variados";
+        case "Peixes e frutos do mar":
+            return "cards-peixes";
+        case "Fitness":
+            return "cards-fitness";
+        case "Vegetarianos":
+            return "cards-vegetarianos";
+        default:
+            ""
+    }
+}
+
+function criaCard(idCategoria, idModal, nome, imagem) {
     var card = document.createElement("div");
     card.className = "col-12 col-md-6 col-lg-4";
     card.innerHTML =
         "<div class=\"card\">" +
-        "<img src=\"" + imagem + "\" class=\"card-img-top\" alt=\"" + descricaoImagem + "\">" +
+        "<img src=\"" + imagem + "\" class=\"card-img-top\" alt=\"" + nome + "\">" +
         "<div class=\"card-body\">" +
-        "<h5 class=\"card-title\">" + titulo + "</h5>" +
-        "<p class=\"card-text\">" + texto + "</p>" +
+        "<h5 class=\"card-title\">" + nome + "</h5>" +
         "<button class=\"btn btn-cards\" data-toggle=\"modal\" data-target=\"#modal-" + idModal + "\">" +
         "Detalhes" +
         "</button>" +
@@ -27,21 +56,33 @@ function criaCard(idCategoria, idModal, titulo, texto, imagem, descricaoImagem) 
 function criaLista(lista) {
     var ingredientes = "";
 
-    lista.forEach(element => {
-        ingredientes += '<li>' + element + '</li>'
+    lista.forEach(ingrediente => {
+        ingredientes += '<li>' + ingrediente.quantidade + " " + getUnidade(ingrediente) + ingrediente.nome.toLowerCase() + '</li>'
     });
 
     return ingredientes;
 }
 
-function criaModal(idModal, titulo, listaIngredientes, preco) {
+function getUnidade(ingrediente) {
+        if (ingrediente.unidadeSingular == "Unidade"){
+            return " ";
+        } 
+
+        if (ingrediente.quantidade != 1){
+            return ingrediente.unidadePlural.toLowerCase() + " de ";
+        } 
+
+        return ingrediente.unidadeSingular.toLowerCase() + " de ";
+}
+
+function criaModal(idModal, nome, listaIngredientes, modoPreparo, linkVideo, preco) {
 
     var modal = document.createElement("div");
     modal.innerHTML = "<div class=\"modal fade\" id=\"modal-" + idModal + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"modalLabel\" aria-hidden=\"true\">" +
         "<div class=\"modal-dialog\">" +
         "<div class=\"modal-content\">" +
         "<div class=\"modal-header\">" +
-        "<h3 class=\"modal-title\" id=\"modalLabel\">" + titulo + "</h3>" +
+        "<h3 class=\"modal-title\" id=\"modalLabel\">" + nome + "</h3>" +
         "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">" +
         "<span aria-hidden=\"true\">&times;</span>" +
         "</button>" +
@@ -49,10 +90,13 @@ function criaModal(idModal, titulo, listaIngredientes, preco) {
         "<div class=\"modal-body\">" +
         "<div class=\"container\">" +
         "<div class=\"row modal-receitas-body\">" +
-        "<h4>Lista de ingredientes <i class=\"fas fa-clipboard-list\"></i></h4>" +
-        "<ul>" +
+        "<div class=\"container\"><h4>Lista de ingredientes <i class=\"fas fa-clipboard-list\"></i></h4><ul>" +
         criaLista(listaIngredientes) +
-        "</ul>" +
+        "</ul></div>" +
+        "<div class=\"container\">" +
+        "<h4>Modo de preparo <i class=\"fas fa-utensils\"></i></h4>" +
+        "<p>" + modoPreparo + "</p></div>" +
+        "<iframe width=\"560\" height=\"315\" src=\"" +  linkVideo + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" +
         "</div>" +
         "</div>" +
         "</div>" +
@@ -77,31 +121,38 @@ function criaModal(idModal, titulo, listaIngredientes, preco) {
     document.body.appendChild(modal);
 }
 
-function criaCardModal(idCategoria, idModal, titulo, texto, imagem, descricaoImagem, listaIngredientes, preco) {
-    criaCard(idCategoria, idModal, titulo, texto, imagem, descricaoImagem)
-    criaModal(idModal, titulo, listaIngredientes, preco)
+function criaCardModal(receita) {
+    criaCard(getIdCategoria(receita.categoria), receita.id, receita.nome, receita.imagem)
+    criaModal(receita.id, receita.nome, receita.listaIngredientes, receita.descricao, receita.linkVideo, receita.preco)
+}
+
+//Método apenas para teste, excluir depois de cadastrar as receitas no banco de dados
+function criaCardModal2(categoria, idModal, nome, descricao, imagem, listaIngredientes, linkVideo, preco ) {
+    criaCard(categoria, idModal, nome, imagem)
+    criaModal(idModal, nome, listaIngredientes, descricao, linkVideo, preco)
 }
 
 const lista = [
-    '1 cebola pequena',
-    '3 dentes de alho triturados ou picados;',
-    '500g de carne moída (patinho);',
-    '1 col (chá) orégano seco;',
-    '1 col (sobremesa) sal;',
-    'pimenta-do-reino a gosto;',
-    '1 sachê de molho pronto;',
-    'Massa para lasanha;',
-    '350g de presunto;',
-    '350g de queijo Muçarela;',
-    'Queijo parmesão a gosto.',
+    { quantidade: 1, nome:'cebola pequena', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
+    { quantidade: 3, nome:'dentes de alho triturados ou picados;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
+    { quantidade: 400, nome:'carne moída (patinho);', unidadeSingular: 'Grama', unidadePlural: "Gramas"},
+    { quantidade: 1, nome:'orégano seco;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
+    { quantidade: 1, nome:'sal;', unidadeSingular: 'Colher de sopa', unidadePlural: "Colheres de sopa"},
+    { quantidade: 1, nome:'pimenta-do-reino a gosto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
+    { quantidade: 2, nome:'sachê de molho pronto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
+    { quantidade: 1, nome:'Massa para lasanha;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
+    { quantidade: 350, nome:'presunto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
+    { quantidade: 350, nome:'queijo Muçarela;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
+    { quantidade: 1, nome:'Queijo parmesão a gosto.', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
 ];
 
 const lista2 = [];
 
-criaCardModal("cards-variados", 1, "Costela Barbecue", "Receita de Costela Barbecue", "img/barbecue.jpg", "Costela Barbecue", lista, 50)
-criaCardModal("cards-variados", 2, "Pizza Marguerita", "Receita de Pizza Marguerita", "img/pizza.jpg", "Pizza Marguerita", lista2, 50)
-criaCardModal("cards-variados", 3, "Hamburguer", "Receita de Hamburguer", "img/hamburguer.jpg", "Hamburguer", lista2, 50)
-criaCardModal("cards-peixes", 4, "Costela Barbecue", "Receita de Costela Barbecue", "img/barbecue.jpg", "Costela Barbecue", lista2, 38)
-criaCardModal("cards-fitness", 5, "Hamburguer", "Receita de Hamburguer", "img/hamburguer.jpg", "Hamburguer", lista2, 40)
-criaCardModal("cards-vegetarianos", 6, "Lasanha Bolonhesa", "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", "Lasanha Bolonhesa", lista2, 45)
-criaCardModal("cards-variados", 7, "Lasanha Bolonhesa", "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", "Lasanha Bolonhesa", lista2, 45)
+criaCardModal2("cards-variados", 10, "Lasanha Bolonhesa", "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", lista, "https://www.youtube.com/embed/-9Wp7NfeTBY", 50)
+criaCardModal2("cards-variados", 20, "Costela Barbecue", "Receita de Costela Barbecue", "img/barbecue.jpg", lista2, "", 38)
+criaCardModal2("cards-variados", 30, "Hamburguer", "Receita de Hamburguer", "img/hamburguer.jpg", lista2, "", 50)
+criaCardModal2("cards-peixes", 40, "Costela Barbecue", "Receita de Costela Barbecue", "img/barbecue.jpg", lista2, "", 38)
+criaCardModal2("cards-fitness", 50, "Hamburguer", "Receita de Hamburguer", "img/hamburguer.jpg", lista2, "", 40)
+criaCardModal2("cards-vegetarianos", 60, "Lasanha Bolonhesa", "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", lista2, "", 45)
+criaCardModal2("cards-variados", 70, "Pizza Marguerita", "Receita de Pizza Marguerita", "img/pizza.jpg", lista2, "", 50)
+
