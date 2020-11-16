@@ -30,6 +30,7 @@
             <a href="#receitas"><img src="img/icons/icon-dot.png">Receitas</a>
             <hr>
             <a href="#usuarios"><img src="img/icons/icon-dot.png">Usuários</a>
+            <a href="#vendas"><img src="img/icons/icon-dot.png">Vendas</a>
         </div>
 
         <button class="btn btn-danger btn-sair">Sair</button>
@@ -304,9 +305,13 @@
                                             <input type="text" autocomplete="off" id="rec_link_youtube" class="form-control">
                                         </div>
                                         <div class="row my-0 py-0">
-                                            <div class="form-group col-8">
+                                            <div class="form-group col-5">
                                                 <label for="rec_id_categoria" class="col-form-label">Categoria</label>
                                                 <select id="rec_id_categoria" class="form-control"></select>
+                                            </div>
+                                            <div class="form-group col-3">
+                                                <label for="rec_preco" class="col-form-label">Preço R$</label>
+                                                <input type="text" autocomplete="off" id="rec_preco" class="form-control">
                                             </div>
                                             <div class="form-group col-4">
                                                 <label for="rec_ativa" class="col-form-label">Ativa</label>
@@ -392,6 +397,30 @@
                             <th>RG</th>
                             <th>CPF</th>
                             <th>Data de cadastro</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+        <div id="icheff-vendas" class="admin-content">
+
+            <div class="card card-admin-content">
+
+                <h4>Vendas</h4>
+
+                <table class="table table-striped dataTable">
+                    <thead>
+                        <tr>
+                            <th data-toggle="tooltip" title="ID">#</th>
+                            <th>Usuário</th>
+                            <th>Endereço de entrega</th>
+                            <th>Data da venda</th>
+                            <th>Data pagamento</th>
+                            <th>Status do pagamento</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
