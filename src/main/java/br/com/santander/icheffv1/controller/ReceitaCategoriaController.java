@@ -21,7 +21,7 @@ import br.com.santander.icheffv1.model.ReceitaCategoria;
 import br.com.santander.icheffv1.service.ReceitaCategoriaService;
 
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("/api/categorias")
 public class ReceitaCategoriaController {
 	
 	private final ReceitaCategoriaService receitaCategoriaService;
@@ -62,7 +62,7 @@ public class ReceitaCategoriaController {
 		return ResponseEntity.ok(receitaCategoria);
 	}
 	
-	@GetMapping
+	@GetMapping("all")
 	public ResponseEntity<List<ReceitaCategoria>> findAll() {
 		
 		List<ReceitaCategoria> receitaCategoria = this.receitaCategoriaService.findAll();

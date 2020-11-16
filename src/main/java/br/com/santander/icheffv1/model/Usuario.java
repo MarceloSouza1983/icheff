@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -63,7 +65,7 @@ public class Usuario implements Serializable {
 	@NotNull(message = "O cpf não pode ser nulo")
 	private String cpf;
 	
-	@OneToMany(mappedBy = "usuario") // cascade type persist ou save
+	@OneToMany(mappedBy = "usuario") // fetch = FetchType.EAGER, cascade = CascadeType.PERSIST cascade type persist ou save
 	private List <UsuarioEndereco> usuarioEndereco;
 	
 	public Usuario() { }
