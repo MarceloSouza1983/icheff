@@ -21,7 +21,7 @@ import br.com.santander.icheffv1.model.Receita;
 import br.com.santander.icheffv1.service.ReceitaService;
 
 @RestController
-@RequestMapping("/receitas")
+@RequestMapping("/api/receitas")
 public class ReceitaController {
 	
 	private final ReceitaService receitaService;
