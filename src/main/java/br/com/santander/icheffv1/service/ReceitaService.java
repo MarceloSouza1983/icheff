@@ -49,12 +49,12 @@ public class ReceitaService {
 	
 	public List<ReceitaDto> findAll(){
 		List<Receita> receitas = this.receitaRepository.findAll();
-
+		
 		List<ReceitaDto> receitasDto = new ArrayList<>();
 		for(Receita receita: receitas) {
-
+			
 			ReceitaDto dto = new ReceitaDto();
-
+			
 			dto.setCategoria(receita.getReceitaCategoria().getNome());
 			dto.setNome(receita.getNome());
 			dto.setDescricao(receita.getDescricao());
@@ -63,21 +63,21 @@ public class ReceitaService {
 			dto.setListaIngredientes(new ArrayList<>());
 			dto.setLinkVideo(receita.getLink());
 			dto.setId(receita.getId());
-
+			
 			for(IngredienteReceita ingrediente : receita.getIngredientes()) {
 				IngredienteDto ingredienteDto = new IngredienteDto();
 				ingredienteDto.setNome(ingrediente.getIngrediente().getNome());
 				ingredienteDto.setQuantidade(ingrediente.getQuantidade());
 				ingredienteDto.setUnidadeSingular(ingrediente.getIngredienteUnidade().getNomeSingular());
 				ingredienteDto.setUnidadePlural(ingrediente.getIngredienteUnidade().getNomePlural());
-
+				
 				dto.getListaIngredientes().add(ingredienteDto);
 			}
-
+			
 			receitasDto.add(dto);
 		}
-
-
+			
+		
 		return receitasDto;
 	}
 	

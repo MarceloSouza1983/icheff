@@ -12,7 +12,7 @@ public class IcheffV1Application {
 	public static void main(String[] args) {
 		SpringApplication.run(IcheffV1Application.class, args);
 	}
-	
+
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
@@ -23,5 +23,5 @@ public class IcheffV1Application {
 			}
 		};
 	}
-
+	
 }

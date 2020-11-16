@@ -2,7 +2,7 @@ package br.com.santander.icheffv1.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -10,6 +10,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "receitas")
 public class Receita implements Serializable {
@@ -25,12 +30,11 @@ public class Receita implements Serializable {
 	@NotNull(message = "O nome não pode ser nulo")
 	private String nome;
 	
-	//@SequenceGenerator(name = "xx", sequenceName = "xx", initialValue = 1, allocationSize = 1)
-	//@Column(name= "rec_id_categoria", length = 11, nullable = false, unique = true)
-	//private Integer categoria;
-	
 	@Column(name= "rec_link_youtube", length = 500)
 	private String link;
+	
+	@Column(name= "rec_link_imagem", length = 500)
+	private String imagem;
 	
 	@Column(columnDefinition = "TEXT", name= "rec_receita_txt", length = 1500)
 	private String descricao;
@@ -44,8 +48,8 @@ public class Receita implements Serializable {
 	@Min(value = 0, message = "O preço não pode ser negativo")
 	private double preco;
 	
-	//@OneToMany(mappedBy="receita")
-	//private Set<Ingrediente> ingredientes;
+	@OneToMany(mappedBy="receita")
+	private List<IngredienteReceita> ingredientes;
 	
 	@ManyToOne
 	@JoinColumn(name = "FK_categoria_receita")
@@ -57,7 +61,7 @@ public class Receita implements Serializable {
 	
 	public Receita() { }
 	
-	public Receita(Long id, @NotNull String nome, String link, String descricao, LocalDateTime dataCadastro,
+	/*public Receita(Long id, @NotNull String nome, String link, String descricao, LocalDateTime dataCadastro,
 			@NotNull double preco) {
 		super();
 		this.id = id;
@@ -66,55 +70,7 @@ public class Receita implements Serializable {
 		this.descricao = descricao;
 		this.dataCadastro = dataCadastro;
 		this.preco = preco;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getLink() {
-		return link;
-	}
-
-	public void setLink(String link) {
-		this.link = link;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(double preco) {
-		this.preco = preco;
-	}
-
-	public LocalDateTime getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(LocalDateTime dataCadastro) {
-		this.dataCadastro = dataCadastro;
-	}
+	} */
 
 	@Override
 	public int hashCode() {

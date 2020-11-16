@@ -62,7 +62,7 @@ public class ReceitaCategoriaController {
 		return ResponseEntity.ok(receitaCategoria);
 	}
 	
-	@GetMapping("all")
+	@GetMapping
 	public ResponseEntity<List<ReceitaCategoria>> findAll() {
 		
 		List<ReceitaCategoria> receitaCategoria = this.receitaCategoriaService.findAll();
@@ -75,4 +75,5 @@ public class ReceitaCategoriaController {
 		this.receitaCategoriaService.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
+	
 }

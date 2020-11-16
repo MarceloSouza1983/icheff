@@ -2,6 +2,7 @@ package br.com.santander.icheffv1.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -26,12 +27,8 @@ public class Ingrediente implements Serializable {
 	@Size(min = 3, max = 200)
 	private String nome;
 	
-	//@Column(name= "ing_unidade_padrao", length = 10, nullable = false)
-	//@NotNull
-	//private int unidadePadrao;
-	
-	@Column(name= "ing_data_cadastro", length = 100, nullable = false)
-	private LocalDateTime dataCadastro;
+	//@Column(name= "ing_data_cadastro", length = 100, nullable = false)
+	//private LocalDateTime dataCadastro;
 	
 	@Column(columnDefinition = "TINYINT(1)", name= "ing_ativo", length = 1, nullable = false)
 	@NotNull
@@ -51,21 +48,24 @@ public class Ingrediente implements Serializable {
 	@JoinColumn(name = "ing_unidade_padrao")
 	private IngredienteUnidade ingredienteUnidade;
 	
+	@OneToMany(mappedBy = "ingrediente") // cascade type persist ou save
+	private List <Ingrediente> ingrediente;
+	
 	public Ingrediente() { }
 	
 	public Ingrediente(Long id, @NotNull(message = "O nome não pode ser nulo") @Size(min = 3, max = 200) String nome,
-			LocalDateTime dataCadastro, @NotNull int ativo,
+			@NotNull int ativo,
 			@NotNull(message = "O custo não pode ser nulo") @Min(value = 0, message = "O valor do custo não pode ser negativo") double custo,
 			IngredienteUnidade ingredienteUnidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.dataCadastro = dataCadastro;
+		//this.dataCadastro = dataCadastro;
 		this.ativo = ativo;
 		this.custo = custo;
 		this.ingredienteUnidade = ingredienteUnidade;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -82,18 +82,21 @@ public class Ingrediente implements Serializable {
 		this.nome = nome;
 	}
 
+	/*
 	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
+	*/
 
+	/*
 	public void setDataCadastro(LocalDateTime dataCadastro) {
 		
 //		dataCadastro = LocalDateTime.now().minusHours(3);
 //		System.out.println(dataCadastro);
-		this.dataCadastro = dataCadastro;
-		
+		this.dataCadastro = dataCadastro;	
 	}
-
+	 */
+	
 	public int getAtivo() {
 		return ativo;
 	}
@@ -108,6 +111,14 @@ public class Ingrediente implements Serializable {
 
 	public void setCusto(double custo) {
 		this.custo = custo;
+	}
+	
+	public IngredienteUnidade getIngredienteUnidade() {
+		return ingredienteUnidade;
+	}
+
+	public void setIngredienteUnidade(IngredienteUnidade ingredienteUnidade) {
+		this.ingredienteUnidade = ingredienteUnidade;
 	}
 
 	@Override
