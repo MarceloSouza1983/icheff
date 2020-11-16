@@ -31,7 +31,7 @@ public class IngredienteReceita implements Serializable {
 	private Receita receita;
 	
 	@ManyToOne
-	@JoinColumn(name = "inr_receita_ingrediente")
+	@JoinColumn(name = "ingrediente_receita")
 	private Ingrediente ingrediente;
 	
 	@ManyToOne

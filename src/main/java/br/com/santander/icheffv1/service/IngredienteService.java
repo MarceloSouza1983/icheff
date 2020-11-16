@@ -1,6 +1,5 @@
 package br.com.santander.icheffv1.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +31,7 @@ public class IngredienteService {
 		ingredienteAntigo.setNome(ingredienteNovo.getNome());
 		ingredienteAntigo.setCusto(ingredienteNovo.getCusto());
 		ingredienteAntigo.setAtivo(ingredienteNovo.getAtivo());
+		ingredienteAntigo.setIngredienteUnidade(ingredienteNovo.getIngredienteUnidade());
 		
 		return this.ingredienteRepository.save(ingredienteAntigo);
 
