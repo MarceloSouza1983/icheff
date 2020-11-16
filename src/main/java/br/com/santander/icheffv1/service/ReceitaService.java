@@ -1,12 +1,16 @@
 package br.com.santander.icheffv1.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import br.com.santander.icheffv1.dto.IngredienteDto;
+import br.com.santander.icheffv1.dto.ReceitaDto;
 import br.com.santander.icheffv1.exception.DataIntegrityException;
 import br.com.santander.icheffv1.exception.ObjectNotFoundException;
+import br.com.santander.icheffv1.model.IngredienteReceita;
 import br.com.santander.icheffv1.model.Receita;
 import br.com.santander.icheffv1.repository.ReceitaRepository;
 
@@ -40,8 +44,38 @@ public class ReceitaService {
 		this.receitaRepository.deleteById(id);
 	}
 	
-	public List<Receita> findAll(){
-		return this.receitaRepository.findAll();
+	public List<ReceitaDto> findAll(){
+		List<Receita> receitas = this.receitaRepository.findAll();
+		
+		List<ReceitaDto> receitasDto = new ArrayList<>();
+		for(Receita receita: receitas) {
+			
+			ReceitaDto dto = new ReceitaDto();
+			
+			dto.setCategoria(receita.getReceitaCategoria().getNome());
+			dto.setNome(receita.getNome());
+			dto.setDescricao(receita.getDescricao());
+			dto.setImagem(receita.getImagem());
+			dto.setPreco(receita.getPreco());
+			dto.setListaIngredientes(new ArrayList<>());
+			dto.setLinkVideo(receita.getLink());
+			dto.setId(receita.getId());
+			
+			for(IngredienteReceita ingrediente : receita.getIngredientes()) {
+				IngredienteDto ingredienteDto = new IngredienteDto();
+				ingredienteDto.setNome(ingrediente.getIngrediente().getNome());
+				ingredienteDto.setQuantidade(ingrediente.getQuantidade());
+				ingredienteDto.setUnidadeSingular(ingrediente.getIngredienteUnidade().getNomeSingular());
+				ingredienteDto.setUnidadePlural(ingrediente.getIngredienteUnidade().getNomePlural());
+				
+				dto.getListaIngredientes().add(ingredienteDto);
+			}
+			
+			receitasDto.add(dto);
+		}
+			
+		
+		return receitasDto;
 	}
 	
 	public Receita findById(Long id) {
