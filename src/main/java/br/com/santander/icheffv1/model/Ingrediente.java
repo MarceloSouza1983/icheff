@@ -17,7 +17,7 @@ public class Ingrediente implements Serializable {
 	private static final long serialVersionUID = -4435672164902123790L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name= "ing_id")
 	private Long id;
 	
@@ -30,8 +30,8 @@ public class Ingrediente implements Serializable {
 	//@NotNull
 	//private int unidadePadrao;
 	
-	@Column(name= "ing_data_cadastro", length = 100, nullable = false)
-	private LocalDateTime dataCadastro;
+	//@Column(name= "ing_data_cadastro", length = 100, nullable = false)
+	//private LocalDateTime dataCadastro;
 	
 	@Column(columnDefinition = "TINYINT(1)", name= "ing_ativo", length = 1, nullable = false)
 	@NotNull
@@ -54,18 +54,18 @@ public class Ingrediente implements Serializable {
 	public Ingrediente() { }
 	
 	public Ingrediente(Long id, @NotNull(message = "O nome não pode ser nulo") @Size(min = 3, max = 200) String nome,
-			LocalDateTime dataCadastro, @NotNull int ativo,
+			@NotNull int ativo,
 			@NotNull(message = "O custo não pode ser nulo") @Min(value = 0, message = "O valor do custo não pode ser negativo") double custo,
 			IngredienteUnidade ingredienteUnidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.dataCadastro = dataCadastro;
+		//this.dataCadastro = dataCadastro;
 		this.ativo = ativo;
 		this.custo = custo;
 		this.ingredienteUnidade = ingredienteUnidade;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -82,18 +82,21 @@ public class Ingrediente implements Serializable {
 		this.nome = nome;
 	}
 
+	/*
 	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
+	*/
 
+	/*
 	public void setDataCadastro(LocalDateTime dataCadastro) {
 		
 //		dataCadastro = LocalDateTime.now().minusHours(3);
 //		System.out.println(dataCadastro);
-		this.dataCadastro = dataCadastro;
-		
+		this.dataCadastro = dataCadastro;	
 	}
-
+	 */
+	
 	public int getAtivo() {
 		return ativo;
 	}

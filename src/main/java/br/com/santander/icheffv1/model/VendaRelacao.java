@@ -16,7 +16,7 @@ public class VendaRelacao implements Serializable {
 	private static final long serialVersionUID = -8114530627690500526L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name= "vr_id")
 	private Long id;
 

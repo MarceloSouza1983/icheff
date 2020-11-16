@@ -29,6 +29,8 @@ public class UsuarioService {
 		Usuario usuarioAntigo = this.findById(usuarioNovo.getId());
 
 		usuarioAntigo.setNome(usuarioNovo.getNome());
+		usuarioAntigo.setSenha(usuarioNovo.getSenha());
+		usuarioAntigo.setLogin(usuarioNovo.getLogin());
 		
 		return this.usuarioRepository.save(usuarioAntigo);
 
