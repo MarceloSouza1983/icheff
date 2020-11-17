@@ -31,7 +31,7 @@ public class Receita implements Serializable {
 	private String nome;
 	
 	@Column(name= "rec_link_youtube", length = 500)
-	private String link;
+	private String linkVideo;
 	
 	@Column(name= "rec_link_imagem", length = 500)
 	private String imagem;

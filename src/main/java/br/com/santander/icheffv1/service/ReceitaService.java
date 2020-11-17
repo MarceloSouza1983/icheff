@@ -34,7 +34,7 @@ public class ReceitaService {
 
 		receitaAntiga.setNome(receitaNova.getNome());
 		receitaAntiga.setDescricao(receitaNova.getDescricao());
-		receitaAntiga.setLink(receitaNova.getLink());
+		receitaAntiga.setLinkVideo(receitaNova.getLinkVideo());
 		receitaAntiga.setPreco(receitaNova.getPreco());
 		
 		return this.receitaRepository.save(receitaAntiga);
@@ -61,7 +61,7 @@ public class ReceitaService {
 			dto.setImagem(receita.getImagem());
 			dto.setPreco(receita.getPreco());
 			dto.setListaIngredientes(new ArrayList<>());
-			dto.setLinkVideo(receita.getLink());
+			dto.setLinkVideo(receita.getLinkVideo());
 			dto.setId(receita.getId());
 			dto.setCategoriaId(receita.getReceitaCategoria().getId());
 			dto.setAtiva(receita.getAtiva());
