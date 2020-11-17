@@ -8,7 +8,7 @@ $( document ).ready(function() {
 
     $.ajax({
         type : "GET",
-        url : "http://localhost:8080/receitas",
+        url : "http://localhost:8080/api/receitas",
         crossDomain: true,
         contentType: "application/json",
         success: function(response){
@@ -45,7 +45,7 @@ function criaCard(idCategoria, idModal, nome, imagem) {
         "<img src=\"" + imagem + "\" class=\"card-img-top\" alt=\"" + nome + "\">" +
         "<div class=\"card-body\">" +
         "<h5 class=\"card-title\">" + nome + "</h5>" +
-        "<button class=\"btn btn-cards\" data-toggle=\"modal\" data-target=\"#modal-" + idModal + "\">" +
+        "<button class=\"btn btn-cards\" data-toggle=\"modal\" data-backdrop=\"static\" data-keyboard=\"false\" data-target=\"#modal-" + idModal + "\">" +
         "Detalhes" +
         "</button>" +
         "</div>" +
@@ -83,7 +83,7 @@ function criaModal(idModal, nome, listaIngredientes, modoPreparo, linkVideo, pre
         "<div class=\"modal-content\">" +
         "<div class=\"modal-header\">" +
         "<h3 class=\"modal-title\" id=\"modalLabel\">" + nome + "</h3>" +
-        "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">" +
+        "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" onclick=\"pararVideo()\" aria-label=\"Close\">" +
         "<span aria-hidden=\"true\">&times;</span>" +
         "</button>" +
         "</div>" +
@@ -101,16 +101,11 @@ function criaModal(idModal, nome, listaIngredientes, modoPreparo, linkVideo, pre
         "</div>" +
         "</div>" +
         "<div class=\"modal-footer\">" +
-        "<div>" +
-        "<button type=\"button\" class=\"btn btn-secondary btn-circle\">" +
-        "-" +
-        "</button>" +
-        "<span class=\"contador-carrinho\"> 1 </span>" +
-        "<button type=\"button\" class=\"btn btn-secondary btn-circle\">" +
-        "+" +
-        "</button>" +
+        "<div class=\"number-wrapper\">" +
+        "<input type=\"number\" class=\"quantidade\" value=\"1\" min=\"1\" max=\"10\" id=\"qtd1\">" +
+        "</input>" +
         "</div>" +
-        "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">" +
+        "<button type=\"button\" class=\"btn btn-secondary\" onclick=\"pararVideo()\" data-dismiss=\"modal\">" +
         "<span class=\"price\"> R$ " + preco + "</span> Adicionar ao carrinho <i class=\"fas fa-shopping-cart\"></i>" +
         "</button>" +
         "</div>" +
@@ -132,6 +127,10 @@ function criaCardModal2(categoria, idModal, nome, descricao, imagem, listaIngred
     criaModal(idModal, nome, listaIngredientes, descricao, linkVideo, preco)
 }
 
+function pararVideo(){
+    $('iframe')[0].contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+ }
+
 const lista = [
     { quantidade: 1, nome:'cebola pequena', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
     { quantidade: 3, nome:'dentes de alho triturados ou picados;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
@@ -148,7 +147,7 @@ const lista = [
 
 const lista2 = [];
 
-criaCardModal2("cards-variados", 10, "Lasanha Bolonhesa", "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", lista, "https://www.youtube.com/embed/-9Wp7NfeTBY", 50)
+criaCardModal2("cards-variados", 10, "Lasanha Bolonhesa", "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", lista, "https://www.youtube.com/embed/-9Wp7NfeTBY?enablejsapi=1", 50)
 criaCardModal2("cards-variados", 20, "Costela Barbecue", "Receita de Costela Barbecue", "img/barbecue.jpg", lista2, "", 38)
 criaCardModal2("cards-variados", 30, "Hamburguer", "Receita de Hamburguer", "img/hamburguer.jpg", lista2, "", 50)
 criaCardModal2("cards-peixes", 40, "Costela Barbecue", "Receita de Costela Barbecue", "img/barbecue.jpg", lista2, "", 38)

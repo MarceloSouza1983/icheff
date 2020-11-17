@@ -63,6 +63,8 @@ public class ReceitaService {
 			dto.setListaIngredientes(new ArrayList<>());
 			dto.setLinkVideo(receita.getLink());
 			dto.setId(receita.getId());
+			dto.setCategoriaId(receita.getReceitaCategoria().getId());
+			dto.setAtiva(receita.getAtiva());
 			
 			for(IngredienteReceita ingrediente : receita.getIngredientes()) {
 				IngredienteDto ingredienteDto = new IngredienteDto();
@@ -70,6 +72,11 @@ public class ReceitaService {
 				ingredienteDto.setQuantidade(ingrediente.getQuantidade());
 				ingredienteDto.setUnidadeSingular(ingrediente.getIngredienteUnidade().getNomeSingular());
 				ingredienteDto.setUnidadePlural(ingrediente.getIngredienteUnidade().getNomePlural());
+				ingredienteDto.setUnidade(ingrediente.getIngredienteUnidade().getUnidadeSigla());
+				ingredienteDto.setUnidadeId(ingrediente.getIngredienteUnidade().getId());
+				ingredienteDto.setId(ingrediente.getIngrediente().getId());
+				
+				dto.setCusto(dto.getCusto() + ingrediente.getIngrediente().getCusto());
 				
 				dto.getListaIngredientes().add(ingredienteDto);
 			}
