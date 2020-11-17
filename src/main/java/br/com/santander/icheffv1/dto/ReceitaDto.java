@@ -15,10 +15,11 @@ public class ReceitaDto implements Serializable {
 	private String nome;
 	private String descricao;
 	private String imagem;
-	private List<IngredienteDto> listaIngredientes;
+	private List<IngredienteDto> ingredientes;
 	private String linkVideo;
 	private double preco;
 	private Long categoriaId;
 	private double custo;
 	private int ativa;
+	
 }

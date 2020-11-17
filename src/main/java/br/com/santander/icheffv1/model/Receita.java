@@ -55,9 +55,11 @@ public class Receita implements Serializable {
 	@JoinColumn(name = "FK_categoria_receita")
 	private ReceitaCategoria receitaCategoria;
 	
+	/*
 	@ManyToOne
 	@JoinColumn(name = "FK_usuario_receita")
 	private Usuario usuario;
+	*/
 	
 	@Column(columnDefinition = "TINYINT(1)", name= "rec_ativa", length = 1, nullable = false)
 	@NotNull
