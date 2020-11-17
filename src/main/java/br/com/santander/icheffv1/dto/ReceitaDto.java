@@ -9,6 +9,7 @@ import lombok.Data;
 public class ReceitaDto implements Serializable {
 
 	private static final long serialVersionUID = 5799136004759553183L;
+
 	private Long id;
 	private String categoria;
 	private String nome;

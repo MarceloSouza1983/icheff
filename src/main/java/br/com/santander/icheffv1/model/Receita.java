@@ -70,6 +70,7 @@ public class Receita implements Serializable {
 		this.descricao = descricao;
 		this.dataCadastro = dataCadastro;
 		this.preco = preco;
+
 	} */
 
 	@Override
