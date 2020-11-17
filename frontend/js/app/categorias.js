@@ -101,14 +101,9 @@ function criaModal(idModal, nome, listaIngredientes, modoPreparo, linkVideo, pre
         "</div>" +
         "</div>" +
         "<div class=\"modal-footer\">" +
-        "<div>" +
-        "<button type=\"button\" class=\"btn btn-secondary btn-circle\">" +
-        "-" +
-        "</button>" +
-        "<span class=\"contador-carrinho\"> 1 </span>" +
-        "<button type=\"button\" class=\"btn btn-secondary btn-circle\">" +
-        "+" +
-        "</button>" +
+        "<div class=\"number-wrapper\">" +
+        "<input type=\"number\" class=\"quantidade\" value=\"1\" min=\"1\" max=\"10\" id=\"qtd1\">" +
+        "</input>" +
         "</div>" +
         "<button type=\"button\" class=\"btn btn-secondary\" onclick=\"pararVideo()\" data-dismiss=\"modal\">" +
         "<span class=\"price\"> R$ " + preco + "</span> Adicionar ao carrinho <i class=\"fas fa-shopping-cart\"></i>" +
