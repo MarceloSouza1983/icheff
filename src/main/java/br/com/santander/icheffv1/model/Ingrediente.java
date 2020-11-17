@@ -2,6 +2,7 @@ package br.com.santander.icheffv1.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -26,10 +27,6 @@ public class Ingrediente implements Serializable {
 	@Size(min = 3, max = 200)
 	private String nome;
 	
-	//@Column(name= "ing_unidade_padrao", length = 10, nullable = false)
-	//@NotNull
-	//private int unidadePadrao;
-	
 	//@Column(name= "ing_data_cadastro", length = 100, nullable = false)
 	//private LocalDateTime dataCadastro;
 	
@@ -50,6 +47,9 @@ public class Ingrediente implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ing_unidade_padrao")
 	private IngredienteUnidade ingredienteUnidade;
+	
+	@OneToMany(mappedBy = "ingrediente") // cascade type persist ou save
+	private List <Ingrediente> ingrediente;
 	
 	public Ingrediente() { }
 	
@@ -111,6 +111,14 @@ public class Ingrediente implements Serializable {
 
 	public void setCusto(double custo) {
 		this.custo = custo;
+	}
+	
+	public IngredienteUnidade getIngredienteUnidade() {
+		return ingredienteUnidade;
+	}
+
+	public void setIngredienteUnidade(IngredienteUnidade ingredienteUnidade) {
+		this.ingredienteUnidade = ingredienteUnidade;
 	}
 
 	@Override

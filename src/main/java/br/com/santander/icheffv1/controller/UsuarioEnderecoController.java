@@ -17,62 +17,63 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.santander.icheffv1.model.ReceitaCategoria;
-import br.com.santander.icheffv1.service.ReceitaCategoriaService;
+import br.com.santander.icheffv1.model.UsuarioEndereco;
+import br.com.santander.icheffv1.service.UsuarioEnderecoService;
 
 @RestController
-@RequestMapping("/api/categorias")
-public class ReceitaCategoriaController {
+@RequestMapping("/api/enderecos")
+public class UsuarioEnderecoController {
 	
-	private final ReceitaCategoriaService receitaCategoriaService;
+	private final UsuarioEnderecoService usuarioEnderecoService;
 
-	public ReceitaCategoriaController(ReceitaCategoriaService receitaCategoriaService) {
-		this.receitaCategoriaService = receitaCategoriaService;
+	public UsuarioEnderecoController(UsuarioEnderecoService usuarioEnderecoService) {
+		this.usuarioEnderecoService = usuarioEnderecoService;
 	}
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Void> create(@Valid @RequestBody ReceitaCategoria receitaCategoria) {
+	public ResponseEntity<Void> create(@Valid @RequestBody UsuarioEndereco usuarioEndereco) {
+	
 		
-		receitaCategoria = this.receitaCategoriaService.create(receitaCategoria);
+		usuarioEndereco = this.usuarioEnderecoService.create(usuarioEndereco);
 		
 		URI uri = ServletUriComponentsBuilder
 				 .fromCurrentRequest()
 				 .path("/{id}")
-				 .buildAndExpand(receitaCategoria.getId())
+				 .buildAndExpand(usuarioEndereco.getId())
 				 .toUri();
 		
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody ReceitaCategoria receitaCategoria) {
-		receitaCategoria.setId(id);
+	public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody UsuarioEndereco usuarioEndereco) {
+		usuarioEndereco.setId(id);
 		
-		this.receitaCategoriaService.update(receitaCategoria);
+		this.usuarioEnderecoService.update(usuarioEndereco);
 		
 		return ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ReceitaCategoria> findById(@PathVariable Long id) {
+	public ResponseEntity<UsuarioEndereco> findById(@PathVariable Long id) {
 		
-		ReceitaCategoria receitaCategoria = this.receitaCategoriaService.findById(id);
+		UsuarioEndereco usuarioEndereco = this.usuarioEnderecoService.findById(id);
 		
-		return ResponseEntity.ok(receitaCategoria);
+		return ResponseEntity.ok(usuarioEndereco);
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<ReceitaCategoria>> findAll() {
+	public ResponseEntity<List<UsuarioEndereco>> findAll() {
 		
-		List<ReceitaCategoria> receitaCategoria = this.receitaCategoriaService.findAll();
+		List<UsuarioEndereco> usuarioEndereco = this.usuarioEnderecoService.findAll();
 		
-		return ResponseEntity.ok(receitaCategoria);
+		return ResponseEntity.ok(usuarioEndereco);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		this.receitaCategoriaService.deleteById(id);
+		this.usuarioEnderecoService.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
 	

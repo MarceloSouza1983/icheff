@@ -3,7 +3,6 @@ package br.com.santander.icheffv1.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -30,10 +29,6 @@ public class Receita implements Serializable {
 	@Column(name= "rec_nome", length = 200, nullable = false, unique = true)
 	@NotNull(message = "O nome não pode ser nulo")
 	private String nome;
-	
-	//@SequenceGenerator(name = "xx", sequenceName = "xx", initialValue = 1, allocationSize = 1)
-	//@Column(name= "rec_id_categoria", length = 11, nullable = false, unique = true)
-	//private Integer categoria;
 	
 	@Column(name= "rec_link_youtube", length = 500)
 	private String link;
@@ -66,7 +61,7 @@ public class Receita implements Serializable {
 	
 	public Receita() { }
 	
-	public Receita(Long id, @NotNull String nome, String link, String descricao, LocalDateTime dataCadastro,
+	/*public Receita(Long id, @NotNull String nome, String link, String descricao, LocalDateTime dataCadastro,
 			@NotNull double preco) {
 		super();
 		this.id = id;
@@ -75,7 +70,8 @@ public class Receita implements Serializable {
 		this.descricao = descricao;
 		this.dataCadastro = dataCadastro;
 		this.preco = preco;
-	}
+
+	} */
 
 	@Override
 	public int hashCode() {

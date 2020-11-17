@@ -48,10 +48,8 @@ public class ReceitaCategoriaService {
 			throw new DataIntegrityException("O id não pode ser nulo");
 		}
 
-
 		return this.receitaCategoriaRepository.findById(id)
 				.orElseThrow( () -> new ObjectNotFoundException("Não foi possível encontrar uma categoria com id " + id));
 	}
 	
-
 }

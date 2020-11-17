@@ -20,7 +20,7 @@ import br.com.santander.icheffv1.model.Venda;
 import br.com.santander.icheffv1.service.VendaService;
 
 @RestController
-@RequestMapping("/vendas")
+@RequestMapping("/api/vendas")
 public class VendaController {
 	
 	private final VendaService vendaService;
