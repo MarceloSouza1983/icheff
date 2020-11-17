@@ -45,7 +45,7 @@ function criaCard(idCategoria, idModal, nome, imagem) {
         "<img src=\"" + imagem + "\" class=\"card-img-top\" alt=\"" + nome + "\">" +
         "<div class=\"card-body\">" +
         "<h5 class=\"card-title\">" + nome + "</h5>" +
-        "<button class=\"btn btn-cards\" data-toggle=\"modal\" data-target=\"#modal-" + idModal + "\">" +
+        "<button class=\"btn btn-cards\" data-toggle=\"modal\" data-backdrop=\"static\" data-keyboard=\"false\" data-target=\"#modal-" + idModal + "\">" +
         "Detalhes" +
         "</button>" +
         "</div>" +
@@ -83,7 +83,7 @@ function criaModal(idModal, nome, listaIngredientes, modoPreparo, linkVideo, pre
         "<div class=\"modal-content\">" +
         "<div class=\"modal-header\">" +
         "<h3 class=\"modal-title\" id=\"modalLabel\">" + nome + "</h3>" +
-        "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">" +
+        "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" onclick=\"pararVideo()\" aria-label=\"Close\">" +
         "<span aria-hidden=\"true\">&times;</span>" +
         "</button>" +
         "</div>" +
@@ -110,7 +110,7 @@ function criaModal(idModal, nome, listaIngredientes, modoPreparo, linkVideo, pre
         "+" +
         "</button>" +
         "</div>" +
-        "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">" +
+        "<button type=\"button\" class=\"btn btn-secondary\" onclick=\"pararVideo()\" data-dismiss=\"modal\">" +
         "<span class=\"price\"> R$ " + preco + "</span> Adicionar ao carrinho <i class=\"fas fa-shopping-cart\"></i>" +
         "</button>" +
         "</div>" +
@@ -131,6 +131,10 @@ function criaCardModal2(categoria, idModal, nome, descricao, imagem, listaIngred
     criaCard(categoria, idModal, nome, imagem)
     criaModal(idModal, nome, listaIngredientes, descricao, linkVideo, preco)
 }
+
+function pararVideo(){
+    $('iframe')[0].contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+ }
 
 const lista = [
     { quantidade: 1, nome:'cebola pequena', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
