@@ -59,6 +59,10 @@ public class Receita implements Serializable {
 	@JoinColumn(name = "FK_usuario_receita")
 	private Usuario usuario;
 	
+	@Column(columnDefinition = "TINYINT(1)", name= "rec_ativa", length = 1, nullable = false)
+	@NotNull
+	private int ativa;
+	
 	public Receita() { }
 	
 	/*public Receita(Long id, @NotNull String nome, String link, String descricao, LocalDateTime dataCadastro,

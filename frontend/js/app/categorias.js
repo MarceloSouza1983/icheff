@@ -8,7 +8,7 @@ $( document ).ready(function() {
 
     $.ajax({
         type : "GET",
-        url : "http://localhost:8080/receitas",
+        url : "http://localhost:8080/api/receitas",
         crossDomain: true,
         contentType: "application/json",
         success: function(response){
