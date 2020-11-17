@@ -20,6 +20,10 @@ public class ReceitaCategoria implements Serializable {
 	@NotNull(message = "O nome não pode ser nulo")
 	private String nome;
 	
+	@Column(name = "cat_vegana", nullable = false)
+	@NotNull(message = "A classificação de vegana não pode ser nula")
+	private Boolean vegana;
+	
 	public ReceitaCategoria() { }
 
 	public ReceitaCategoria(Long id, @NotNull(message = "O nome não pode ser nulo") String nome) {
@@ -42,6 +46,14 @@ public class ReceitaCategoria implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Boolean getVegana() {
+		return this.vegana;
+	}
+
+	public void setVegana(Boolean vegana) {
+		this.vegana = vegana;
 	}
 
 }

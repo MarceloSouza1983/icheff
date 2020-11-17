@@ -52,7 +52,7 @@ public class IngredienteUnidadeController {
 		return ResponseEntity.ok(ingredienteUnidade);
 	}
 	
-	@GetMapping("/all")
+	@GetMapping
 	public ResponseEntity<List<IngredienteUnidade>> findAll() {
 		
 		List<IngredienteUnidade> ingredienteUnidade = this.ingredienteUnidadeService.findAll();

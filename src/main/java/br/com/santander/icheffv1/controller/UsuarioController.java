@@ -63,7 +63,7 @@ public class UsuarioController {
 		return ResponseEntity.ok(usuario);
 	}
 	
-	@GetMapping(value="/all")
+	@GetMapping
 	public ResponseEntity<List<Usuario>> findAll() {
 		
 		List<Usuario> usuario = this.usuarioService.findAll();
