@@ -39,7 +39,6 @@ const BASE_URL = 'http://localhost:8080';
                     if (!_this)
                         return;
 
-                    //Async/Await
                     _this['consultaLista' + _this.primeiraMaiuscula(secao)]();
 
                     $('#icheff-' + secao).delay(50).slideDown(200);
@@ -76,7 +75,6 @@ const BASE_URL = 'http://localhost:8080';
 
                 $modalEdit.find('h5').html('Editar ' + secao);
 
-                //Async/Await
                 _this['preencheEditModal' + _this.primeiraMaiuscula(secao)]($form, json);
 
                 let $btn = $modalEdit.find('.modal-footer button');
@@ -131,7 +129,7 @@ const BASE_URL = 'http://localhost:8080';
             $form.find('input#ingrediente-nome').val(json.nome);
 
             $form.find('select#ingrediente-unidade option:selected').removeAttr('selected');
-            $form.find('select#ingrediente-unidade option[value="' + json.unidade_padrao + '"]').attr('selected', '');
+            $form.find('select#ingrediente-unidade option[value="' + json.ingredienteUnidade.id + '"]').attr('selected', '');
 
             $form.find('input#ingrediente-custo').val(json.custo.toString().replace('.', ','));
 
@@ -143,17 +141,17 @@ const BASE_URL = 'http://localhost:8080';
             $form.find('input#cat_nome').val(json.nome);
 
             $form.find('select#cat_vegana option:selected').removeAttr('selected');
-            $form.find('select#cat_vegana option[value="' + json.vegana + '"]').attr('selected', '');
+            $form.find('select#cat_vegana option[value="' + (json.vegana=='1'?1:0) + '"]').attr('selected', '');
         },
 
         preencheEditModalReceitas: function ($form, json) {
             $form.find('input#rec_nome').val(json.nome);
             $form.find('input#rec_imagem').val(json.imagem);
-            $form.find('input#rec_link_youtube').val(json.youtube);
+            $form.find('input#rec_link_youtube').val(json.linkVideo);
             $form.find('input#rec_preco').val(json.preco.toString().replace('.',','));
 
-            $form.find('select#rec_id_categoria option[value="' + json.categoria_id + '"]').attr('selected', '');
-            $form.find('select#rec_ativa option[value="' + json.ativa + '"]').attr('selected', '');
+            $form.find('select#rec_id_categoria option[value="' + json.categoriaId + '"]').attr('selected', '');
+            $form.find('select#rec_ativa option[value="' + (json.ativa?'1':'0') + '"]').attr('selected', '');
 
             $form.find('textarea#rec_descricao').val(json.descricao);
 
@@ -172,13 +170,20 @@ const BASE_URL = 'http://localhost:8080';
                 $tr.append($('<td>').html(ing.nome));
                 $tr.append($('<td>').html('<img class="icon-delete-ingrediente" src="img/icons/icon-delete.png">'));
                 
-                let objJson = {
-                    id: ing.id,
-                    unidade_id: ing.unidade_id,
+                let jsonIngrediente = {
+                    ingrediente: {
+                        id: ing.id
+                    },
+                    ingredienteUnidade:{
+                        id: ing.unidadeId,
+                    },
+                    unidade: ing.unidadeId,
                     quantidade: ing.quantidade
                 }
 
-                $tr.attr('data', JSON.stringify(objJson));
+                console.log(jsonIngrediente);
+
+                $tr.attr('data', JSON.stringify(jsonIngrediente));
 
                 $tbodyIngredientes.append($tr);
                 
@@ -287,17 +292,17 @@ const BASE_URL = 'http://localhost:8080';
                         let $delete = $('<img class="icon-delete" src="img/icons/icon-delete.png">');
         
                         let d = data[i];
-        
+
                         $edit.attr('data', JSON.stringify(d));
         
                         let $tr = $('<tr>');
                         let $tdOpcoes = $('<td>');
         
-                        $tr.append('<td>' + d['id'] + '</td>');
-                        $tr.append('<td>' + d['nome'] + '</td>');
-                        $tr.append('<td>' + d['unidade_sigla'] + '</td>');
-                        $tr.append('<td>' + d['custo'].toString().replace('.',',') + '</td>');
-                        $tr.append('<td>' + (d['ativo']?'Sim':'Não') + '</td>');
+                        $tr.append('<td>' + d.id + '</td>');
+                        $tr.append('<td>' + d.nome + '</td>');
+                        $tr.append('<td>' + d.ingredienteUnidade.unidadeSigla + '</td>');
+                        $tr.append('<td>' + d.custo.toString().replace('.',',') + '</td>');
+                        $tr.append('<td>' + (d.ativo?'Sim':'Não') + '</td>');
         
                         $edit.attr('item_id', d['id']);
                         $tdOpcoes.append($edit);
@@ -346,15 +351,15 @@ const BASE_URL = 'http://localhost:8080';
                         let $tr = $('<tr>');
                         let $tdOpcoes = $('<td>');
 
-                        $tr.append('<td>' + d['id'] + '</td>');
-                        $tr.append('<td>' + d['nome'] + '</td>');
-                        $tr.append('<td>' + (d['vegana']?'Sim':'Não') + '</td>');
-                        $tr.append('<td>' + d['qtd_receitas'] + '</td>');
+                        $tr.append('<td>' + d.id + '</td>');
+                        $tr.append('<td>' + d.nome + '</td>');
+                        $tr.append('<td>' + (d.vegana?'Sim':'Não') + '</td>');
+                        $tr.append('<td>' + d.qtd_receitas + '</td>');
 
-                        $edit.attr('item_id', d['id']);
+                        $edit.attr('item_id', d.id);
                         $tdOpcoes.append($edit);
 
-                        $delete.attr('item_id', d['id']);
+                        $delete.attr('item_id', d.id);
                         $tdOpcoes.append($delete);
 
                         $tr.append($tdOpcoes);
@@ -424,20 +429,21 @@ const BASE_URL = 'http://localhost:8080';
                         let $tr = $('<tr>');
                         let $tdOpcoes = $('<td>');
         
-                        $tr.append('<td>' + d['id'] + '</td>');
-                        $tr.append('<td>' + d['nome'] + '</td>');
+                        $tr.append('<td>' + d.id + '</td>');
+                        $tr.append('<td>' + d.nome + '</td>');
+                        $tr.append('<td>' + d.categoria + '</td>');
                         $tr.append('<td>' + (d.ingredientes ? d.ingredientes.length : 0) + '</td>');
-                        $tr.append('<td>' + d['custo'] + '</td>');
-                        $tr.append('<td>' + d['preco'] + '</td>');
-                        $tr.append('<td>' + (d['ativa']?'Sim':'Não') + '</td>');
+                        $tr.append('<td>' + d.custo + '</td>');
+                        $tr.append('<td>' + d.preco + '</td>');
+                        $tr.append('<td>' + (d.ativa?'Sim':'Não') + '</td>');
         
                         let ingredientesJson = JSON.stringify(d);
         
                         $edit.attr('data', ingredientesJson);
-                        $edit.attr('item_id', d['id']);
+                        $edit.attr('item_id', d.id);
                         $tdOpcoes.append($edit);
         
-                        $delete.attr('item_id', d['id']);
+                        $delete.attr('item_id', d.id);
                         $tdOpcoes.append($delete);
         
                         $tr.append($tdOpcoes);
@@ -460,7 +466,7 @@ const BASE_URL = 'http://localhost:8080';
             $('ol.breadcrumb li.active').html('Usuários');
 
             $.ajax({
-                url: BASE_URL + '/api/usuarios/all',
+                url: BASE_URL + '/api/usuarios',
                 type: 'GET',
                 dataType: 'json',
                 cache: false,
@@ -476,14 +482,14 @@ const BASE_URL = 'http://localhost:8080';
         
                         let $tr = $('<tr>');
         
-                        $tr.append('<td>' + d['id'] + '</td>');
-                        $tr.append('<td>' + d['nome'] + '</td>');
-                        $tr.append('<td>' + d['tipo'] + '</td>');
-                        $tr.append('<td>' + d['login'] + '</td>');
-                        $tr.append('<td>' + d['email'] + '</td>');
-                        $tr.append('<td>' + d['rg'] + '</td>');
-                        $tr.append('<td>' + d['cpf'] + '</td>');
-                        $tr.append('<td>' + d['dataCadastro'] + '</td>');
+                        $tr.append('<td>' + d.id + '</td>');
+                        $tr.append('<td>' + d.nome + '</td>');
+                        $tr.append('<td>' + d.tipo + '</td>');
+                        $tr.append('<td>' + d.login + '</td>');
+                        $tr.append('<td>' + d.email + '</td>');
+                        $tr.append('<td>' + d.rg + '</td>');
+                        $tr.append('<td>' + d.cpf + '</td>');
+                        $tr.append('<td>' + d.dataCadastro + '</td>');
         
                         $tabelaBody.append($tr);
         
@@ -575,7 +581,6 @@ const BASE_URL = 'http://localhost:8080';
                 let $form = $divContent.find('div.modal form');
                 let _this = this;
 
-                //Async/Await
                 _this['submeterModal' + _this.primeiraMaiuscula(secao)]($form, acao);
 
             });
@@ -604,7 +609,7 @@ const BASE_URL = 'http://localhost:8080';
 
                 let jsonIngrediente = JSON.stringify({
                     id: ingrediente_id,
-                    unidade_id: unidade_id,
+                    unidade: unidade_id,
                     quantidade: qtd
                 });
 
@@ -619,7 +624,9 @@ const BASE_URL = 'http://localhost:8080';
             let data = {
                 id: (acao=='cadastrar'?0:acao),
                 nome: $form.find('input#ingrediente-nome').val(),
-                unidade: $form.find('select#ingrediente-unidade option:selected').val(),
+                ingredienteUnidade: {
+                    id: $form.find('select#ingrediente-unidade option:selected').val()
+                },
                 custo: $form.find('input#ingrediente-custo').val().replace(',','.'),
                 ativo: $form.find('select#ingrediente-ativo option:selected').val()
             }
@@ -658,7 +665,7 @@ const BASE_URL = 'http://localhost:8080';
             
             let data = {
                 nome: $form.find('input#cat_nome').val(),
-                vegana: $form.find('select#cat_vegana option:selected').val(),
+                vegana: $form.find('select#cat_vegana option:selected').val()=='1' ? true : false,
             }
 
             //Verificações
@@ -687,17 +694,17 @@ const BASE_URL = 'http://localhost:8080';
         },
 
         submeterModalReceitas: function ($form, acao) {
-            
-            //ichef.com.br/api/receitas/cadastar
-            //ichef.com.br/api/receitas/editar/{id}
+           
             let data = {
                 nome: $form.find('input#rec_nome').val(),
                 preco: $form.find('input#rec_preco').val().replace(',','.'),
                 imagem: $form.find('input#rec_imagem').val(),
-                youtube: $form.find('input#rec_link_youtube').val(),
+                linkVideo: $form.find('input#rec_link_youtube').val(),
                 descricao: $form.find('textarea#rec_descricao').val(),
 
-                categoria_id: $form.find('select#rec_id_categoria option:selected').val(),
+                receitaCategoria: {
+                    id: $form.find('select#rec_id_categoria option:selected').val()
+                },
 
                 ingredientes: []
             }
@@ -720,7 +727,7 @@ const BASE_URL = 'http://localhost:8080';
                 return;
             }
 
-            if(data.youtube.trim().length === 0){
+            if(data.linkVideo.trim().length === 0){
                 alert('Preencha o link para o YouTube da receita!');
                 return;
             }
@@ -735,6 +742,8 @@ const BASE_URL = 'http://localhost:8080';
                 return;
             }
             //Fim verificações
+
+            console.log(JSON.stringify(data))
 
             let _this = this;
 
@@ -752,23 +761,6 @@ const BASE_URL = 'http://localhost:8080';
                 }
             });
 
-        },
-
-        tableDataTable: function () {
-            $('table:not(.table-ingredientes)').DataTable({
-                "paging": false,
-                "info": false,
-                "columnDefs": [
-                    //className: "text-center"
-                    //"orderable": false
-                    { "targets": 0, "width": "50px", className: "text-center" },
-                    { "targets": 1 },
-                    { "targets": 2 },
-                    { "targets": 3 },
-                    { "targets": 4 },
-                    { "targets": -1, className: "text-center" }
-                ]
-            });
         },
 
         //Redimensiona o tamanho do menu
@@ -802,7 +794,7 @@ const BASE_URL = 'http://localhost:8080';
         },
 
         loadListaUnidades: function(){
-            return this.loadListas('ingredienteunidade/all');
+            return this.loadListas('ingredienteunidade');
         },
 
         loadCharts: function (dataDistribuicao, dataHistorico) {
