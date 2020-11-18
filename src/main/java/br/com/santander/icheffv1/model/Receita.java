@@ -55,29 +55,34 @@ public class Receita implements Serializable {
 	@JoinColumn(name = "FK_categoria_receita")
 	private ReceitaCategoria receitaCategoria;
 	
-	/*
-	@ManyToOne
-	@JoinColumn(name = "FK_usuario_receita")
-	private Usuario usuario;
-	*/
-	
 	@Column(columnDefinition = "TINYINT(1)", name= "rec_ativa", length = 1, nullable = false)
 	@NotNull
 	private int ativa;
 	
-	public Receita() { }
+	public Receita() {
+		
+	}
 	
-	/*public Receita(Long id, @NotNull String nome, String link, String descricao, LocalDateTime dataCadastro,
-			@NotNull double preco) {
+	public Receita(
+		Long id,
+		@NotNull String nome,
+		String imagem,
+		String linkVideo,
+		String descricao,
+		List<IngredienteReceita> ingredientes,
+		LocalDateTime dataCadastro,
+		@NotNull double preco
+	) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.link = link;
+		this.imagem = imagem;
+		this.linkVideo = linkVideo;
 		this.descricao = descricao;
+		this.ingredientes = ingredientes;
 		this.dataCadastro = dataCadastro;
 		this.preco = preco;
-
-	} */
+	}
 
 	@Override
 	public int hashCode() {
