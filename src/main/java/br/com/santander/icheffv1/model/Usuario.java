@@ -3,20 +3,20 @@ package br.com.santander.icheffv1.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "usuarios")
@@ -48,8 +48,9 @@ public class Usuario implements Serializable {
 	//@NotNull
 	//private Tipo tipo;
 	
-	//@Column(name= "usu_data_nascimento", length = 50, nullable = false)
-	//private LocalDate dataNascimento;
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@Column(name= "usu_data_nascimento", length = 10, nullable = false)
+	private LocalDate dataNascimento;
 	
 	@Column(name= "usu_data_cadastro", length = 100, nullable = false)
 	private LocalDateTime dataCadastro;
@@ -63,25 +64,73 @@ public class Usuario implements Serializable {
 	@NotNull(message = "O cpf não pode ser nulo")
 	private String cpf;
 	
-	@OneToMany(mappedBy = "usuario") // cascade type persist ou save
-	private List <UsuarioEndereco> usuarioEndereco;
+	@Column(name= "usu_logradouro", length = 300, nullable = false)
+	@NotNull(message = "O logradouro do endereço não pode ser nulo")
+	private String logradouro;
+	
+	@Column(name= "usu_numero", length = 10, nullable = false)
+	@NotNull(message = "O número não pode ser nulo")
+	private String numero;
+	
+	@Column(name= "usu_complemento", length = 200)
+	private String complemento;
+	
+	@Column(name= "usu_cep", length = 10, nullable = false)
+	@NotNull(message = "O CEP não pode ser nulo")
+	private String cep;
+	
+	@Column(name= "usu_bairro", length = 100, nullable = false)
+	@NotNull(message = "O bairro não pode ser nulo")
+	private String bairro;
+	
+	@Column(name= "usu_cidade", length = 100, nullable = false)
+	@NotNull(message = "A cidade não pode ser nula")
+	private String cidade;
+	
+	@Column(name= "usu_estado", length = 100, nullable = false)
+	@NotNull(message = "O estado não pode ser nulo")
+	private String estado;
+	
+	@Column(name= "usu_telefone", length = 11, nullable = false)
+	private String telefone;
+	
+	@Column(name= "usu_celular", length = 12, nullable = false)
+	@NotNull(message = "O campo celular não pode ser nulo")
+	private String celular;
 	
 	public Usuario() { }
 	
 	public Usuario(Long id, @NotNull(message = "O nome não pode ser nulo") String nome,
 			@NotNull(message = "O login não pode ser nulo e precisa ter no mínimo 5 caracteres") @Length(min = 5, max = 100) String login,
 			@Length(min = 5, max = 255) @NotNull(message = "A senha não pode ser nula e precisa ter no mínimo 5 caracteres") String senha,
-			 LocalDateTime dataCadastro,
+			LocalDate dataNascimento, LocalDateTime dataCadastro,
 			@NotNull(message = "O rg não pode ser nulo") String rg,
-			@CPF @NotNull(message = "O cpf não pode ser nulo") String cpf) {
+			@CPF @NotNull(message = "O cpf não pode ser nulo") String cpf,
+			@NotNull(message = "O logradouro do endereço não pode ser nulo") String logradouro,
+			@NotNull(message = "O número não pode ser nulo") String numero, String complemento,
+			@NotNull(message = "O CEP não pode ser nulo") String cep,
+			@NotNull(message = "O bairro não pode ser nulo") String bairro,
+			@NotNull(message = "A cidade não pode ser nula") String cidade,
+			@NotNull(message = "O estado não pode ser nulo") String estado, String telefone,
+			@NotNull(message = "O campo celular não pode ser nulo") String celular) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.login = login;
 		this.senha = senha;
+		this.dataNascimento = dataNascimento;
 		this.dataCadastro = dataCadastro;
 		this.rg = rg;
 		this.cpf = cpf;
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.cep = cep;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.telefone = telefone;
+		this.celular = celular;
 	}
 
 	public Long getId() {
@@ -124,13 +173,13 @@ public class Usuario implements Serializable {
 		this.tipo = tipo;
 	} */
 
-	/*public LocalDate getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}*/
+	}
 	
 	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
@@ -154,6 +203,78 @@ public class Usuario implements Serializable {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
 	}
 
 	@Override
