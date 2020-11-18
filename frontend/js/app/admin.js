@@ -171,17 +171,11 @@ const BASE_URL = 'http://localhost:8080';
                 $tr.append($('<td>').html('<img class="icon-delete-ingrediente" src="img/icons/icon-delete.png">'));
                 
                 let jsonIngrediente = {
-                    ingrediente: {
-                        id: ing.id
+                    ingrediente:{
+                        id: ingrediente_id
                     },
-                    ingredienteUnidade:{
-                        id: ing.unidadeId,
-                    },
-                    unidade: ing.unidadeId,
-                    quantidade: ing.quantidade
+                    quantidade: qtd
                 }
-
-                console.log(jsonIngrediente);
 
                 $tr.attr('data', JSON.stringify(jsonIngrediente));
 
@@ -396,16 +390,26 @@ const BASE_URL = 'http://localhost:8080';
             let ingredientes = await this.loadListaIngredientes();
 
             for(let i in ingredientes){
-                let $option = $('<option>').val(ingredientes[i].id).html(ingredientes[i].nome);
+
+                let unidadeIngrediente = ingredientes[i].ingredienteUnidade.unidadeSigla;
+                let nomeIngrediente = ingredientes[i].nome + ' (' + unidadeIngrediente + ')';
+
+                let $option = $('<option>')
+                    .val(ingredientes[i].id)
+                    .attr('unidade', unidadeIngrediente)
+                    .html(nomeIngrediente);
+
                 $selectIngredientes.append($option)
             }
             
+            /*
             let unidades = await this.loadListaUnidades();
 
             for(let i in unidades){
                 let $option = $('<option>').val(unidades[i].id).html(unidades[i].unidadeSigla);
                 $selectUnidades.append($option)
             }
+            */
             //Fim do load do modal
 
             $.ajax({
@@ -563,6 +567,10 @@ const BASE_URL = 'http://localhost:8080';
 
                 _this.limparForm($modal.find('form'));
 
+                if(secao=='receita'){
+                    $modal.find('input#inr_quantidade').val(1);
+                }
+
                 $modal.find('h5').html(novoTxt + ' ' + secao);
                 $modalButton.html('Criar');
                 $modalButton.removeAttr('item_id');
@@ -593,10 +601,18 @@ const BASE_URL = 'http://localhost:8080';
 
             $('div.modal-receitas button#add-ingrediente').on('click', function(){
 
-                let qtd = $('input#inr_quantidade').val();
+                let $inputQuantidade = $('input#inr_quantidade');
+                let qtd = $inputQuantidade.val();
 
-                let unidade = $('select#inr_id_unidade option:selected').html();
-                let unidade_id = $('select#inr_id_unidade option:selected').val();
+                qtd.replace(',','.');
+                qtd = parseFloat(qtd);
+
+                if(qtd<=0 || !qtd){
+                    $inputQuantidade.focus();
+                    return;
+                }
+
+                let unidade = $('select#inr_id_ingrediente option:selected').attr('unidade');
 
                 let ingrediente = $('select#inr_id_ingrediente option:selected').html();
                 let ingrediente_id = $('select#inr_id_ingrediente option:selected').val();
@@ -608,8 +624,9 @@ const BASE_URL = 'http://localhost:8080';
                 $tr.append($('<td>').html($('<img class="icon-delete-ingrediente" src="img/icons/icon-delete.png">')));
 
                 let jsonIngrediente = JSON.stringify({
-                    id: ingrediente_id,
-                    unidade: unidade_id,
+                    ingrediente:{
+                        id: ingrediente_id
+                    },
                     quantidade: qtd
                 });
 
