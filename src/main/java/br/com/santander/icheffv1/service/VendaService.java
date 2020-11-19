@@ -43,4 +43,8 @@ public class VendaService {
 				.orElseThrow( () -> new ObjectNotFoundException("Não foi possível encontrar uma venda com id " + id));
 	}
 	
+	public Long count() {
+		return this.vendaRepository.count();
+	}
+	
 }

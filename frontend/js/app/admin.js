@@ -189,68 +189,45 @@ const BASE_URL = 'http://localhost:8080';
 
             $('ol.breadcrumb li.active').html('Dashboard');
 
-            let respostaAjax = {
-                estatisticas: {
-                    total_ingredientes: 44,
-                    total_receitas: 30,
-                    total_clientes: 202,
-                    total_vendas: 1250,
+            let _this = this;
+
+            $.ajax({
+                url: BASE_URL + '/api/dashboard',
+                type: 'GET',
+                dataType: 'json',
+                cache: false,
+                success: function(data){
+
+                    //Carregar os dados na tela
+                    let $divsDash = $('div#dash-estatisticas div');
+        
+                    $divsDash.eq(0).find('span').html(
+                        data.ingredientesCadastrados
+                        + (data.ingredientesCadastrados > 1 ? ' ingredientes cadastrados' : ' ingrediente cadastrado')
+                    );
+
+                    $divsDash.eq(1).find('span').html(
+                        data.receitasCadastradas
+                        + (data.receitasCadastradas > 1 ? ' receitas cadastradas' : ' receita cadastrada')
+                    );
+
+                    $divsDash.eq(2).find('span').html(
+                        data.clientesCadastrados
+                        + (data.clientesCadastrados > 1 ? ' clientes cadastrados' : ' cliente cadastrado')
+                    );
+
+                    $divsDash.eq(3).find('span').html(
+                        data.vendasRealizadas
+                        + (data.vendasRealizadas > 1 ? ' vendas realizadas' : ' venda realizada')
+                    );
+
+                    _this.loadCharts(data.distribuicaoDeVendas, data.historicoDeVendas);
+
                 },
-                historico_de_vendas: [
-                    { data: '2020/1/1', quantidade: 5 },
-                    { data: '2020/1/2', quantidade: 7 },
-                    { data: '2020/1/3', quantidade: 3 },
-                    { data: '2020/1/4', quantidade: 1 },
-                    { data: '2020/1/5', quantidade: 3 },
-                    { data: '2020/1/6', quantidade: 4 },
-                    { data: '2020/1/7', quantidade: 3 },
-                    { data: '2020/1/8', quantidade: 4 },
-                    { data: '2020/1/9', quantidade: 2 },
-                    { data: '2020/1/10', quantidade: 5 },
-                    { data: '2020/1/11', quantidade: 8 },
-                    { data: '2020/1/12', quantidade: 6 },
-                    { data: '2020/1/13', quantidade: 3 },
-                    { data: '2020/1/14', quantidade: 3 },
-                    { data: '2020/1/15', quantidade: 5 },
-                    { data: '2020/1/16', quantidade: 7 },
-                    { data: '2020/1/17', quantidade: 6 },
-                    { data: '2020/1/18', quantidade: 6 },
-                    { data: '2020/1/19', quantidade: 3 },
-                    { data: '2020/1/20', quantidade: 1 },
-                    { data: '2020/1/21', quantidade: 2 },
-                    { data: '2020/1/22', quantidade: 4 },
-                    { data: '2020/1/23', quantidade: 6 },
-                    { data: '2020/1/24', quantidade: 5 },
-                    { data: '2020/1/25', quantidade: 9 },
-                    { data: '2020/1/26', quantidade: 4 },
-                    { data: '2020/1/27', quantidade: 9 },
-                    { data: '2020/1/28', quantidade: 8 },
-                    { data: '2020/1/29', quantidade: 6 },
-                    { data: '2020/1/30', quantidade: 4 },
-                    { data: '2020/1/31', quantidade: 6 },
-                    { data: '2020/2/1', quantidade: 7 },
-                    { data: '2020/2/2', quantidade: 9 }
-                ],
-                distribuicao_de_vendas: [
-                    //Ação / Quantidade
-                    ['Variados', 55],
-                    ['Peixes e frutos do mar', 20],
-                    ['Fitness', 50],
-                    ['Vegetarianos', 20]
-                ]
-            };
-
-            let data = respostaAjax;
-
-            //Carregar os dados na tela
-            let $divsDash = $('div#dash-estatisticas div');
-
-            $divsDash.eq(0).find('span').html(data.estatisticas.total_ingredientes + ' ingredientes cadastrados');
-            $divsDash.eq(1).find('span').html(data.estatisticas.total_receitas + ' receitas cadastradas');
-            $divsDash.eq(2).find('span').html(data.estatisticas.total_clientes + ' clientes cadastrados');
-            $divsDash.eq(3).find('span').html(data.estatisticas.total_vendas + ' vendas');
-
-            this.loadCharts(data.distribuicao_de_vendas, data.historico_de_vendas);
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log(JSON.parse(jqXHR.responseText));
+                }
+            });
 
         },
 
@@ -821,10 +798,18 @@ const BASE_URL = 'http://localhost:8080';
 
             function drawChart() {
 
-                var data = google.visualization.arrayToDataTable([
-                    ['Ação', 'Quantidade'],
-                    ...dataDistribuicao
-                ]);
+                let arrayDados = [
+                    ['Categoria', 'Quantidade']
+                ];
+
+                for(let i in dataDistribuicao){
+                    arrayDados.push([
+                        dataDistribuicao[i].categoria,
+                        dataDistribuicao[i].quantidade
+                    ]);
+                }
+
+                var data = google.visualization.arrayToDataTable(arrayDados);
 
                 var options = {
                     title: 'Distribuição de vendas por categoria',
@@ -848,7 +833,7 @@ const BASE_URL = 'http://localhost:8080';
                 let datas = [];
 
                 for(let i in dataHistorico) {
-                    let d = dataHistorico[i].data.split('/');
+                    let d = dataHistorico[i].data.split('-');
                     let qtd = dataHistorico[i].quantidade;
                     let dt = [new Date(d[0], d[1] - 1, d[2]), qtd];
                     datas.push(dt);

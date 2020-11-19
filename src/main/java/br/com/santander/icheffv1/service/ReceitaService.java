@@ -94,4 +94,8 @@ public class ReceitaService {
 				.orElseThrow( () -> new ObjectNotFoundException("Não foi possivel encontrar uma receita com id " + id));
 	}
 	
+	public Long count() {
+		return this.receitaRepository.count();
+	}
+	
 }

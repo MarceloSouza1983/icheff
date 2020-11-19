@@ -55,4 +55,8 @@ public class UsuarioService {
 				.orElseThrow( () -> new ObjectNotFoundException("Não foi possivel encontrar um usuário com id " + id));
 	}
 	
+	public Long count() {
+		return this.usuarioRepository.count();
+	}
+	
 }

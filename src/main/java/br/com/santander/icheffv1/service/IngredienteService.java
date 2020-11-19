@@ -9,11 +9,12 @@ import br.com.santander.icheffv1.exception.DataIntegrityException;
 import br.com.santander.icheffv1.exception.ObjectNotFoundException;
 import br.com.santander.icheffv1.model.Ingrediente;
 import br.com.santander.icheffv1.repository.IngredienteRepository;
+import br.com.santander.icheffv1.repository.IngredienteUnidadeRepository;
 
 @Service
 public class IngredienteService {
-	
-	private final IngredienteRepository ingredienteRepository;
+
+	private final IngredienteRepository ingredienteRepository;	
 
 	public IngredienteService(IngredienteRepository ingredienteRepository) {
 		this.ingredienteRepository = ingredienteRepository;
@@ -54,6 +55,10 @@ public class IngredienteService {
 
 		return this.ingredienteRepository.findById(id)
 				.orElseThrow( () -> new ObjectNotFoundException("Não foi possivel encontrar um ingrediente com id " + id));
+	}
+	
+	public Long count() {
+		return ingredienteRepository.count();
 	}
 	
 }
