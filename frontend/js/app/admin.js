@@ -112,7 +112,6 @@ const BASE_URL = 'http://localhost:8080';
                     dataType: 'json',
                     cache: false,
                     success: function(){
-                        alert('Item deletado com sucesso!');
                         $modalDelete.modal('hide');
                         _this['consultaLista' + _this.primeiraMaiuscula(secao)]();
                     },
@@ -171,10 +170,11 @@ const BASE_URL = 'http://localhost:8080';
                 $tr.append($('<td>').html('<img class="icon-delete-ingrediente" src="img/icons/icon-delete.png">'));
                 
                 let jsonIngrediente = {
+                    id: ing.id,
                     ingrediente:{
-                        id: ingrediente_id
+                        id: ing.ingredienteId
                     },
-                    quantidade: qtd
+                    quantidade: ing.quantidade
                 }
 
                 $tr.attr('data', JSON.stringify(jsonIngrediente));
@@ -325,7 +325,7 @@ const BASE_URL = 'http://localhost:8080';
                         $tr.append('<td>' + d.id + '</td>');
                         $tr.append('<td>' + d.nome + '</td>');
                         $tr.append('<td>' + (d.vegana?'Sim':'Não') + '</td>');
-                        $tr.append('<td>' + d.qtd_receitas + '</td>');
+                        $tr.append('<td>' + d.quantidadeReceitas + '</td>');
 
                         $edit.attr('item_id', d.id);
                         $tdOpcoes.append($edit);
@@ -378,16 +378,6 @@ const BASE_URL = 'http://localhost:8080';
 
                 $selectIngredientes.append($option)
             }
-            
-            /*
-            let unidades = await this.loadListaUnidades();
-
-            for(let i in unidades){
-                let $option = $('<option>').val(unidades[i].id).html(unidades[i].unidadeSigla);
-                $selectUnidades.append($option)
-            }
-            */
-            //Fim do load do modal
 
             $.ajax({
                 url: BASE_URL + '/api/receitas',
@@ -399,7 +389,7 @@ const BASE_URL = 'http://localhost:8080';
                     let $tabelaBody = $('div#icheff-receitas table tbody').eq(0);
         
                     $tabelaBody.html('');
-        
+
                     for (let i in data) {
         
                         let $edit = $('<img class="icon-edit" src="img/icons/icon-edit.png">');
@@ -694,6 +684,7 @@ const BASE_URL = 'http://localhost:8080';
                 preco: $form.find('input#rec_preco').val().replace(',','.'),
                 imagem: $form.find('input#rec_imagem').val(),
                 linkVideo: $form.find('input#rec_link_youtube').val(),
+                ativa: $form.find('select#rec_ativa option:selected').val(),
                 descricao: $form.find('textarea#rec_descricao').val(),
 
                 receitaCategoria: {
@@ -736,8 +727,6 @@ const BASE_URL = 'http://localhost:8080';
                 return;
             }
             //Fim verificações
-
-            console.log(JSON.stringify(data))
 
             let _this = this;
 

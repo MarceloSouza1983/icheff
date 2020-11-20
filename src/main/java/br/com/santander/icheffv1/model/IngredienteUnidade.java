@@ -43,10 +43,13 @@ public class IngredienteUnidade implements Serializable {
 	
 	public IngredienteUnidade() { }
 	
-	public IngredienteUnidade(Long id, @NotNull(message = "A unidade não pode ser nula") String unidadeSigla,
+	public IngredienteUnidade(
+			Long id,
+			@NotNull(message = "A unidade não pode ser nula") String unidadeSigla,
 			@NotNull(message = "Este campo não pode ser nulo") String nomeSingular,
 			@NotNull(message = "Este campo não pode ser nulo") String nomePlural,
-			@NotNull(message = "A descrição não pode ser nula") String descricao) {
+			@NotNull(message = "A descrição não pode ser nula") String descricao
+	) {
 		super();
 		this.id = id;
 		this.unidadeSigla = unidadeSigla;

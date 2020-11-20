@@ -22,7 +22,7 @@ public class Ingrediente implements Serializable {
 	@Column(name= "ing_id")
 	private Long id;
 	
-	@Column(name= "ing_nome", length = 200, nullable = false, unique = true)
+	@Column(name= "ing_nome", length = 200, nullable = false, unique = false)
 	@NotNull(message = "O nome não pode ser nulo")
 	@Size(min = 3, max = 200)
 	private String nome;
@@ -32,7 +32,7 @@ public class Ingrediente implements Serializable {
 	
 	@Column(columnDefinition = "TINYINT(1)", name= "ing_ativo", length = 1, nullable = false)
 	@NotNull
-	private int ativo;
+	private boolean ativo;
 
 	@Column(name= "ing_custo", length = 10, nullable = false) // columnDefinition = "decimal(4,2)"
 	@NotNull(message = "O custo não pode ser nulo")
@@ -53,10 +53,13 @@ public class Ingrediente implements Serializable {
 	
 	public Ingrediente() { }
 	
-	public Ingrediente(Long id, @NotNull(message = "O nome não pode ser nulo") @Size(min = 3, max = 200) String nome,
-			@NotNull int ativo,
+	public Ingrediente(
+			Long id,
+			@NotNull(message = "O nome não pode ser nulo") @Size(min = 3, max = 200) String nome,
+			@NotNull boolean ativo,
 			@NotNull(message = "O custo não pode ser nulo") @Min(value = 0, message = "O valor do custo não pode ser negativo") double custo,
-			IngredienteUnidade ingredienteUnidade) {
+			IngredienteUnidade ingredienteUnidade
+	) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -97,11 +100,11 @@ public class Ingrediente implements Serializable {
 	}
 	 */
 	
-	public int getAtivo() {
+	public boolean getAtivo() {
 		return ativo;
 	}
 
-	public void setAtivo(int ativo) {
+	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
 

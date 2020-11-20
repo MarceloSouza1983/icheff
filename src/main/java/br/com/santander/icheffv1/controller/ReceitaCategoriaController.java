@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.santander.icheffv1.dto.ReceitaCategoriaDTO;
 import br.com.santander.icheffv1.model.ReceitaCategoria;
 import br.com.santander.icheffv1.service.ReceitaCategoriaService;
 
@@ -63,9 +64,9 @@ public class ReceitaCategoriaController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<ReceitaCategoria>> findAll() {
+	public ResponseEntity<List<ReceitaCategoriaDTO>> findAll() {
 		
-		List<ReceitaCategoria> receitaCategoria = this.receitaCategoriaService.findAll();
+		List<ReceitaCategoriaDTO> receitaCategoria = this.receitaCategoriaService.findAll();
 		
 		return ResponseEntity.ok(receitaCategoria);
 	}

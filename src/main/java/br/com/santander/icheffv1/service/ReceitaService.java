@@ -12,20 +12,31 @@ import br.com.santander.icheffv1.exception.DataIntegrityException;
 import br.com.santander.icheffv1.exception.ObjectNotFoundException;
 import br.com.santander.icheffv1.model.IngredienteReceita;
 import br.com.santander.icheffv1.model.Receita;
+import br.com.santander.icheffv1.repository.IngredienteReceitaRepository;
 import br.com.santander.icheffv1.repository.ReceitaRepository;
 
 @Service
 public class ReceitaService {
 	
 	private final ReceitaRepository receitaRepository;
-
-	public ReceitaService(ReceitaRepository receitaRepository) {
+	
+	private final IngredienteReceitaRepository ingredienteReceitaRepository;
+	
+	public ReceitaService(ReceitaRepository receitaRepository, IngredienteReceitaRepository ingredienteReceitaRepository) {
 		this.receitaRepository = receitaRepository;
+		this.ingredienteReceitaRepository = ingredienteReceitaRepository;
 	}
 	
 	public Receita create(Receita receita) {
 		receita.setId(null);
-		return this.receitaRepository.save(receita);
+		Receita receitaDB = this.receitaRepository.save(receita);
+		
+		for(IngredienteReceita ingrediente : receita.getIngredientes()) {
+			ingrediente.setReceita(receitaDB);
+			this.ingredienteReceitaRepository.save(ingrediente);
+		}
+		
+		return receitaDB;
 	}
 	
 	public Receita update(Receita receitaNova) {
@@ -36,10 +47,35 @@ public class ReceitaService {
 		receitaAntiga.setDescricao(receitaNova.getDescricao());
 		receitaAntiga.setLinkVideo(receitaNova.getLinkVideo());
 		receitaAntiga.setPreco(receitaNova.getPreco());
-		receitaAntiga.setIngredientes(receitaNova.getIngredientes());
+		receitaAntiga.setAtiva(receitaNova.getAtiva());
+		
+		System.out.println(receitaAntiga.getAtiva());
+		System.out.println(receitaNova.getAtiva());
+		
+		List<IngredienteReceita> ingredientesAntigos = new ArrayList<IngredienteReceita>();
+		List<IngredienteReceita> novosIngredientes = new ArrayList<IngredienteReceita>();
+		
+		for(IngredienteReceita ingrediente : receitaAntiga.getIngredientes()) {
+			ingredientesAntigos.add(ingrediente);
+		}
+		
+		for(IngredienteReceita ingrediente : receitaNova.getIngredientes()) {
+			ingrediente.setReceita(receitaAntiga);
+			if(ingredientesAntigos.contains(ingrediente)) {
+				novosIngredientes.add(ingrediente);
+				ingredientesAntigos.remove(ingrediente);
+			} else {
+				novosIngredientes.add(this.ingredienteReceitaRepository.save(ingrediente));
+			}
+		}
+		
+		for(IngredienteReceita ingrediente : ingredientesAntigos) {
+			this.ingredienteReceitaRepository.delete(ingrediente);
+		}
+		
+		receitaAntiga.setIngredientes(novosIngredientes);
 		
 		return this.receitaRepository.save(receitaAntiga);
-
 	}
 	
 	public void deleteById(Long id) {
@@ -69,9 +105,12 @@ public class ReceitaService {
 			
 			for(IngredienteReceita ingrediente : receita.getIngredientes()) {
 				IngredienteDto ingredienteDto = new IngredienteDto();
+				
+				ingredienteDto.setId(ingrediente.getId());
+				ingredienteDto.setIngredienteId(ingrediente.getIngrediente().getId());
 				ingredienteDto.setNome(ingrediente.getIngrediente().getNome());
+				ingredienteDto.setUnidade(ingrediente.getIngrediente().getIngredienteUnidade().getUnidadeSigla());
 				ingredienteDto.setQuantidade(ingrediente.getQuantidade());
-				ingredienteDto.setId(ingrediente.getIngrediente().getId());
 				
 				dto.setCusto(dto.getCusto() + ingrediente.getIngrediente().getCusto());
 				

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.santander.icheffv1.exception.DataIntegrityException;
 import br.com.santander.icheffv1.exception.ObjectNotFoundException;
+import br.com.santander.icheffv1.model.Ingrediente;
 import br.com.santander.icheffv1.model.IngredienteUnidade;
 import br.com.santander.icheffv1.repository.IngredienteUnidadeRepository;
 
@@ -32,6 +33,14 @@ public class IngredienteUnidadeService {
 	
 	public List<IngredienteUnidade> findAll(){
 		return this.ingredienteUnidadeRepository.findAll();
+	}
+	
+	public List<IngredienteUnidade> findByUnidadeSigla(String unidadeSigla){
+		
+		Optional.ofNullable(unidadeSigla).orElseThrow(() -> new DataIntegrityException("A unidade não pode ser nula!"));
+		
+		return this.ingredienteUnidadeRepository.findByUnidadeSigla(unidadeSigla)
+				.orElseThrow(() -> new ObjectNotFoundException("Não foi possivel encontrar nenhuma unidade com a sigla " + unidadeSigla));
 	}
 	
 	public IngredienteUnidade findById(Long id) {

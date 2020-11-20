@@ -24,12 +24,15 @@ public class ReceitaCategoria implements Serializable {
 	@NotNull(message = "A classificação de vegana não pode ser nula")
 	private Boolean vegana;
 	
-	public ReceitaCategoria() { }
+	public ReceitaCategoria() {
+		
+	}
 
-	public ReceitaCategoria(Long id, @NotNull(message = "O nome não pode ser nulo") String nome) {
+	public ReceitaCategoria(Long id, @NotNull(message = "O nome não pode ser nulo") String nome, Boolean vegana) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.vegana = vegana;
 	}
 
 	public Long getId() {

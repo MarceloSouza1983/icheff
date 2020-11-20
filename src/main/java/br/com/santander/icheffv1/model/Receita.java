@@ -71,7 +71,8 @@ public class Receita implements Serializable {
 		String descricao,
 		List<IngredienteReceita> ingredientes,
 		LocalDateTime dataCadastro,
-		@NotNull double preco
+		@NotNull double preco,
+		int ativa
 	) {
 		super();
 		this.id = id;
@@ -82,6 +83,7 @@ public class Receita implements Serializable {
 		this.ingredientes = ingredientes;
 		this.dataCadastro = dataCadastro;
 		this.preco = preco;
+		this.preco = ativa;
 	}
 
 	@Override
