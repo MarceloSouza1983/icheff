@@ -3,6 +3,7 @@ package br.com.santander.icheffv1;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -17,13 +18,16 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import br.com.santander.icheffv1.model.Ingrediente;
+import br.com.santander.icheffv1.model.IngredienteReceita;
 import br.com.santander.icheffv1.model.IngredienteUnidade;
+import br.com.santander.icheffv1.model.Receita;
 import br.com.santander.icheffv1.model.ReceitaCategoria;
 import br.com.santander.icheffv1.model.Tipo;
 import br.com.santander.icheffv1.model.Usuario;
 import br.com.santander.icheffv1.repository.IngredienteRepository;
 import br.com.santander.icheffv1.repository.IngredienteUnidadeRepository;
 import br.com.santander.icheffv1.repository.ReceitaCategoriaRepository;
+import br.com.santander.icheffv1.repository.ReceitaRepository;
 import br.com.santander.icheffv1.repository.UsuarioEnderecoRepository;
 import br.com.santander.icheffv1.repository.UsuarioRepository;
 
@@ -56,6 +60,9 @@ public class IcheffV1Application implements CommandLineRunner {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private ReceitaRepository receitaRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -184,13 +191,36 @@ public class IcheffV1Application implements CommandLineRunner {
 		}
 		
 		//Instancia as categorias quando não tem! ;)
-		if(receitaCategoriaRepository.count() == 0) {
+		if(this.receitaCategoriaRepository.count() == 0) {
 			receitaCategoriaRepository.save(new ReceitaCategoria(null,"Variados",false));
 			receitaCategoriaRepository.save(new ReceitaCategoria(null,"Peixes e frutos do mar",false));
 			receitaCategoriaRepository.save(new ReceitaCategoria(null,"Fitness",false));
 			receitaCategoriaRepository.save(new ReceitaCategoria(null,"Veganos e Vegetarianos",true));
 		}
 		
+		//Instancia uma receita caso não exista nenhuma ;)
+		/*
+		if(this.receitaRepository.count() == 0) {
+			
+			Receita receita = new Receita(
+				null,
+				"Bolo de côco",
+				"http://localhost:8080/imagens/bolo-de-coco.jpg",
+				"https://www.youtube.com/watch?v=bxMxOsypcck",
+				"Misture todos os ingredientes o liquidificador e coloque para assar!",
+				25.0
+			);
+			
+			List<IngredienteReceita> ingredientes = new ArrayList<IngredienteReceita>();
+			
+			//ingredientes.add();
+			
+			receita.setIngredientes(ingredientes);
+			
+			this.receitaRepository.save(receita);
+			
+		}
+		*/
 	}
 	
 }

@@ -8,8 +8,12 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "vendas_relacao")
 public class VendaRelacao implements Serializable {
 
@@ -27,15 +31,15 @@ public class VendaRelacao implements Serializable {
 	private double preco;
 
 	@ManyToOne
-	@JoinColumn(name = "relacao_receita")
+	@JoinColumn(name = "vr_receita_id", nullable = false)
 	private Receita receita;
 
 	@ManyToOne
-	@JoinColumn(name = "relacao_venda")
+	@JoinColumn(name = "vr_venda_id", nullable = false)
 	private Venda venda;
 
-	public VendaRelacao() { }
-
-
+	public VendaRelacao() {
+		
+	}
 
 }

@@ -691,7 +691,7 @@ const BASE_URL = 'http://localhost:8080';
                 preco: $form.find('input#rec_preco').val().replace(',','.'),
                 imagem: $form.find('input#rec_imagem').val(),
                 linkVideo: $form.find('input#rec_link_youtube').val(),
-                ativa: $form.find('select#rec_ativa option:selected').val(),
+                ativa: ($form.find('select#rec_ativa option:selected').val() == '1' ? true : false),
                 descricao: $form.find('textarea#rec_descricao').val(),
 
                 receitaCategoria: {

@@ -20,6 +20,6 @@ public class ReceitaDto implements Serializable {
 	private double preco;
 	private Long categoriaId;
 	private double custo;
-	private int ativa;
+	private Boolean ativa;
 	
 }

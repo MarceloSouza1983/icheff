@@ -57,7 +57,7 @@ public class Receita implements Serializable {
 	
 	@Column(columnDefinition = "TINYINT(1)", name= "rec_ativa", length = 1, nullable = false)
 	@NotNull
-	private int ativa;
+	private Boolean ativa;
 	
 	public Receita() {
 		
@@ -69,10 +69,7 @@ public class Receita implements Serializable {
 		String imagem,
 		String linkVideo,
 		String descricao,
-		List<IngredienteReceita> ingredientes,
-		LocalDateTime dataCadastro,
-		@NotNull double preco,
-		int ativa
+		@NotNull double preco
 	) {
 		super();
 		this.id = id;
@@ -80,10 +77,9 @@ public class Receita implements Serializable {
 		this.imagem = imagem;
 		this.linkVideo = linkVideo;
 		this.descricao = descricao;
-		this.ingredientes = ingredientes;
-		this.dataCadastro = dataCadastro;
+		this.dataCadastro = LocalDateTime.now();
 		this.preco = preco;
-		this.preco = ativa;
+		this.ativa = true;
 	}
 
 	@Override
