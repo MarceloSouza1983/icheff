@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.santander.icheffv1.dto.UsuarioDTO;
 import br.com.santander.icheffv1.model.Usuario;
 import br.com.santander.icheffv1.service.UsuarioService;
 
@@ -64,9 +65,9 @@ public class UsuarioController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Usuario>> findAll() {
+	public ResponseEntity<List<UsuarioDTO>> findAll() {
 		
-		List<Usuario> usuario = this.usuarioService.findAll();
+		List<UsuarioDTO> usuario = this.usuarioService.findAll();
 		
 		return ResponseEntity.ok(usuario);
 	}

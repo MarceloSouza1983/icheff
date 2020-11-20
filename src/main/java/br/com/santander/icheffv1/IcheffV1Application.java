@@ -1,5 +1,13 @@
 package br.com.santander.icheffv1;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,9 +19,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import br.com.santander.icheffv1.model.Ingrediente;
 import br.com.santander.icheffv1.model.IngredienteUnidade;
 import br.com.santander.icheffv1.model.ReceitaCategoria;
+import br.com.santander.icheffv1.model.Tipo;
+import br.com.santander.icheffv1.model.Usuario;
 import br.com.santander.icheffv1.repository.IngredienteRepository;
 import br.com.santander.icheffv1.repository.IngredienteUnidadeRepository;
 import br.com.santander.icheffv1.repository.ReceitaCategoriaRepository;
+import br.com.santander.icheffv1.repository.UsuarioEnderecoRepository;
+import br.com.santander.icheffv1.repository.UsuarioRepository;
 
 @SpringBootApplication
 public class IcheffV1Application implements CommandLineRunner {
@@ -42,8 +54,85 @@ public class IcheffV1Application implements CommandLineRunner {
 	@Autowired
 	private ReceitaCategoriaRepository receitaCategoriaRepository;
 	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
+		
+		//Instancia o admin caso não exista ;)
+		if(usuarioRepository.findByTipo(Tipo.ADMINISTRADOR).orElse(new ArrayList<Usuario>()).isEmpty()){
+			Usuario administrador = new Usuario(
+				null,
+				"iCheff Admin",
+				"admin@icheff.com.br",
+				"hackme",
+				LocalDate.now(),
+				LocalDateTime.now(),
+				"310821459",
+				"95212599067",
+				"Praça da Sé",
+				"s/n",
+				null,
+				"01001-001",
+				"Centro",
+				"São Paulo",
+				"São Paulo",
+				"1155554321",
+				"11987654321"
+			);
+			administrador.setTipo(Tipo.ADMINISTRADOR);
+			usuarioRepository.save(administrador);
+		}
+		
+		//Instancia cliente caso não exista ;)
+		if(usuarioRepository.findByTipo(Tipo.CLIENTE).orElse(new ArrayList<Usuario>()).isEmpty()){
+			Usuario usuario1 = new Usuario(
+				null,
+				"Maria José",
+				"maria@gmail.com",
+				"hackme",
+				LocalDate.parse("1985-05-04"),
+				LocalDateTime.now(),
+				"303069028",
+				"78325540028",
+				"Rua Ofélia",
+				"42",
+				"Apto 45",
+				"05423-110",
+				"Pinheiros",
+				"São Paulo",
+				"São Paulo",
+				"1155554321",
+				"11987654321"
+			);
+			
+			Usuario usuario2 = new Usuario(
+					null,
+					"José Maria",
+					"jose@gmail.com",
+					"hackme",
+					LocalDate.parse("1980-12-11"),
+					LocalDateTime.now(),
+					"472403679",
+					"60028024010",
+					"Av. Paulista",
+					"2200",
+					"Casa",
+					"05401-010",
+					"Jardim Paulista",
+					"São Paulo",
+					"São Paulo",
+					"1155554321",
+					"11987654321"
+			);
+			
+			usuario1.setTipo(Tipo.CLIENTE);
+			usuario2.setTipo(Tipo.CLIENTE);
+			
+			this.usuarioRepository.save(usuario1);
+			this.usuarioRepository.save(usuario2);
+		}
 		
 		//Instancia as unidades quando não tem! ;)
 		if(ingredienteUnidadeRepository.count() == 0) {

@@ -2,7 +2,6 @@ package br.com.santander.icheffv1.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -16,33 +15,40 @@ public class Venda implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name= "ven_id")
+	@Column(name = "ven_id")
 	private Long id;
 	
 	@Column(columnDefinition = "TINYINT(1)", name= "ven_pagamento_realizado", length = 10)
 	private int pagamentoRealizado;
 	
-	@Column(name= "ven_data_venda", length = 100, nullable = false)
+	@Column(name = "ven_data_venda", length = 100, nullable = false)
 	@NotNull
 	private LocalDateTime dataVenda;
 	
-	@Column(name= "ven_data_pagamento", length = 100, nullable = false)
+	@Column(name = "ven_data_pagamento", length = 100, nullable = false)
 	@NotNull
 	private LocalDateTime dataPagamento;
 	
 	@ManyToOne
-	@JoinColumn(name = "endereco_venda")
-	private UsuarioEndereco usuarioEndereco;
+	@JoinColumn(name = "ven_usuario_id")
+	private Usuario usuario;
 	
-	public Venda() { }
+	public Venda() {
+		
+	}
 	
-	public Venda(Long id, int pagamentoRealizado, @NotNull LocalDateTime dataVenda,
-			@NotNull LocalDateTime dataPagamento) {
-		super();
+	public Venda(
+			Long id,
+			int pagamentoRealizado,
+			@NotNull LocalDateTime dataVenda,
+			@NotNull LocalDateTime dataPagamento,
+			@NotNull Usuario usuario
+	) {
 		this.id = id;
 		this.pagamentoRealizado = pagamentoRealizado;
 		this.dataVenda = dataVenda;
 		this.dataPagamento = dataPagamento;
+		this.usuario = usuario;
 	}
 
 	public Long getId() {
@@ -75,6 +81,14 @@ public class Venda implements Serializable {
 
 	public void setDataPagamento(LocalDateTime dataPagamento) {
 		this.dataPagamento = dataPagamento;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

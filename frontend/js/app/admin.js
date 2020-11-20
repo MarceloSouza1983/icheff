@@ -22,7 +22,14 @@ const BASE_URL = 'http://localhost:8080';
         primeiraMaiuscula: (s) => {
             if (typeof s !== 'string')
                 return ''
-            return s.charAt(0).toUpperCase() + s.slice(1)
+            return s.charAt(0).toUpperCase() + s.slice(1);
+        },
+
+        //Só primeira letra maiúscula
+        soPrimeiraMaiuscula: (s) => {
+            if (typeof s !== 'string')
+                return ''
+            return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
         },
 
         //Botões menu
@@ -436,6 +443,8 @@ const BASE_URL = 'http://localhost:8080';
 
             $('ol.breadcrumb li.active').html('Usuários');
 
+            let _this = this;
+
             $.ajax({
                 url: BASE_URL + '/api/usuarios',
                 type: 'GET',
@@ -455,11 +464,9 @@ const BASE_URL = 'http://localhost:8080';
         
                         $tr.append('<td>' + d.id + '</td>');
                         $tr.append('<td>' + d.nome + '</td>');
-                        $tr.append('<td>' + d.tipo + '</td>');
+                        $tr.append('<td>' + _this.soPrimeiraMaiuscula(d.tipo) + '</td>');
                         $tr.append('<td>' + d.login + '</td>');
-                        $tr.append('<td>' + d.email + '</td>');
-                        $tr.append('<td>' + d.rg + '</td>');
-                        $tr.append('<td>' + d.cpf + '</td>');
+                        $tr.append('<td>' + d.quantidadeCompras + '</td>');
                         $tr.append('<td>' + d.dataCadastro + '</td>');
         
                         $tabelaBody.append($tr);

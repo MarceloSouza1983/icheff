@@ -43,10 +43,10 @@ public class Usuario implements Serializable {
 	@NotNull(message = "A senha não pode ser nula e precisa ter no mínimo 5 caracteres")
 	private String senha;
 	
-	//@Column(name= "usu_tipo", length = 20, nullable = false)
-	//@ColumnDefault("0")
-	//@NotNull
-	//private Tipo tipo;
+	@Column(name= "usu_tipo", length = 20, nullable = false)
+	@ColumnDefault("0")
+	@NotNull
+	private Tipo tipo;
 	
 	@JsonFormat(pattern="dd/MM/yyyy")
 	@Column(name= "usu_data_nascimento", length = 10, nullable = false)
@@ -98,21 +98,29 @@ public class Usuario implements Serializable {
 	@NotNull(message = "O campo celular não pode ser nulo")
 	private String celular;
 	
-	public Usuario() { }
+	public Usuario() {
+		
+	}
 	
-	public Usuario(Long id, @NotNull(message = "O nome não pode ser nulo") String nome,
+	public Usuario(
+			Long id,
+			@NotNull(message = "O nome não pode ser nulo") String nome,
 			@NotNull(message = "O login não pode ser nulo e precisa ter no mínimo 5 caracteres") @Length(min = 5, max = 100) String login,
 			@Length(min = 5, max = 255) @NotNull(message = "A senha não pode ser nula e precisa ter no mínimo 5 caracteres") String senha,
-			LocalDate dataNascimento, LocalDateTime dataCadastro,
+			LocalDate dataNascimento,
+			LocalDateTime dataCadastro,
 			@NotNull(message = "O rg não pode ser nulo") String rg,
 			@CPF @NotNull(message = "O cpf não pode ser nulo") String cpf,
 			@NotNull(message = "O logradouro do endereço não pode ser nulo") String logradouro,
-			@NotNull(message = "O número não pode ser nulo") String numero, String complemento,
+			@NotNull(message = "O número não pode ser nulo") String numero,
+			String complemento,
 			@NotNull(message = "O CEP não pode ser nulo") String cep,
 			@NotNull(message = "O bairro não pode ser nulo") String bairro,
 			@NotNull(message = "A cidade não pode ser nula") String cidade,
-			@NotNull(message = "O estado não pode ser nulo") String estado, String telefone,
-			@NotNull(message = "O campo celular não pode ser nulo") String celular) {
+			@NotNull(message = "O estado não pode ser nulo") String estado,
+			String telefone,
+			@NotNull(message = "O campo celular não pode ser nulo") String celular
+	) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -165,13 +173,13 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	/* public Tipo getTipo() {
+	public Tipo getTipo() {
 		return tipo;
 	}
 
 	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
-	} */
+	}
 
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
