@@ -1,5 +1,6 @@
 package br.com.santander.icheffv1.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,7 @@ public class ReceitaService {
 	
 	public Receita create(Receita receita) {
 		receita.setId(null);
+		receita.setDataCadastro(LocalDateTime.now());
 		Receita receitaDB = this.receitaRepository.save(receita);
 		
 		for(IngredienteReceita ingrediente : receita.getIngredientes()) {
@@ -48,10 +50,9 @@ public class ReceitaService {
 		receitaAntiga.setLinkVideo(receitaNova.getLinkVideo());
 		receitaAntiga.setPreco(receitaNova.getPreco());
 		receitaAntiga.setAtiva(receitaNova.getAtiva());
+		receitaAntiga.setPorcoes(receitaNova.getPorcoes());
 		
-		System.out.println(receitaAntiga.getAtiva());
-		System.out.println(receitaNova.getAtiva());
-		
+		//Ingredientes
 		List<IngredienteReceita> ingredientesAntigos = new ArrayList<IngredienteReceita>();
 		List<IngredienteReceita> novosIngredientes = new ArrayList<IngredienteReceita>();
 		
@@ -74,6 +75,7 @@ public class ReceitaService {
 		}
 		
 		receitaAntiga.setIngredientes(novosIngredientes);
+		//Fim ingredientes
 		
 		return this.receitaRepository.save(receitaAntiga);
 	}
@@ -102,6 +104,7 @@ public class ReceitaService {
 			dto.setId(receita.getId());
 			dto.setCategoriaId(receita.getReceitaCategoria().getId());
 			dto.setAtiva(receita.getAtiva());
+			dto.setPorcoes(receita.getPorcoes());
 			
 			for(IngredienteReceita ingrediente : receita.getIngredientes()) {
 				IngredienteDto ingredienteDto = new IngredienteDto();
@@ -118,8 +121,8 @@ public class ReceitaService {
 			}
 			
 			receitasDto.add(dto);
-		}
 			
+		}
 		
 		return receitasDto;
 	}

@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-@Setter
-@Getter
 public class UsuarioDTO implements Serializable {
 
 	private static final long serialVersionUID = 447629492527514331L;

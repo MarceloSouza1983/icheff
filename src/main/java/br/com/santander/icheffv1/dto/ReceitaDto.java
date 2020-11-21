@@ -13,6 +13,7 @@ public class ReceitaDto implements Serializable {
 	private Long id;
 	private String categoria;
 	private String nome;
+	private Long porcoes;
 	private String descricao;
 	private String imagem;
 	private List<IngredienteDto> ingredientes;

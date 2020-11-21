@@ -140,14 +140,14 @@ const BASE_URL = 'http://localhost:8080';
             $form.find('input#ingrediente-custo').val(json.custo.toString().replace('.', ','));
 
             $form.find('select#ingrediente-ativo option:selected').removeAttr('selected');
-            $form.find('select#ingrediente-ativo option[value="' + json.ativo + '"]').attr('selected', '');
+            $form.find('select#ingrediente-ativo option[value="' + (json.ativo?1:0) + '"]').attr('selected', '');
         },
 
         preencheEditModalCategorias: function ($form, json) {
             $form.find('input#cat_nome').val(json.nome);
 
             $form.find('select#cat_vegana option:selected').removeAttr('selected');
-            $form.find('select#cat_vegana option[value="' + (json.vegana=='1'?1:0) + '"]').attr('selected', '');
+            $form.find('select#cat_vegana option[value="' + (json.vegana?1:0) + '"]').attr('selected', '');
         },
 
         preencheEditModalReceitas: function ($form, json) {
@@ -158,6 +158,7 @@ const BASE_URL = 'http://localhost:8080';
 
             $form.find('select#rec_id_categoria option[value="' + json.categoriaId + '"]').attr('selected', '');
             $form.find('select#rec_ativa option[value="' + (json.ativa?'1':'0') + '"]').attr('selected', '');
+            $form.find('select#rec_porcoes option[value="' + json.porcoes + '"]').attr('selected', '');
 
             $form.find('textarea#rec_descricao').val(json.descricao);
 
@@ -228,7 +229,9 @@ const BASE_URL = 'http://localhost:8080';
                         + (data.vendasRealizadas > 1 ? ' vendas realizadas' : ' venda realizada')
                     );
 
-                    _this.loadCharts(data.distribuicaoDeVendas, data.historicoDeVendas);
+                    setTimeout(()=>{
+                        _this.loadCharts(data.distribuicaoDeVendas, data.historicoDeVendas);
+                    },500)
 
                 },
                 error: function(jqXHR, textStatus, errorThrown){
@@ -411,6 +414,7 @@ const BASE_URL = 'http://localhost:8080';
                         $tr.append('<td>' + d.nome + '</td>');
                         $tr.append('<td>' + d.categoria + '</td>');
                         $tr.append('<td>' + (d.ingredientes ? d.ingredientes.length : 0) + '</td>');
+                        $tr.append('<td>' + d.porcoes + '</td>');
                         $tr.append('<td>' + d.custo + '</td>');
                         $tr.append('<td>' + d.preco + '</td>');
                         $tr.append('<td>' + (d.ativa?'Sim':'Não') + '</td>');
@@ -619,7 +623,7 @@ const BASE_URL = 'http://localhost:8080';
                     id: $form.find('select#ingrediente-unidade option:selected').val()
                 },
                 custo: $form.find('input#ingrediente-custo').val().replace(',','.'),
-                ativo: $form.find('select#ingrediente-ativo option:selected').val()
+                ativo: ($form.find('select#ingrediente-ativo option:selected').val() == '1' ? true : false)
             }
 
             //Verificações
@@ -656,7 +660,7 @@ const BASE_URL = 'http://localhost:8080';
             
             let data = {
                 nome: $form.find('input#cat_nome').val(),
-                vegana: $form.find('select#cat_vegana option:selected').val()=='1' ? true : false,
+                vegana: ($form.find('select#cat_vegana option:selected').val()=='1' ? true : false),
             }
 
             //Verificações
@@ -693,6 +697,7 @@ const BASE_URL = 'http://localhost:8080';
                 linkVideo: $form.find('input#rec_link_youtube').val(),
                 ativa: ($form.find('select#rec_ativa option:selected').val() == '1' ? true : false),
                 descricao: $form.find('textarea#rec_descricao').val(),
+                porcoes: $form.find('select#rec_porcoes option:selected').val(),
 
                 receitaCategoria: {
                     id: $form.find('select#rec_id_categoria option:selected').val()

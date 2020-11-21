@@ -46,42 +46,6 @@ public class DashboardService {
 		//Histórico de vendas
 		List<HistoricoDeVenda> historicoDeVenda = new ArrayList<HistoricoDeVenda>();
 		
-		/* Mock */
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-01"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-02"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-03"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-04"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-05"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-06"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-07"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-08"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-09"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-10"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-11"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-12"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-13"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-14"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-15"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-16"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-17"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-18"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-19"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-20"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-21"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-22"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-23"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-24"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-25"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-26"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-27"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-28"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-29"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-30"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-01-31"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-02-01"), getRandomNumber(0,10)));
-        historicoDeVenda.add(new HistoricoDeVenda(LocalDate.parse("2020-02-02"), getRandomNumber(0,10)));
-		/* Fim Mock */
-		
 		//Implementação do service
         for(Venda venda : vendaService.findAll()) {
         	

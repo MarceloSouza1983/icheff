@@ -19,14 +19,13 @@ public class Venda implements Serializable {
 	private Long id;
 	
 	@Column(columnDefinition = "TINYINT(1)", name= "ven_pagamento_realizado", length = 10)
-	private int pagamentoRealizado;
+	private Boolean pagamentoRealizado;
 	
 	@Column(name = "ven_data_venda", length = 100, nullable = false)
 	@NotNull
 	private LocalDateTime dataVenda;
 	
-	@Column(name = "ven_data_pagamento", length = 100, nullable = false)
-	@NotNull
+	@Column(name = "ven_data_pagamento", length = 100)
 	private LocalDateTime dataPagamento;
 	
 	@ManyToOne
@@ -38,11 +37,11 @@ public class Venda implements Serializable {
 	}
 	
 	public Venda(
-			Long id,
-			int pagamentoRealizado,
-			@NotNull LocalDateTime dataVenda,
-			@NotNull LocalDateTime dataPagamento,
-			@NotNull Usuario usuario
+		Long id,
+		Boolean pagamentoRealizado,
+		@NotNull LocalDateTime dataVenda,
+		LocalDateTime dataPagamento,
+		@NotNull Usuario usuario
 	) {
 		this.id = id;
 		this.pagamentoRealizado = pagamentoRealizado;
@@ -59,11 +58,11 @@ public class Venda implements Serializable {
 		this.id = id;
 	}
 
-	public int getPagamentoRealizado() {
+	public Boolean getPagamentoRealizado() {
 		return pagamentoRealizado;
 	}
 
-	public void setPagamentoRealizado(int pagamentoRealizado) {
+	public void setPagamentoRealizado(Boolean pagamentoRealizado) {
 		this.pagamentoRealizado = pagamentoRealizado;
 	}
 

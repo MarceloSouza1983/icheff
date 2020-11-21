@@ -33,6 +33,9 @@ public class Receita implements Serializable {
 	@Column(name= "rec_link_youtube", length = 500)
 	private String linkVideo;
 	
+	@Column(name= "rec_porcoes", length = 11)
+	private Long porcoes;
+	
 	@Column(name= "rec_link_imagem", length = 500)
 	private String imagem;
 	
@@ -68,14 +71,17 @@ public class Receita implements Serializable {
 		@NotNull String nome,
 		String imagem,
 		String linkVideo,
+		ReceitaCategoria receitaCategoria,
+		Long porcoes,
 		String descricao,
 		@NotNull double preco
 	) {
-		super();
 		this.id = id;
 		this.nome = nome;
 		this.imagem = imagem;
 		this.linkVideo = linkVideo;
+		this.receitaCategoria = receitaCategoria;
+		this.porcoes = porcoes;
 		this.descricao = descricao;
 		this.dataCadastro = LocalDateTime.now();
 		this.preco = preco;
