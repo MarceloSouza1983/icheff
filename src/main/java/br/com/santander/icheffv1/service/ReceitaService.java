@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import br.com.santander.icheffv1.dto.IngredienteDto;
-import br.com.santander.icheffv1.dto.ReceitaDto;
+import br.com.santander.icheffv1.dto.ReceitaDTO;
 import br.com.santander.icheffv1.exception.DataIntegrityException;
 import br.com.santander.icheffv1.exception.ObjectNotFoundException;
 import br.com.santander.icheffv1.model.IngredienteReceita;
@@ -86,13 +86,13 @@ public class ReceitaService {
 		this.receitaRepository.deleteById(id);
 	}
 	
-	public List<ReceitaDto> findAll(){
+	public List<ReceitaDTO> findAll(){
 		List<Receita> receitas = this.receitaRepository.findAll();
 		
-		List<ReceitaDto> receitasDto = new ArrayList<>();
+		List<ReceitaDTO> receitasDto = new ArrayList<>();
 		for(Receita receita: receitas) {
 			
-			ReceitaDto dto = new ReceitaDto();
+			ReceitaDTO dto = new ReceitaDTO();
 			
 			dto.setCategoria(receita.getReceitaCategoria().getNome());
 			dto.setNome(receita.getNome());

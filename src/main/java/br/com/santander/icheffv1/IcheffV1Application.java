@@ -227,7 +227,7 @@ public class IcheffV1Application implements CommandLineRunner {
 				categoria,
 				12L,
 				"Misture todos os ingredientes o liquidificador e coloque para assar!",
-				25.0
+				25.99
 			);
 			
 			List<IngredienteReceita> ingredientes = new ArrayList<IngredienteReceita>();
@@ -265,7 +265,7 @@ public class IcheffV1Application implements CommandLineRunner {
 				categoria2,
 				12L,
 				"Misture todos os ingredientes o liquidificador e coloque para assar!",
-				20.0
+				19.99
 			);
 			
 			List<IngredienteReceita> ingredientes2 = new ArrayList<IngredienteReceita>();
@@ -293,7 +293,7 @@ public class IcheffV1Application implements CommandLineRunner {
 			
 			Venda venda1 = new Venda(
 				null,
-				false,
+				true,
 				LocalDateTime.now(),
 				LocalDateTime.now(),
 				usuario1
@@ -312,9 +312,9 @@ public class IcheffV1Application implements CommandLineRunner {
 			
 			Venda venda2 = new Venda(
 				null,
-				false,
-				LocalDateTime.now().minus(1, ChronoUnit.DAYS),
-				LocalDateTime.now().minus(1, ChronoUnit.DAYS),
+				true,
+				LocalDateTime.now().minus(2, ChronoUnit.DAYS),
+				LocalDateTime.now().minus(2, ChronoUnit.DAYS),
 				usuario2
 			);
 			
@@ -323,8 +323,50 @@ public class IcheffV1Application implements CommandLineRunner {
 			VendaRelacao vendaRelacao3 = new VendaRelacao(null, 5L, receita, venda2);
 			this.vendaRelacaoRepository.save(vendaRelacao3);
 			
-			VendaRelacao vendaRelacao4 = new VendaRelacao(null, 2L, receita, venda2);
+			VendaRelacao vendaRelacao4 = new VendaRelacao(null, 2L, receita2, venda2);
 			this.vendaRelacaoRepository.save(vendaRelacao4);
+			
+			//Venda 3
+			Venda venda3 = new Venda(
+				null,
+				true,
+				LocalDateTime.now().minus(2, ChronoUnit.DAYS),
+				LocalDateTime.now().minus(2, ChronoUnit.DAYS),
+				usuario1
+			);
+			
+			this.vendaRepository.save(venda3);
+			
+			VendaRelacao vendaRelacao5 = new VendaRelacao(null, 5L, receita, venda3);
+			this.vendaRelacaoRepository.save(vendaRelacao5);
+			
+			//Venda 4
+			Venda venda4 = new Venda(
+				null,
+				true,
+				LocalDateTime.now().minus(4, ChronoUnit.DAYS),
+				LocalDateTime.now().minus(4, ChronoUnit.DAYS),
+				usuario2
+			);
+			
+			this.vendaRepository.save(venda4);
+			
+			VendaRelacao vendaRelacao6 = new VendaRelacao(null, 5L, receita2, venda4);
+			this.vendaRelacaoRepository.save(vendaRelacao6);
+			
+			//Venda 5
+			Venda venda5 = new Venda(
+				null,
+				true,
+				LocalDateTime.now().minus(8, ChronoUnit.DAYS),
+				LocalDateTime.now().minus(8, ChronoUnit.DAYS),
+				usuario1
+			);
+			
+			this.vendaRepository.save(venda5);
+			
+			VendaRelacao vendaRelacao7 = new VendaRelacao(null, 5L, receita2, venda5);
+			this.vendaRelacaoRepository.save(vendaRelacao7);
 			
 		}
 		

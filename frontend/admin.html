@@ -23,14 +23,14 @@
         <hr>
 
         <div class="menu">
-            <a href="#dashboard"><img src="img/icons/icon-dot.png">Dashboard</a>
+            <a href="#dashboard"><img src="img/icons/grafico-de-linha-p.png">Dashboard</a>
             <hr>
-            <a href="#ingredientes"><img src="img/icons/icon-dot.png">Ingredientes</a>
-            <a href="#categorias"><img src="img/icons/icon-dot.png">Categorias</a>
-            <a href="#receitas"><img src="img/icons/icon-dot.png">Receitas</a>
+            <a href="#ingredientes"><img src="img/icons/ingredientes-p.png">Ingredientes</a>
+            <a href="#categorias"><img src="img/icons/lista-p.png">Categorias</a>
+            <a href="#receitas"><img src="img/icons/livro-de-receitas-p.png">Receitas</a>
             <hr>
-            <a href="#usuarios"><img src="img/icons/icon-dot.png">Usuários</a>
-            <a href="#vendas"><img src="img/icons/icon-dot.png">Vendas</a>
+            <a href="#usuarios"><img src="img/icons/revisao-do-cliente-p.png">Usuários</a>
+            <a href="#vendas"><img src="img/icons/caixa-registradora-p.png">Vendas</a>
         </div>
 
         <button class="btn btn-danger btn-sair">Sair</button>
@@ -54,22 +54,22 @@
 
             <div id="dash-estatisticas" class="d-flex justify-content-between">
                 <div class="card p-3 text-wrap">
-                    <img src="img/logotipo-icheff2.png">
+                    <img src="img/icons/ingredientes.png">
                     <span></span>
                 </div>
                 
                 <div class="card p-3">
-                    <img src="img/logotipo-icheff2.png">
+                    <img src="img/icons/livro-de-receitas.png">
                     <span></span>
                 </div>
 
                 <div class="card p-3">
-                    <img src="img/logotipo-icheff2.png">
+                    <img src="img/icons/revisao-do-cliente.png">
                     <span></span>
                 </div>
 
                 <div class="card p-3">
-                    <img src="img/logotipo-icheff2.png">
+                    <img src="img/icons/caixa-registradora.png">
                     <span></span>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                             <th data-toggle="tooltip" title="ID">#</th>
                             <th>Nome</th>
                             <th>Unidade</th>
-                            <th>Valor</th>
+                            <th>Custo</th>
                             <th>Ativo</th>
                             <th>Opções</th>
                         </tr>
@@ -471,10 +471,11 @@
                         <tr>
                             <th data-toggle="tooltip" title="ID">#</th>
                             <th>Usuário</th>
-                            <th>Endereço de entrega</th>
+                            <th>Valor</th>
+                            <th>Receitas</th>
+                            <th>Endereço</th>
                             <th>Data da venda</th>
                             <th>Data pagamento</th>
-                            <th>Status do pagamento</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -485,7 +486,7 @@
         </div>
 
         <!-- Modal delete -->
-        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
+        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -503,6 +504,22 @@
             </div>
         </div>
         <!-- Fim Modal delete -->
+
+        <!-- Modal Infos -->
+        <div class="modal fade" id="modalInfos" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle"><span></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim Modal Infos -->
 
         <footer>
             <p>iCheff - Área administrativa</p>

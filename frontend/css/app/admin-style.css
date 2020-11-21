@@ -178,6 +178,19 @@ div.modal-receitas .modal-dialog{
     max-width: 1000px;
 }
 
+div#modalInfos .modal-dialog{
+    max-width: 450px;
+}
+
+img.btn-infos-receitas{
+    cursor: pointer;
+    margin: -2px 0 2px 5px;
+}
+
+img.btn-infos-endereco{
+    cursor: pointer;
+}
+
 table.table-ingredientes th{
     text-align: center;
     border-bottom: 1px solid #888;
@@ -202,6 +215,21 @@ table.table-ingredientes tr:last-child td{
 
 table.table-ingredientes tr:hover td{
     background-color: #eee;
+}
+
+table thead tr th{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+table thead tr th,
+table tbody tr td {
+    text-align: center;
+}
+
+table thead tr th:nth-child(2),
+table tbody tr td:nth-child(2){
+    text-align: left;
 }
 
 div.lista-ingredientes{

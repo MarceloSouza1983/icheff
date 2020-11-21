@@ -3,8 +3,8 @@ package br.com.santander.icheffv1.model;
 import java.io.Serializable;
 import java.util.List;
 
-import br.com.santander.icheffv1.model.dashboard.DistribuicaoDeVenda;
-import br.com.santander.icheffv1.model.dashboard.HistoricoDeVenda;
+import br.com.santander.icheffv1.dto.DistribuicaoDeVendaDTO;
+import br.com.santander.icheffv1.dto.HistoricoDeVendaDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,8 +22,8 @@ public class Dashboard implements Serializable {
 	
 	private Long vendasRealizadas;
 		
-	private List<HistoricoDeVenda> historicoDeVendas;
+	private List<HistoricoDeVendaDTO> historicoDeVendas;
 	
-	private List<DistribuicaoDeVenda> distribuicaoDeVendas;
+	private List<DistribuicaoDeVendaDTO> distribuicaoDeVendas;
 
 }

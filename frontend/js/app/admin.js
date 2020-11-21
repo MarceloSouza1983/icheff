@@ -128,6 +128,58 @@ const BASE_URL = 'http://localhost:8080';
                 });
 
             });
+
+            //Botão de ver receitas compradas
+            $('main').on('click', 'img.btn-infos-receitas', function() {
+                let $modal = $('#modalInfos');
+                let json = $(this).parents('tr').attr('receitas');
+
+                json = JSON.parse(json);
+
+                $modal.find('.modal-title span').html('Receitas da venda');
+
+                $body = $modal.find('.modal-body').html('');
+
+                for(let i in json){
+                    let receita = json[i];
+                    $body.append('<strong>' + receita.quantidade + '</strong> x ' + receita.nome + '<br>');
+                }
+
+                $modal.modal();
+            });
+
+            //Botão de ver endereco
+            $('main').on('click', 'img.btn-infos-endereco', function() {
+                let $modal = $('#modalInfos');
+                let json = $(this).parents('tr').attr('usuario');
+
+                json = JSON.parse(json);
+
+                $modal.find('.modal-title span').html('Endereço de entrega da venda');
+
+                $body = $modal.find('.modal-body').html('');
+
+                $body.append('<strong>' + json.nome + '</strong>' + '<br>');
+                
+                $body.append(json.logradouro + ' nº ' + json.numero + '<br>');
+
+                if(json.complemento && json.complemento.length > 0)
+                    $body.append(json.complemento + '<br>');
+                
+                $body.append('CEP: ' + json.cep + '<br>');
+                $body.append('Bairro: ' + json.bairro + '<br>');
+                $body.append(json.cidade + ' - ' + json.estado + '<br>');
+
+                $body.append('<br><strong>Contato</strong><br>');
+
+                if(json.telefone && json.telefone.length > 0)
+                    $body.append('Telefone: ' + json.telefone + '<br>');
+
+                if(json.celular && json.celular.length > 0)
+                    $body.append('Celular: ' + json.celular + '<br>');
+
+                $modal.modal();
+            });
         },
 
         //Preencher campos do modal
@@ -174,7 +226,7 @@ const BASE_URL = 'http://localhost:8080';
                 let $tr = $('<tr>');
                 
                 $tr.append($('<td>').html(ing.quantidade + ' ' + ing.unidade));
-                $tr.append($('<td>').html(ing.nome));
+                $tr.append($('<td>').html(ing.nome + ' (' + ing.unidade + ')'));
                 $tr.append($('<td>').html('<img class="icon-delete-ingrediente" src="img/icons/icon-delete.png">'));
                 
                 let jsonIngrediente = {
@@ -282,7 +334,7 @@ const BASE_URL = 'http://localhost:8080';
                         $tr.append('<td>' + d.id + '</td>');
                         $tr.append('<td>' + d.nome + '</td>');
                         $tr.append('<td>' + d.ingredienteUnidade.unidadeSigla + '</td>');
-                        $tr.append('<td>' + d.custo.toString().replace('.',',') + '</td>');
+                        $tr.append('<td>R$ ' + d.custo.toString().replace('.',',') + '</td>');
                         $tr.append('<td>' + (d.ativo?'Sim':'Não') + '</td>');
         
                         $edit.attr('item_id', d['id']);
@@ -415,8 +467,8 @@ const BASE_URL = 'http://localhost:8080';
                         $tr.append('<td>' + d.categoria + '</td>');
                         $tr.append('<td>' + (d.ingredientes ? d.ingredientes.length : 0) + '</td>');
                         $tr.append('<td>' + d.porcoes + '</td>');
-                        $tr.append('<td>' + d.custo + '</td>');
-                        $tr.append('<td>' + d.preco + '</td>');
+                        $tr.append('<td>R$ ' + (Math.round(d.custo * 100) / 100) + '</td>');
+                        $tr.append('<td>R$ ' + (Math.round(d.preco * 100) / 100) + '</td>');
                         $tr.append('<td>' + (d.ativa?'Sim':'Não') + '</td>');
         
                         let ingredientesJson = JSON.stringify(d);
@@ -459,6 +511,11 @@ const BASE_URL = 'http://localhost:8080';
                     let $tabelaBody = $('div#icheff-usuarios table tbody').eq(0);
         
                     $tabelaBody.html('');
+
+                    let localDateBR = (date) => {
+                        date = new Date(date);
+                        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                    }
         
                     for (let i in data) {
         
@@ -471,7 +528,7 @@ const BASE_URL = 'http://localhost:8080';
                         $tr.append('<td>' + _this.soPrimeiraMaiuscula(d.tipo) + '</td>');
                         $tr.append('<td>' + d.login + '</td>');
                         $tr.append('<td>' + d.quantidadeCompras + '</td>');
-                        $tr.append('<td>' + d.dataCadastro + '</td>');
+                        $tr.append('<td>' + localDateBR(d.dataCadastro) + '</td>');
         
                         $tabelaBody.append($tr);
         
@@ -505,20 +562,23 @@ const BASE_URL = 'http://localhost:8080';
         
                         let $tr = $('<tr>');
 
-                        let date = new Date(d['dataVenda']);
-                        let datePayment = new Date(d['dataPagamento']);
-
                         let localDateBR = (date) => {
+                            date = new Date(date);
                             return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
                         }
         
-                        $tr.append('<td>' + d['id'] + '</td>');
-                        $tr.append('<td>' + d['nome'] + '</td>');
-                        $tr.append('<td>' + d['endereco'] + '</td>');
-                        $tr.append('<td>' + localDateBR(date) + '</td>');
-                        $tr.append('<td>' + localDateBR(datePayment) + '</td>');
-                        $tr.append('<td>' + d['pagamentoRealizado'] + '</td>');
+                        $tr.append('<td>' + d.id + '</td>');
+                        $tr.append('<td>' + d.usuario.nome + '</td>');
+                        $tr.append('<td>R$ ' + (Math.round(d.valorVenda * 100) / 100) + '</td>');
+                        $tr.append('<td>' + d.quantidadeReceitas + '<img class="btn-infos-receitas" title="Ver receitas da venda" src="img/icons/livro-de-receitas-p.png"></td>');
+                        $tr.append('<td><img class="btn-infos-endereco" title="Ver endereço de entrega" src="img/icons/lugar-colocar-p.png"></td>');
+                        $tr.append('<td>' + localDateBR(d.dataVenda) + '</td>');
+                        $tr.append('<td>' + localDateBR(d.dataPagamento) + '</td>');
         
+                        $tr.attr('usuario', JSON.stringify(d.usuario));
+
+                        $tr.attr('receitas', JSON.stringify(d.receitas));
+
                         $tabelaBody.append($tr);
         
                     }
@@ -594,6 +654,23 @@ const BASE_URL = 'http://localhost:8080';
 
                 let ingrediente = $('select#inr_id_ingrediente option:selected').html();
                 let ingrediente_id = $('select#inr_id_ingrediente option:selected').val();
+
+                //Verificar se já não está na lista
+                let repetido = false;
+                $('table.table-ingredientes tbody tr').each(function(){
+                    let data = $(this).attr('data'),
+                        json = JSON.parse(data);
+                    if(json.ingrediente.id == ingrediente_id){
+                        repetido = true;
+                    }
+                });
+
+                if(repetido){
+                    alert('Ingrediente já selecionado!');
+                    $inputQuantidade.focus();
+                    return;
+                }
+                //
 
                 let $tr = $('<tr>');
                 

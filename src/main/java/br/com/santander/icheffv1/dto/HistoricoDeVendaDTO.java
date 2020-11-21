@@ -1,4 +1,4 @@
-package br.com.santander.icheffv1.model.dashboard;
+package br.com.santander.icheffv1.dto;
 
 import java.time.LocalDate;
 
@@ -7,13 +7,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HistoricoDeVenda {
+public class HistoricoDeVendaDTO {
 
 	private LocalDate data;
 	
 	private Long quantidade;
 	
-	public HistoricoDeVenda(LocalDate data, Long quantidade) {
+	public HistoricoDeVendaDTO(LocalDate data, Long quantidade) {
 		this.data = data;
 		this.quantidade = quantidade;
 	}
@@ -38,7 +38,7 @@ public class HistoricoDeVenda {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		HistoricoDeVenda other = (HistoricoDeVenda) obj;
+		HistoricoDeVendaDTO other = (HistoricoDeVendaDTO) obj;
 		if (data == null) {
 			if (other.data != null)
 				return false;

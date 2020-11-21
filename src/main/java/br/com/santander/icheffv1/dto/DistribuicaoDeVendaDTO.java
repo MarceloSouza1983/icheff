@@ -1,23 +1,23 @@
-package br.com.santander.icheffv1.model.dashboard;
+package br.com.santander.icheffv1.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class DistribuicaoDeVenda {
+public class DistribuicaoDeVendaDTO {
 	
 	private String categoria;
 	
 	private Long quantidade;
 
-	public DistribuicaoDeVenda(String categoria, Long quantidade) {
+	public DistribuicaoDeVendaDTO(String categoria, Long quantidade) {
 		this.categoria = categoria;
 		this.quantidade = quantidade;
 	}
 	
-	public void somaQuantidade() {
-		this.quantidade++;
+	public void somaQuantidade(Long qtd) {
+		this.quantidade += qtd;
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class DistribuicaoDeVenda {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DistribuicaoDeVenda other = (DistribuicaoDeVenda) obj;
+		DistribuicaoDeVendaDTO other = (DistribuicaoDeVendaDTO) obj;
 		if (categoria == null) {
 			if (other.categoria != null)
 				return false;
