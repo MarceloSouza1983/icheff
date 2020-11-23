@@ -26,20 +26,34 @@ public class VendaRelacao implements Serializable {
 
 	@Column(name= "vr_quantidade_receita", length = 11, nullable = false)
 	@ColumnDefault("1")
-	@NotNull(message = "A receita não pode ser nula")
+	@NotNull(message = "A quantidade não pode ser nula")
 	@Min(value = 0, message = "A quantidade não pode ser negativa")
-	private double preco;
+	private Long quantidade;
 
 	@ManyToOne
+	@NotNull(message = "A receita não pode ser nula")
 	@JoinColumn(name = "vr_receita_id", nullable = false)
 	private Receita receita;
 
 	@ManyToOne
+	@NotNull(message = "A venda não pode ser nula")
 	@JoinColumn(name = "vr_venda_id", nullable = false)
 	private Venda venda;
 
 	public VendaRelacao() {
 		
+	}
+
+	public VendaRelacao(
+		Long id,
+		@Min(value = 1, message = "A quantidade não pode ser negativa") Long quantidade,
+		@NotNull(message = "A receita não pode ser nula") Receita receita,
+		Venda venda
+	) {
+		this.id = id;
+		this.quantidade = quantidade;
+		this.receita = receita;
+		this.venda = venda;
 	}
 
 }

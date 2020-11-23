@@ -6,13 +6,14 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class ReceitaDto implements Serializable {
+public class ReceitaDTO implements Serializable {
 
 	private static final long serialVersionUID = 5799136004759553183L;
 
 	private Long id;
 	private String categoria;
 	private String nome;
+	private Long porcoes;
 	private String descricao;
 	private String imagem;
 	private List<IngredienteDto> ingredientes;

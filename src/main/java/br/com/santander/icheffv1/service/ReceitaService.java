@@ -10,7 +10,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import br.com.santander.icheffv1.dto.IngredienteDto;
-import br.com.santander.icheffv1.dto.ReceitaDto;
+import br.com.santander.icheffv1.dto.ReceitaDTO;
 import br.com.santander.icheffv1.exception.DataIntegrityException;
 import br.com.santander.icheffv1.exception.ObjectNotFoundException;
 import br.com.santander.icheffv1.model.IngredienteReceita;
@@ -52,10 +52,9 @@ public class ReceitaService {
 		receitaAntiga.setLinkVideo(receitaNova.getLinkVideo());
 		receitaAntiga.setPreco(receitaNova.getPreco());
 		receitaAntiga.setAtiva(receitaNova.getAtiva());
+		receitaAntiga.setPorcoes(receitaNova.getPorcoes());
 		
-		System.out.println(receitaAntiga.getAtiva());
-		System.out.println(receitaNova.getAtiva());
-		
+		//Ingredientes
 		List<IngredienteReceita> ingredientesAntigos = new ArrayList<IngredienteReceita>();
 		List<IngredienteReceita> novosIngredientes = new ArrayList<IngredienteReceita>();
 		
@@ -78,6 +77,7 @@ public class ReceitaService {
 		}
 		
 		receitaAntiga.setIngredientes(novosIngredientes);
+		//Fim ingredientes
 		
 		return this.receitaRepository.save(receitaAntiga);
 	}
@@ -88,13 +88,13 @@ public class ReceitaService {
 		this.receitaRepository.deleteById(id);
 	}
 	
-	public List<ReceitaDto> findAll(){
+	public List<ReceitaDTO> findAll(){
 		List<Receita> receitas = this.receitaRepository.findAll();
 		
-		List<ReceitaDto> receitasDto = new ArrayList<>();
+		List<ReceitaDTO> receitasDto = new ArrayList<>();
 		for(Receita receita: receitas) {
 			
-			ReceitaDto dto = new ReceitaDto();
+			ReceitaDTO dto = new ReceitaDTO();
 			
 			dto.setCategoria(receita.getReceitaCategoria().getNome());
 			dto.setNome(receita.getNome());
@@ -106,6 +106,7 @@ public class ReceitaService {
 			dto.setId(receita.getId());
 			dto.setCategoriaId(receita.getReceitaCategoria().getId());
 			dto.setAtiva(receita.getAtiva());
+			dto.setPorcoes(receita.getPorcoes());
 			
 			double totalCusto = 0;
 			
@@ -128,8 +129,8 @@ public class ReceitaService {
 			dto.setCusto(BigDecimal.valueOf(totalCusto).setScale(2, RoundingMode.HALF_UP).doubleValue());
 			
 			receitasDto.add(dto);
-		}
 			
+		}
 		
 		return receitasDto;
 	}

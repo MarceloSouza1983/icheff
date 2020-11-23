@@ -45,8 +45,7 @@ public class IngredienteReceita implements Serializable {
 		Long id,
 		@NotNull(message = "A quantidade não pode ser nula") @Min(value = 0, message = "A quantidade não pode ser negativa") double quantidade,
 		@NotNull(message = "A receita não pode ser nula") Receita receita,
-		@NotNull(message = "O ingrediente não pode ser nulo")
-		Ingrediente ingrediente
+		@NotNull(message = "O ingrediente não pode ser nulo") Ingrediente ingrediente
 	) {
 		this.id = id;
 		this.quantidade = quantidade;

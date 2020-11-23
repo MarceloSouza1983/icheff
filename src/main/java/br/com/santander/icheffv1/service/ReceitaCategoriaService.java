@@ -35,6 +35,7 @@ public class ReceitaCategoriaService {
 		ReceitaCategoria receitaCategoriaAntiga = this.findById(receitaCategoriaNova.getId());
 
 		receitaCategoriaAntiga.setNome(receitaCategoriaNova.getNome());
+		receitaCategoriaAntiga.setVegana(receitaCategoriaNova.getVegana());
 		
 		return this.receitaCategoriaRepository.save(receitaCategoriaAntiga);
 

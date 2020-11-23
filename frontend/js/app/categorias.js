@@ -47,7 +47,6 @@ $(document).ready(function () {
     
 });
 
-
 function getIdCategoria(categoria) {
     switch (categoria) {
         case "Variados":
@@ -197,3 +196,105 @@ criaCardModal2("cards-fitness", 50, "Hamburguer", "Receita de Hamburguer", "img/
 criaCardModal2("cards-vegetarianos", 60, "Lasanha Bolonhesa", "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", lista2, "", 45)
 criaCardModal2("cards-variados", 70, "Pizza Marguerita", "Receita de Pizza Marguerita", "img/pizza.jpg", lista2, "", 50)
 
+function mostrarCarrinho() {
+    if (document.getElementById("carrinho").style.display === "block") {
+        document.getElementById("carrinho").style.display = "none";
+    } else {
+        document.getElementById("carrinho").style.display = "block";
+    }
+}
+
+var list = [];
+
+//somando total
+function getTotal(list) {
+    var total = 0;
+    for (var key in list) {
+        total += list[key].valor * list[key].quantidade;
+    }
+    document.getElementById("totalValue").innerHTML = formatValue(total);
+}
+
+//criando a tabela
+function setList(list) {
+    var table = '<thead><tr><td>Descrição</td><td>Quantidade</td><td>Valor</td><td>Ação</td></tr></thead><tbody>';
+    for (var key in list) {
+        table += '<tr><td>' + list[key].descricao + '</td><td>' + list[key].quantidade + '</td><td>' + list[key].valor + '</td><td> <button class="btn btn-danger" onclick="deleteData(' + key + ');"><i class="fas fa-eraser"></i> Delete</button></td></tr>';
+        
+    }
+    table += '</tbody>';
+    console.log(list);
+
+    document.getElementById('listTable').innerHTML = table;
+    getTotal(list);
+    saveListStorage(list);
+}
+
+//formatando o preço
+function formatValue(value) {
+    var str = parseFloat(value).toFixed(2) + "";
+    str = str.replace(".", ",");
+    str = "R$ " + str;
+    return str;
+}
+
+function adicionarReceita() {
+    
+    pararVideo();
+
+    var amount = document.getElementById("qtd1").value;
+    var desc = document.getElementById("modalLabel").textContent;
+    var valueDesformatada = document.getElementById("precoReceita").textContent;
+    var str = "";
+    str = valueDesformatada.substring(3, 10).trim();
+
+    if (str.length === 2) {
+        str += ".00";
+    }
+
+    var value = str;
+
+    list.push({ "descricao": desc, "quantidade": amount, "valor": value });
+    setList(list);
+}
+
+//deletando os dados
+function deleteData(id) {
+    if (confirm("Deseja deletar este item?")) {
+        if (id === list.length - 1) {
+            list.pop();
+        } else if (id === 0) {
+            list.shift();
+        } else {
+            var arrAuxIni = list.slice(0, id);
+            var arrAuxEnd = list.slice(id + 1);
+            list = arrAuxIni.concat(arrAuxEnd);
+        }
+        setList(list);
+    }
+}
+
+//deletando Pedido
+function deleteList() {
+    if (confirm("Deseja deletar o pedido?")) {
+        list = [];
+        setList(list);
+    }
+}
+
+//salvando em storage
+function saveListStorage(list) {
+    var jsonStr = JSON.stringify(list);
+    localStorage.setItem("list", jsonStr);
+}
+
+//verifica se já tem algo salvo
+function initListStorage() {
+    var testList = localStorage.getItem("list");
+    if (testList) {
+        list = JSON.parse(testList);
+    }
+    setList(list);
+}
+
+initListStorage();

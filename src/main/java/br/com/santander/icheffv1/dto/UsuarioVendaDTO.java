@@ -9,15 +9,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-public class UsuarioDTO implements Serializable {
+public class UsuarioVendaDTO implements Serializable {
 
 	private static final long serialVersionUID = 447629492527514331L;
 	
 	private Long Id;
 	private String nome;
-	private Tipo tipo;
-	private String login;
-	private LocalDateTime dataCadastro;
-	private Long quantidadeCompras;
+	
+	//Endereco
+	private String logradouro;
+	private String numero;
+	private String complemento;
+	private String cep;
+	private String bairro;
+	private String cidade;
+	private String estado;
+	private String telefone;
+	private String celular;
 	
 }
