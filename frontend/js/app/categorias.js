@@ -41,7 +41,22 @@ $(document).ready(function () {
                     $modalFotter.find(".price").text(newPrice.toFixed(2))
                 }
          
-              });
+            });
+
+            $(".modal #comprar").on("click", function() {
+
+                var $button = $(this);
+                var modal = $button.parent().parent();
+
+                pararVideo();
+
+                var amount = modal.find(".contador-carrinho").val();
+                var desc = modal.find("#modalLabel").text();
+                var price = modal.find(".price").text();
+            
+                adicionarReceita(amount, desc, price);
+         
+            });
         }
     });
     
@@ -102,14 +117,17 @@ function getUnidade(ingrediente) {
     return ingrediente.unidadeSingular.toLowerCase() + " de ";
 }
 
-function criaModal(idModal, nome, listaIngredientes, modoPreparo, linkVideo, preco) {
+function criaModal(idModal, nome, porcoes, listaIngredientes, modoPreparo, linkVideo, preco) {
 
     var modal = document.createElement("div");
     modal.innerHTML = "<div class=\"modal fade\" id=\"modal-" + idModal + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"modalLabel\" aria-hidden=\"true\">" +
         "<div class=\"modal-dialog\">" +
         "<div class=\"modal-content\">" +
         "<div class=\"modal-header\">" +
-        "<h3 class=\"modal-title\" id=\"modalLabel\">" + nome + "</h3>" +
+        "<div>" +
+        "<h3 class=\"modal-title\" id=\"modalLabel\">" + nome + "</h3>" + 
+        "<p> <b> Rende: </b> "+ porcoes + " porções</p>" +
+        "</div>" +
         "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" onclick=\"pararVideo()\" aria-label=\"Close\">" +
         "<span aria-hidden=\"true\">&times;</span>" +
         "</button>" +
@@ -137,7 +155,7 @@ function criaModal(idModal, nome, listaIngredientes, modoPreparo, linkVideo, pre
         "+" +
         "</button>" +
         "</div>" +
-        "<button type=\"button\" class=\"btn btn-secondary\" onclick=\"pararVideo()\" data-dismiss=\"modal\">" +
+        "<button id=\"comprar\" type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">" +
         "<span>R$ </span><span class=\"price\">" + preco + "</span> Adicionar ao carrinho <i class=\"fas fa-shopping-cart\"></i>" +
         "</button>" +
         "</div>" +
@@ -159,13 +177,13 @@ function atualizaPreco(idModal, preco){
 
 function criaCardModal(receita) {
     criaCard(getIdCategoria(receita.categoria), receita.id, receita.nome, receita.imagem)
-    criaModal(receita.id, receita.nome, receita.ingredientes, receita.descricao, receita.linkVideo, receita.preco)
+    criaModal(receita.id, receita.nome, receita.porcoes, receita.ingredientes, receita.descricao, receita.linkVideo, receita.preco)
 }
 
 //Método apenas para teste, excluir depois de cadastrar as receitas no banco de dados
-function criaCardModal2(categoria, idModal, nome, descricao, imagem, listaIngredientes, linkVideo, preco) {
+function criaCardModal2(categoria, idModal, nome, porcoes, descricao, imagem, listaIngredientes, linkVideo, preco) {
     criaCard(categoria, idModal, nome, imagem)
-    criaModal(idModal, nome, listaIngredientes, descricao, linkVideo, preco)
+    criaModal(idModal, nome, porcoes, listaIngredientes, descricao, linkVideo, preco)
 }
 
 function pararVideo() {
@@ -188,13 +206,13 @@ const lista = [
 
 const lista2 = [];
 
-criaCardModal2("cards-variados", 10, "Lasanha Bolonhesa", "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", lista, "https://www.youtube.com/embed/-9Wp7NfeTBY?enablejsapi=1", 50)
-criaCardModal2("cards-variados", 20, "Costela Barbecue", "Receita de Costela Barbecue", "img/barbecue.jpg", lista2, "", 38)
-criaCardModal2("cards-variados", 30, "Hamburguer", "Receita de Hamburguer", "img/hamburguer.jpg", lista2, "", 50)
-criaCardModal2("cards-peixes", 40, "Costela Barbecue", "Receita de Costela Barbecue", "img/barbecue.jpg", lista2, "", 38)
-criaCardModal2("cards-fitness", 50, "Hamburguer", "Receita de Hamburguer", "img/hamburguer.jpg", lista2, "", 40)
-criaCardModal2("cards-vegetarianos", 60, "Lasanha Bolonhesa", "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", lista2, "", 45)
-criaCardModal2("cards-variados", 70, "Pizza Marguerita", "Receita de Pizza Marguerita", "img/pizza.jpg", lista2, "", 50)
+criaCardModal2("cards-variados", 10, "Lasanha Bolonhesa", 5, "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", lista, "https://www.youtube.com/embed/-9Wp7NfeTBY?enablejsapi=1", 50)
+criaCardModal2("cards-variados", 20, "Costela Barbecue", 5, "Receita de Costela Barbecue", "img/barbecue.jpg", lista2, "", 38)
+criaCardModal2("cards-variados", 30, "Hamburguer", 5, "Receita de Hamburguer", "img/hamburguer.jpg", lista2, "", 50)
+criaCardModal2("cards-peixes", 40, "Costela Barbecue", 5, "Receita de Costela Barbecue", "img/barbecue.jpg", lista2, "", 38)
+criaCardModal2("cards-fitness", 50, "Hamburguer", 5, "Receita de Hamburguer", "img/hamburguer.jpg", lista2, "", 40)
+criaCardModal2("cards-vegetarianos", 60, "Lasanha Bolonhesa", 5, "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", lista2, "", 45)
+criaCardModal2("cards-variados", 70, "Pizza Marguerita", 5, "Receita de Pizza Marguerita", "img/pizza.jpg", lista2, "", 50)
 
 function mostrarCarrinho() {
     if (document.getElementById("carrinho").style.display === "block") {
@@ -238,21 +256,13 @@ function formatValue(value) {
     return str;
 }
 
-function adicionarReceita() {
+function adicionarReceita(amount, desc, price) {
     
-    pararVideo();
-
-    var amount = document.getElementById("qtd1").value;
-    var desc = document.getElementById("modalLabel").textContent;
-    var valueDesformatada = document.getElementById("precoReceita").textContent;
-    var str = "";
-    str = valueDesformatada.substring(3, 10).trim();
-
-    if (str.length === 2) {
-        str += ".00";
+    if (price.length === 2) {
+        price += ".00";
     }
 
-    var value = str;
+    var value = price;
 
     list.push({ "descricao": desc, "quantidade": amount, "valor": value });
     setList(list);
