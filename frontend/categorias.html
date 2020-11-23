@@ -2,19 +2,19 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="./css/lib/bootstrap.4.5.2.min.css" />
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="./css/lib/bootstrap.4.5.2.min.css" />
 
-    <!-- Fontawesome -->
-    <link rel="stylesheet" href="./css/lib/fontawesome.all.5.15.1.css" />
+  <!-- Fontawesome -->
+  <link rel="stylesheet" href="./css/lib/fontawesome.all.5.15.1.css" />
 
-    <!-- estilo pagina index(home) -->
-    <link rel="stylesheet" href="./css/app/index.css" />
+  <!-- estilo pagina index(home) -->
+  <link rel="stylesheet" href="./css/app/index.css" />
 
-    <title>iCheff - A satisfação em comer bem</title>
+  <title>iCheff - A satisfação em comer bem</title>
 </head>
 
 <body>
@@ -26,12 +26,32 @@
       </h2>
       <nav>
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
-				<a href="#"><i class="fas fa-book"></i> Categorias</a>
-				<a href="login.html"><i class="fas fa-user-lock"></i> Login</a>
-				<a href="cadastro.html"><i class="fas fa-user-plus"></i> Cadastro</a>
+        <a href="#"><i class="fas fa-book"></i> Categorias</a>
+        <a href="login.html"><i class="fas fa-user-lock"></i> Login</a>
+        <a href="cadastro.html"><i class="fas fa-user-plus"></i> Cadastro</a>
+        <a href="#" onclick="mostrarCarrinho()"><i class="fa fa-shopping-cart"></i> Exibir Carrinho</a>
       </nav>
     </div>
   </header>
+
+  <div id="carrinho" class="carrinho-oculto">
+
+    <table id="listTable" class="table">
+    </table>
+    <hr>
+
+    <span id="btnAdd" class="btn-carrinho">
+      <button type="button" class="btn btn-danger" onclick="deleteList()"><i class="fas fa-eraser"></i> Deletar
+        Pedido</button>
+      <button type="button" class="btn btn-success">Finalizar Pedido</button>
+    </span>
+    <hr>
+
+    <div class="container-valor-total">
+      <h4 class="text-center text-success">Total: <span id="totalValue">R$0,00 </span></h4>
+    </div>
+
+  </div>
 
   <!-- Menu (Categorias) -->
   <div class="container-fluid">
@@ -39,8 +59,8 @@
     <ul id="categorias-nav" class="nav nav-tabs" role="tablist">
 
       <li class="nav-item">
-        <a class="nav-link" href="#variados" id="variados-tab" role="tab" data-toggle="tab"
-          aria-controls="Variados" aria-expanded="true">Variados</a>
+        <a class="nav-link" href="#variados" id="variados-tab" role="tab" data-toggle="tab" aria-controls="Variados"
+          aria-expanded="true">Variados</a>
       </li>
 
       <li class="nav-item">
@@ -96,31 +116,32 @@
         <a href="https://www.facebook.com/Lojas.icheff"><img src="./img/icons/facebook.png" alt="Logotipo facebook"></a>
         <a href="https://www.instagram.com/icheff/"><img src="./img/icons/instagram.png" alt="Logotipo instagram"></a>
         <a href="https://twitter.com/icheff"><img src="./img/icons/twitter.png" alt="Logotipo twitter"></a>
-        <a href="https://www.youtube.com/user/lojasicheff"><img src="./img/icons/youtube.png" alt="Logotipo youtube"></a>
+        <a href="https://www.youtube.com/user/lojasicheff"><img src="./img/icons/youtube.png"
+            alt="Logotipo youtube"></a>
         <a href="https://www.linkedin.com/"><img src="./img/icons/linkedin.png" alt="Logotipo linkedin"></a>
       </div>
 
       <div class="form-group col-md-4 newsletter">
-				<h4 class="index-h4">Assine nossa Newsletter:</h4>
-				<form class="form-inline newsletter" method="post" ajax="true">
-					<input type="text" id="email" class="form-control col-md-9" placeholder="Digite seu email">
-					<button type="submit" id="cadastrar" class="btn btn-primary">Cadastrar</button>
-				</form>
-			</div>
-		</div>
+        <h4 class="index-h4">Assine nossa Newsletter:</h4>
+        <form class="form-inline newsletter" method="post" ajax="true">
+          <input type="text" id="email" class="form-control col-md-9" placeholder="Digite seu email">
+          <button type="submit" id="cadastrar" class="btn btn-primary">Cadastrar</button>
+        </form>
+      </div>
+    </div>
 
-	</div>
-	<hr>
+  </div>
+  <hr>
 
-	<div class="container-success" id="divSuccess" style=overflow:hidden>
-		<div class="row justify-content-center success">
-			<div class="col-sm-7" id="showDivSuccess">
-				
-				<h4 class=sucess>Sucesso!!! Obrigado por cadastrar seu email em nossa newsletter.</h4>
-			</div>
-		</div>
-		<br>
-	</div>
+  <div class="container-success" id="divSuccess" style=overflow:hidden>
+    <div class="row justify-content-center success">
+      <div class="col-sm-7" id="showDivSuccess">
+
+        <h4 class=sucess>Sucesso!!! Obrigado por cadastrar seu email em nossa newsletter.</h4>
+      </div>
+    </div>
+    <br>
+  </div>
 
   <footer class="index-site-footer">
     <div class="index-container-footer">
