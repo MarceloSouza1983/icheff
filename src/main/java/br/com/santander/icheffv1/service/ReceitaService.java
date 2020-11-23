@@ -1,5 +1,8 @@
 package br.com.santander.icheffv1.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +32,7 @@ public class ReceitaService {
 	
 	public Receita create(Receita receita) {
 		receita.setId(null);
+		receita.setDataCadastro(LocalDateTime.now());
 		Receita receitaDB = this.receitaRepository.save(receita);
 		
 		for(IngredienteReceita ingrediente : receita.getIngredientes()) {
@@ -103,6 +107,8 @@ public class ReceitaService {
 			dto.setCategoriaId(receita.getReceitaCategoria().getId());
 			dto.setAtiva(receita.getAtiva());
 			
+			double totalCusto = 0;
+			
 			for(IngredienteReceita ingrediente : receita.getIngredientes()) {
 				IngredienteDto ingredienteDto = new IngredienteDto();
 				
@@ -110,12 +116,16 @@ public class ReceitaService {
 				ingredienteDto.setIngredienteId(ingrediente.getIngrediente().getId());
 				ingredienteDto.setNome(ingrediente.getIngrediente().getNome());
 				ingredienteDto.setUnidade(ingrediente.getIngrediente().getIngredienteUnidade().getUnidadeSigla());
+				ingredienteDto.setUnidadeSingular(ingrediente.getIngrediente().getIngredienteUnidade().getNomeSingular());
+				ingredienteDto.setUnidadePlural(ingrediente.getIngrediente().getIngredienteUnidade().getNomePlural());
 				ingredienteDto.setQuantidade(ingrediente.getQuantidade());
 				
-				dto.setCusto(dto.getCusto() + ingrediente.getIngrediente().getCusto());
+				totalCusto += ingrediente.getIngrediente().getCusto()*ingrediente.getQuantidade();
 				
 				dto.getIngredientes().add(ingredienteDto);
 			}
+			
+			dto.setCusto(BigDecimal.valueOf(totalCusto).setScale(2, RoundingMode.HALF_UP).doubleValue());
 			
 			receitasDto.add(dto);
 		}

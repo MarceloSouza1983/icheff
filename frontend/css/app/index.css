@@ -14,7 +14,9 @@ body {
 }
 
 .index-h3 {
+    font-weight: bold;
     color: #d10e0e;
+    font-size: 26px;
 }
 
 .index-h4 {
@@ -70,7 +72,7 @@ header nav a:hover {
 .index-social img {
     background-color: #e4e4e4;
     margin-left: 20px;
-    width: 4%;
+    width: 30px;
     margin-bottom: 10px;
 }
 
@@ -111,8 +113,7 @@ div.hide {
 }
 
 .index-video {
-    text-align: center;
-    color: #000000;
+    margin: 25px 0 15px 0;
 }
 
 .index-row-image img {
@@ -127,18 +128,33 @@ div.hide {
     display: table;
 }
 
-.index-column-image {
-    float: left;
-    width: 25%;
-    padding: 15px;
+.index-categorias {
+    margin-top: 20px;
 }
 
-#lightSlider {
-    margin-left: 53px;
-    margin-right: 53px;
+.index-background-image img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.index-categorias-card img {
+    width: 100%;
+    min-height: 250px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+
+#lightSlider li {
+    width: 40vw;
+    padding: 0 15px;
 }
 
 #lightSlider img {
+    width: 100%;
     border-radius: 20px;
 }
 
@@ -370,10 +386,13 @@ div.hide {
     border-radius: 20px;
     font-size: 22px;
     padding: 0px !important;
+
 }
 
 .contador-carrinho {
     font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .modal-title {
@@ -399,3 +418,29 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     height: 40px;
     cursor: pointer;
 }
+
+.sobre-nos {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 20px;
+    box-shadow: 3px 3px 5px 3px #ccc;
+}
+
+.imagem-sobre-nos {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.sobre-nos > div:first-child {
+    margin-bottom: 15px;
+}
+
+.sobre-nos p {
+    text-align: justify;
+}
+
+.sobre-nos div {
+    padding: 15px;
+}
+
+

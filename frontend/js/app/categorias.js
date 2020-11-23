@@ -1,29 +1,55 @@
 
-$( document ).ready(function() {
+$(document).ready(function () {
     var categoria = window.location.hash.substr(1)
     categoria = categoria ? categoria : 'variados'
-    
-    $('#'+categoria+'-tab').addClass('active')
-    $('#'+categoria).addClass('show active in')
+
+    $('#' + categoria + '-tab').addClass('active')
+    $('#' + categoria).addClass('show active in')
 
     $.ajax({
-        type : "GET",
-        url : "http://localhost:8080/api/receitas",
+        type: "GET",
+        url: "http://localhost:8080/api/receitas",
         crossDomain: true,
         contentType: "application/json",
-        success: function(response){
-          console.log(response)
-          response.forEach( (receita, indice) => {
-              console.log(receita)
-            criaCardModal(receita)
-          })
+        success: function (response) {
+            console.log(response)
+            response.forEach((receita, indice) => {
+                console.log(receita)
+                criaCardModal(receita)
+            })
+
+            $(".modal .btn-circle").on("click", function() {
+
+                var $button = $(this);
+                var oldValue = $button.parent().find("span").text();
+                var newVal = 0;
+
+                if ($button.text() == "+" && oldValue < 10) {
+                    newVal = parseFloat(oldValue) + 1;
+                } else if ($button.text() == "-" && oldValue > 1) {
+                    newVal = parseFloat(oldValue) - 1;
+                }
+              
+                if(newVal != 0) {
+                    $button.parent().find("span").text(newVal);
+
+                    var $modalFotter = $button.parent().parent();
+                    const oldPrice = $modalFotter.find(".price").text();
+    
+                    const newPrice = newVal * ( parseFloat(oldPrice) / oldValue)
+
+                    $modalFotter.find(".price").text(newPrice.toFixed(2))
+                }
+         
+              });
         }
     });
+    
 });
 
 
 function getIdCategoria(categoria) {
-    switch(categoria){
+    switch (categoria) {
         case "Variados":
             return "cards-variados";
         case "Peixes e frutos do mar":
@@ -64,15 +90,17 @@ function criaLista(lista) {
 }
 
 function getUnidade(ingrediente) {
-        if (ingrediente.unidadeSingular == "Unidade"){
-            return " ";
-        } 
+    const siglas = ["g", "kg", "mL"]
 
-        if (ingrediente.quantidade != 1){
-            return ingrediente.unidadePlural.toLowerCase() + " de ";
-        } 
+    if (siglas.includes(ingrediente.unidade)) {
+        return ingrediente.unidade.toLowerCase() + " de ";
+    }
 
-        return ingrediente.unidadeSingular.toLowerCase() + " de ";
+    if (ingrediente.quantidade != 1) {
+        return ingrediente.unidadePlural.toLowerCase() + " de ";
+    }
+
+    return ingrediente.unidadeSingular.toLowerCase() + " de ";
 }
 
 function criaModal(idModal, nome, listaIngredientes, modoPreparo, linkVideo, preco) {
@@ -96,17 +124,22 @@ function criaModal(idModal, nome, listaIngredientes, modoPreparo, linkVideo, pre
         "<div class=\"container\">" +
         "<h4>Modo de preparo <i class=\"fas fa-utensils\"></i></h4>" +
         "<p>" + modoPreparo + "</p></div>" +
-        "<iframe width=\"560\" height=\"315\" src=\"" +  linkVideo + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" +
+        "<iframe width=\"560\" height=\"315\" src=\"" + linkVideo + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" +
         "</div>" +
         "</div>" +
         "</div>" +
         "<div class=\"modal-footer\">" +
-        "<div class=\"number-wrapper\">" +
-        "<input type=\"number\" class=\"quantidade\" value=\"1\" min=\"1\" max=\"10\" id=\"qtd1\">" +
-        "</input>" +
+        "<div>" +
+        "<button type=\"button\" class=\"btn btn-secondary btn-circle\">" +
+        "-" +
+        "</button>" +
+        "<span class=\"contador-carrinho\">1</span>" +
+        "<button type=\"button\" class=\"btn btn-secondary btn-circle\">" +
+        "+" +
+        "</button>" +
         "</div>" +
         "<button type=\"button\" class=\"btn btn-secondary\" onclick=\"pararVideo()\" data-dismiss=\"modal\">" +
-        "<span class=\"price\"> R$ " + preco + "</span> Adicionar ao carrinho <i class=\"fas fa-shopping-cart\"></i>" +
+        "<span>R$ </span><span class=\"price\">" + preco + "</span> Adicionar ao carrinho <i class=\"fas fa-shopping-cart\"></i>" +
         "</button>" +
         "</div>" +
         "</div>" +
@@ -116,33 +149,42 @@ function criaModal(idModal, nome, listaIngredientes, modoPreparo, linkVideo, pre
     document.body.appendChild(modal);
 }
 
+
+function atualizaPreco(idModal, preco){
+
+    const quantidade = parseInt($("#modal-" + idModal).find('input').val());
+    console.log(quantidade)
+    console.log($("#modal-" + idModal + " .price").innerHTML)
+    $("#modal-" + idModal + " .price").innerHTML = "R$ " + (preco * quantidade);
+}
+
 function criaCardModal(receita) {
     criaCard(getIdCategoria(receita.categoria), receita.id, receita.nome, receita.imagem)
-    criaModal(receita.id, receita.nome, receita.listaIngredientes, receita.descricao, receita.linkVideo, receita.preco)
+    criaModal(receita.id, receita.nome, receita.ingredientes, receita.descricao, receita.linkVideo, receita.preco)
 }
 
 //Método apenas para teste, excluir depois de cadastrar as receitas no banco de dados
-function criaCardModal2(categoria, idModal, nome, descricao, imagem, listaIngredientes, linkVideo, preco ) {
+function criaCardModal2(categoria, idModal, nome, descricao, imagem, listaIngredientes, linkVideo, preco) {
     criaCard(categoria, idModal, nome, imagem)
     criaModal(idModal, nome, listaIngredientes, descricao, linkVideo, preco)
 }
 
-function pararVideo(){
+function pararVideo() {
     $('iframe')[0].contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
- }
+}
 
 const lista = [
-    { quantidade: 1, nome:'cebola pequena', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
-    { quantidade: 3, nome:'dentes de alho triturados ou picados;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
-    { quantidade: 400, nome:'carne moída (patinho);', unidadeSingular: 'Grama', unidadePlural: "Gramas"},
-    { quantidade: 1, nome:'orégano seco;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
-    { quantidade: 1, nome:'sal;', unidadeSingular: 'Colher de sopa', unidadePlural: "Colheres de sopa"},
-    { quantidade: 1, nome:'pimenta-do-reino a gosto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
-    { quantidade: 2, nome:'sachê de molho pronto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
-    { quantidade: 1, nome:'Massa para lasanha;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
-    { quantidade: 350, nome:'presunto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
-    { quantidade: 350, nome:'queijo Muçarela;', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
-    { quantidade: 1, nome:'Queijo parmesão a gosto.', unidadeSingular: 'Unidade', unidadePlural: "Unidades"},
+    { quantidade: 1, nome: 'cebola pequena', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
+    { quantidade: 3, nome: 'dentes de alho triturados ou picados;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
+    { quantidade: 400, nome: 'carne moída (patinho);', unidadeSingular: 'Grama', unidadePlural: "Gramas" },
+    { quantidade: 1, nome: 'orégano seco;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
+    { quantidade: 1, nome: 'sal;', unidadeSingular: 'Colher de sopa', unidadePlural: "Colheres de sopa" },
+    { quantidade: 1, nome: 'pimenta-do-reino a gosto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
+    { quantidade: 2, nome: 'sachê de molho pronto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
+    { quantidade: 1, nome: 'Massa para lasanha;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
+    { quantidade: 350, nome: 'presunto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
+    { quantidade: 350, nome: 'queijo Muçarela;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
+    { quantidade: 1, nome: 'Queijo parmesão a gosto.', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
 ];
 
 const lista2 = [];
