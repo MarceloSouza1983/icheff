@@ -50,7 +50,7 @@ $(document).ready(function () {
 
                 pararVideo();
 
-                var amount = modal.find(".contador-carrinho").val();
+                var amount = modal.find(".contador-carrinho").text();
                 var desc = modal.find("#modalLabel").text();
                 var price = modal.find(".price").text();
             
@@ -228,7 +228,7 @@ var list = [];
 function getTotal(list) {
     var total = 0;
     for (var key in list) {
-        total += list[key].valor * list[key].quantidade;
+        total += parseFloat(list[key].valor);
     }
     document.getElementById("totalValue").innerHTML = formatValue(total);
 }
