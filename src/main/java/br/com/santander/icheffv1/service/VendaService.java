@@ -89,6 +89,10 @@ public class VendaService {
 		return vendasDTO;
 	}
 	
+	public Venda save(Venda venda) {
+		return this.vendaRepository.save(venda);
+	}
+	
 	public Venda findById(Long id) {
 		
 		if( id == null ) {

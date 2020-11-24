@@ -1,5 +1,12 @@
 const BASE_URL = 'http://localhost:8080';
 
+let localDateBR = (date) => {
+    if(date == null || date == '' || date.length < 11)
+        return '-';
+    date = new Date(date);
+    return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + (date.getMinutes()<10?'0':'') + date.getMinutes();
+}
+
 (function () {
 
     return {
@@ -511,12 +518,7 @@ const BASE_URL = 'http://localhost:8080';
                     let $tabelaBody = $('div#icheff-usuarios table tbody').eq(0);
         
                     $tabelaBody.html('');
-
-                    let localDateBR = (date) => {
-                        date = new Date(date);
-                        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-                    }
-        
+       
                     for (let i in data) {
         
                         let d = data[i];
@@ -562,11 +564,6 @@ const BASE_URL = 'http://localhost:8080';
         
                         let $tr = $('<tr>');
 
-                        let localDateBR = (date) => {
-                            date = new Date(date);
-                            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-                        }
-        
                         $tr.append('<td>' + d.id + '</td>');
                         $tr.append('<td>' + d.usuario.nome + '</td>');
                         $tr.append('<td>R$ ' + (Math.round(d.valorVenda * 100) / 100) + '</td>');
