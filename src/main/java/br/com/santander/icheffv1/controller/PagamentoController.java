@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.santander.icheffv1.model.Pagamento;
@@ -15,6 +16,7 @@ import br.com.santander.icheffv1.model.Venda;
 import br.com.santander.icheffv1.service.VendaService;
 
 @RestController
+@RequestMapping("/api/pagamento")
 public class PagamentoController {
 	
 	private final VendaService vendaService;

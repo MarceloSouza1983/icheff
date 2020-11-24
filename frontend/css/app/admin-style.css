@@ -217,9 +217,10 @@ table.table-ingredientes tr:hover td{
     background-color: #eee;
 }
 
-table thead tr th{
-    padding-right: 0 !important;
-    padding-left: 0 !important;
+table thead tr th,
+table tbody tr td{
+    padding-right: 8px !important;
+    padding-left: 8px !important;
 }
 
 table thead tr th,

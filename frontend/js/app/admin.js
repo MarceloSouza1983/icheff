@@ -543,6 +543,43 @@ let localDateBR = (date) => {
             });
         },
 
+        consultaListaNewsletter: function (){
+
+            $('ol.breadcrumb li.active').html('Newsletter');
+
+            let _this = this;
+
+            $.ajax({
+                url: BASE_URL + '/newsletter/all',
+                type: 'GET',
+                dataType: 'json',
+                cache: false,
+                success: function(data){
+
+                    let $tabelaBody = $('div#icheff-newsletter table tbody').eq(0);
+        
+                    $tabelaBody.html('');
+       
+                    for (let i in data) {
+        
+                        let d = data[i];
+        
+                        let $tr = $('<tr>');
+        
+                        $tr.append('<td>' + d.id + '</td>');
+                        $tr.append('<td>' + d.email + '</td>');
+        
+                        $tabelaBody.append($tr);
+        
+                    }
+
+				},
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log(JSON.parse(jqXHR.responseText));
+                }
+            });
+        },
+
         consultaListaVendas: function (){
 
             $('ol.breadcrumb li.active').html('Vendas');

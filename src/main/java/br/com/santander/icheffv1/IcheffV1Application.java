@@ -2,7 +2,6 @@ package br.com.santander.icheffv1;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import br.com.santander.icheffv1.model.Ingrediente;
 import br.com.santander.icheffv1.model.IngredienteReceita;
 import br.com.santander.icheffv1.model.IngredienteUnidade;
+import br.com.santander.icheffv1.model.Newsletter;
 import br.com.santander.icheffv1.model.Receita;
 import br.com.santander.icheffv1.model.ReceitaCategoria;
 import br.com.santander.icheffv1.model.Tipo;
@@ -27,6 +27,7 @@ import br.com.santander.icheffv1.model.VendaRelacao;
 import br.com.santander.icheffv1.repository.IngredienteReceitaRepository;
 import br.com.santander.icheffv1.repository.IngredienteRepository;
 import br.com.santander.icheffv1.repository.IngredienteUnidadeRepository;
+import br.com.santander.icheffv1.repository.NewsletterRepository;
 import br.com.santander.icheffv1.repository.ReceitaCategoriaRepository;
 import br.com.santander.icheffv1.repository.ReceitaRepository;
 import br.com.santander.icheffv1.repository.UsuarioRepository;
@@ -74,6 +75,9 @@ public class IcheffV1Application implements CommandLineRunner {
 	
 	@Autowired
 	private VendaRelacaoRepository vendaRelacaoRepository;
+	
+	@Autowired
+	private NewsletterRepository newsletterRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -368,6 +372,16 @@ public class IcheffV1Application implements CommandLineRunner {
 			VendaRelacao vendaRelacao7 = new VendaRelacao(null, 5L, receita2, venda5);
 			this.vendaRelacaoRepository.save(vendaRelacao7);
 			
+		}
+		
+		//Newsletter
+		if(this.newsletterRepository.count() == 0) {
+			this.newsletterRepository.save(new Newsletter(null, "jose@gmail.com"));
+			this.newsletterRepository.save(new Newsletter(null, "karina@msn.com.br"));
+			this.newsletterRepository.save(new Newsletter(null, "julio@email.com"));
+			this.newsletterRepository.save(new Newsletter(null, "eduardo@gmail.com"));
+			this.newsletterRepository.save(new Newsletter(null, "vinicius@hotmail.com"));
+			this.newsletterRepository.save(new Newsletter(null, "karol@email.com"));
 		}
 		
 	}
