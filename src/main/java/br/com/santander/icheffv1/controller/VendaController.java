@@ -1,6 +1,7 @@
 package br.com.santander.icheffv1.controller;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -17,7 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.santander.icheffv1.dto.VendaDTO;
+import br.com.santander.icheffv1.exception.DataIntegrityException;
+import br.com.santander.icheffv1.model.CarrinhoItem;
+import br.com.santander.icheffv1.model.Receita;
+import br.com.santander.icheffv1.model.Usuario;
 import br.com.santander.icheffv1.model.Venda;
+import br.com.santander.icheffv1.model.VendaRelacao;
+import br.com.santander.icheffv1.service.ReceitaService;
+import br.com.santander.icheffv1.service.UsuarioService;
+import br.com.santander.icheffv1.service.VendaRelacaoService;
 import br.com.santander.icheffv1.service.VendaService;
 
 @RestController
@@ -26,15 +35,54 @@ public class VendaController {
 	
 	private final VendaService vendaService;
 	
-	public VendaController(VendaService vendaService) {
+	private final UsuarioService usuarioService;
+	
+	private final VendaRelacaoService vendaRelacaoService;
+	
+	private final ReceitaService receitaService;
+		
+	public VendaController(
+			VendaService vendaService,
+			UsuarioService usuarioService,
+			VendaRelacaoService vendaRelacaoService,
+			ReceitaService receitaService
+	) {
 		this.vendaService = vendaService;
+		this.usuarioService = usuarioService;
+		this.vendaRelacaoService = vendaRelacaoService;
+		this.receitaService = receitaService;
 	}
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Void> create(@Valid @RequestBody Venda venda) {
+	public ResponseEntity<Void> create(@Valid @RequestBody List<CarrinhoItem> listaReceitas) {
 		
-		venda = this.vendaService.create(venda);
+		Usuario usuario = this.usuarioService.findById(2L); //JWT??
+		
+		for(CarrinhoItem item : listaReceitas) {
+			if(item.getQuantidade() <= 0) {
+				throw new DataIntegrityException("A quantidade da venda não pode ser menor ou igual a zero.");
+			}
+		}
+		
+		Venda venda = new Venda(
+			null,
+			false,
+			LocalDateTime.now(),
+			null,
+			usuario
+		);
+
+		this.vendaService.create(venda);
+		
+		for(CarrinhoItem item : listaReceitas) {
+			
+			Receita receita = this.receitaService.findById(item.getReceita_id());
+			
+			VendaRelacao vendaRelacao = new VendaRelacao(null, item.getQuantidade(), receita, venda);
+			
+			this.vendaRelacaoService.create(vendaRelacao);
+		}
 		
 		URI uri = ServletUriComponentsBuilder
 				 .fromCurrentRequest()
@@ -43,6 +91,7 @@ public class VendaController {
 				 .toUri();
 		
 		return ResponseEntity.created(uri).build();
+
 	}
 	
 	@GetMapping("/{id}")
@@ -66,4 +115,5 @@ public class VendaController {
 		this.vendaService.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
+	
 }

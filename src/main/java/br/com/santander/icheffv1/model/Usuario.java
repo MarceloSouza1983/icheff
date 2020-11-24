@@ -17,6 +17,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "usuarios")
@@ -40,6 +41,7 @@ public class Usuario implements Serializable {
 	
 	@Column(name= "usu_senha", length = 255, nullable = false)
 	@Length(min = 5, max = 255)
+	@JsonIgnore
 	@NotNull(message = "A senha não pode ser nula e precisa ter no mínimo 5 caracteres")
 	private String senha;
 	

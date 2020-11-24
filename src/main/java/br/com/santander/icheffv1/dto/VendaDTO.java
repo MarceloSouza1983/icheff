@@ -18,6 +18,6 @@ public class VendaDTO implements Serializable {
 	private UsuarioVendaDTO usuario;
 	private Long quantidadeReceitas;
 	private Double valorVenda;
-	private List<ReceitaResumoDTO> receitas; 
+	private List<ReceitaResumoDTO> receitas;
 	
 }
