@@ -17,7 +17,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "usuarios")
@@ -41,7 +40,6 @@ public class Usuario implements Serializable {
 	
 	@Column(name= "usu_senha", length = 255, nullable = false)
 	@Length(min = 5, max = 255)
-	@JsonIgnore
 	@NotNull(message = "A senha não pode ser nula e precisa ter no mínimo 5 caracteres")
 	private String senha;
 	
@@ -96,7 +94,7 @@ public class Usuario implements Serializable {
 	@Column(name= "usu_telefone", length = 11, nullable = false)
 	private String telefone;
 	
-	@Column(name= "usu_celular", length = 12, nullable = false)
+	@Column(name= "usu_celular", length = 15, nullable = false)
 	@NotNull(message = "O campo celular não pode ser nulo")
 	private String celular;
 	
@@ -129,7 +127,7 @@ public class Usuario implements Serializable {
 		this.login = login;
 		this.senha = senha;
 		this.dataNascimento = dataNascimento;
-		this.dataCadastro = dataCadastro;
+		this.dataCadastro = LocalDateTime.now();
 		this.rg = rg;
 		this.cpf = cpf;
 		this.logradouro = logradouro;

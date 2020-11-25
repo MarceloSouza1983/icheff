@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.santander</groupId>
-	<artifactId>icheff-v71</artifactId>
+	<artifactId>icheff-v79</artifactId>
 	<version>1.0.0</version>
-	<name>icheff-v71</name>
+	<name>icheff-v79</name>
 	<description>Projeto integrador para Santander Coders 2020</description>
 	<packaging>jar</packaging>
 
