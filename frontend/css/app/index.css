@@ -68,13 +68,15 @@ header nav a:hover {
 .index-social {
     background-color: #e4e4e4;
     border-radius: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .index-social img {
     background-color: #e4e4e4;
     margin-left: 20px;
-    width: 30px;
     margin-bottom: 10px;
+    width: 30px;
 }
 
 .form-group.col-md-7.social {

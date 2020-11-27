@@ -1,0 +1,8 @@
+div.termos{
+    text-align: justify;
+}
+
+div.termos p{
+    line-height: 25px;
+    margin-bottom: 25px;
+}

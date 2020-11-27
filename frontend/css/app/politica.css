@@ -1,0 +1,8 @@
+div.politica{
+    text-align: justify;
+}
+
+div.politica p{
+    line-height: 25px;
+    margin-bottom: 25px;
+}
