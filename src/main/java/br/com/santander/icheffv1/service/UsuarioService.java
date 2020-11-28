@@ -1,5 +1,6 @@
 package br.com.santander.icheffv1.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ public class UsuarioService {
 	public Usuario create(Usuario usuario) {
 		usuario.setId(null);
 		usuario.setTipo(Tipo.CLIENTE);
+		usuario.setDataCadastro(LocalDateTime.now());
 		return this.usuarioRepository.save(usuario);
 	}
 	
@@ -39,6 +41,17 @@ public class UsuarioService {
 		usuarioAntigo.setNome(usuarioNovo.getNome());
 		usuarioAntigo.setSenha(usuarioNovo.getSenha());
 		usuarioAntigo.setLogin(usuarioNovo.getLogin());
+		usuarioAntigo.setBairro(usuarioNovo.getBairro());
+		usuarioAntigo.setCelular(usuarioNovo.getCelular());
+		usuarioAntigo.setCep(usuarioNovo.getCep());
+		usuarioAntigo.setCidade(usuarioNovo.getCidade());
+		usuarioAntigo.setComplemento(usuarioNovo.getComplemento());
+		usuarioAntigo.setDataNascimento(usuarioNovo.getDataNascimento());
+		usuarioAntigo.setEstado(usuarioNovo.getEstado());
+		usuarioAntigo.setLogradouro(usuarioNovo.getLogradouro());
+		usuarioAntigo.setNumero(usuarioNovo.getNumero());
+		usuarioAntigo.setSenha(usuarioNovo.getSenha());
+		usuarioAntigo.setTelefone(usuarioNovo.getTelefone());
 		
 		return this.usuarioRepository.save(usuarioAntigo);
 
@@ -61,7 +74,6 @@ public class UsuarioService {
 					usuarioDTO.setTipo(usuario.getTipo());
 					usuarioDTO.setLogin(usuario.getLogin());
 					usuarioDTO.setDataCadastro(usuario.getDataCadastro());
-					usuarioDTO.setNome(usuario.getNome());
 					
 					Long qtdComprasUsuario = this.vendaRepository.countByUsuario(usuario).orElse(0L);
 					

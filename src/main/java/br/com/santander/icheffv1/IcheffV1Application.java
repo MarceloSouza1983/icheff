@@ -197,7 +197,7 @@ public class IcheffV1Application implements CommandLineRunner {
 			ingredienteRepository.save(new Ingrediente(null, "Massa de lazanha", true, 0.55, grama));
 			ingredienteRepository.save(new Ingrediente(null, "Carne moída", true, 0.0124, grama));
 			ingredienteRepository.save(new Ingrediente(null, "Carne moída", true, 12.4, kg));
-			ingredienteRepository.save(new Ingrediente(null, "Côco ralado", true, 0.08, grama));
+			ingredienteRepository.save(new Ingrediente(null, "Coco ralado", true, 0.08, grama));
 			ingredienteRepository.save(new Ingrediente(null, "Leite condensado", true, 5.8, lata));
 			ingredienteRepository.save(new Ingrediente(null, "Leite condensado", true, 0.79, ml));
 			ingredienteRepository.save(new Ingrediente(null, "Manteiga", true, 1.35, grama));
@@ -228,7 +228,7 @@ public class IcheffV1Application implements CommandLineRunner {
 			
 			Receita receita = new Receita(
 				null,
-				"Bolo de côco",
+				"Bolo de coco",
 				"http://localhost:8080/imagens/bolo-de-coco.jpg",
 				"https://www.youtube.com/watch?v=bxMxOsypcck",
 				categoria,
@@ -252,7 +252,7 @@ public class IcheffV1Application implements CommandLineRunner {
 			Ingrediente leiteCondensado = ingredienteRepository.findByNomeAndIngredienteUnidade("Leite condensado", lata).get();
 			ingredientes.add(new IngredienteReceita(null, 1, receita, leiteCondensado));
 			
-			Ingrediente coco = ingredienteRepository.findByNomeAndIngredienteUnidade("Côco ralado", grama).get();
+			Ingrediente coco = ingredienteRepository.findByNomeAndIngredienteUnidade("Coco ralado", grama).get();
 			ingredientes.add(new IngredienteReceita(null, 150, receita, coco));
 			
 			receita.setIngredientes(ingredientes);
