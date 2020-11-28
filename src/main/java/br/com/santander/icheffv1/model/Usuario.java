@@ -3,12 +3,19 @@ package br.com.santander.icheffv1.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -18,8 +25,11 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.Builder;
+
 @Entity
 @Table(name = "usuarios")
+@Builder
 public class Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1264482886062073151L;
@@ -98,6 +108,10 @@ public class Usuario implements Serializable {
 	@NotNull(message = "O campo celular não pode ser nulo")
 	private String celular;
 	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name="usuario_id"), inverseJoinColumns  = @JoinColumn(name = "role_id"))
+	private Set<Role> roles;
+	
 	public Usuario() {
 		
 	}
@@ -139,6 +153,41 @@ public class Usuario implements Serializable {
 		this.estado = estado;
 		this.telefone = telefone;
 		this.celular = celular;
+	}
+	
+	public Usuario(Long id, @NotNull(message = "O nome não pode ser nulo") String nome,
+			@NotNull(message = "O login não pode ser nulo e precisa ter no mínimo 5 caracteres") @Length(min = 5, max = 100) String login,
+			@Length(min = 5, max = 255) @NotNull(message = "A senha não pode ser nula e precisa ter no mínimo 5 caracteres") String senha,
+			@NotNull Tipo tipo, LocalDate dataNascimento, LocalDateTime dataCadastro,
+			@NotNull(message = "O rg não pode ser nulo") String rg,
+			@CPF @NotNull(message = "O cpf não pode ser nulo") String cpf,
+			@NotNull(message = "O logradouro do endereço não pode ser nulo") String logradouro,
+			@NotNull(message = "O número não pode ser nulo") String numero, String complemento,
+			@NotNull(message = "O CEP não pode ser nulo") String cep,
+			@NotNull(message = "O bairro não pode ser nulo") String bairro,
+			@NotNull(message = "A cidade não pode ser nula") String cidade,
+			@NotNull(message = "O estado não pode ser nulo") String estado, String telefone,
+			@NotNull(message = "O campo celular não pode ser nulo") String celular, Set<Role> roles) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.login = login;
+		this.senha = senha;
+		this.tipo = tipo;
+		this.dataNascimento = dataNascimento;
+		this.dataCadastro = dataCadastro;
+		this.rg = rg;
+		this.cpf = cpf;
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.cep = cep;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.telefone = telefone;
+		this.celular = celular;
+		this.roles = roles;
 	}
 
 	public Long getId() {
@@ -283,6 +332,18 @@ public class Usuario implements Serializable {
 
 	public void setCelular(String celular) {
 		this.celular = celular;
+	}
+	
+	public List<String> getSimpleRoles() {
+		return this.roles.stream().map(role -> role.getName()).collect(Collectors.toList());
+	}
+	
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 	@Override
