@@ -1,3 +1,5 @@
+const BASE_URL = window.location.protocol + '//' + window.location.hostname + (window.location.port != '' ? ':' + window.location.port : '');
+
 $(document).ready(function () {
 
     document.getElementById("divSuccess").classList.add("hide");
@@ -41,17 +43,21 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "api/usuarios/save",
+                url: BASE_URL + '/api/usuarios/save',
                 data: JSON.stringify(formData),
-                dataType: 'json',
                 success: function (response) {
-
+                    reset();
+                    mostrarDiv();
+                    setTimeout(() => {
+                        window.location.href = BASE_URL + '/login.html';
+                    }, 2500);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert("Usuário ou senha incorreta");
+                    console.log(JSON.parse(jqXHR.responseText));
                 }
-
             });
 
-            reset();
-            mostrarDiv();
 
         }
 

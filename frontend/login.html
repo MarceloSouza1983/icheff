@@ -1,72 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Login iCheff</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login iCheff</title>
 
-  <!-- estilo pagina (login) -->
-  <link rel="stylesheet" href="/css/app/styles.css">
+    <!-- estilo pagina (login) -->
+    <link rel="stylesheet" href="/css/app/styles.css">
 
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/lib/bootstrap.4.5.2.min.css" />
-  
-  <!-- Fontawesome -->
-  <link rel="stylesheet" href="/css/lib/fontawesome.all.5.15.1.css" />
-  
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/css/lib/bootstrap.4.5.2.min.css" />
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="/css/lib/fontawesome.all.5.15.1.css" />
+
 </head>
 
 <header>
-  <div class="index-container">
-    <h2 class="index-logo">
-      <img src="/img/logotipo-icheff.png" alt="Logotipo icheff" width="25%">iCheff
-    </h2>
-    <nav>
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
-				<a href="categorias.html"><i class="fas fa-book"></i> Categorias</a>
-				<a href="login.html"><i class="fas fa-user-lock"></i> Login</a>
-				<a href="cadastro.html"><i class="fas fa-user-plus"></i> Cadastro</a>
-    </nav>
-  </div>
+    <div class="index-container">
+        <h2 class="index-logo">
+            <img src="/img/logotipo-icheff.png" alt="Logotipo icheff" width="25%">iCheff
+        </h2>
+        <nav>
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="categorias.html"><i class="fas fa-book"></i> Categorias</a>
+            <a href="login.html"><i class="fas fa-user-lock"></i> Login</a>
+            <a href="cadastro.html"><i class="fas fa-user-plus"></i> Cadastro</a>
+        </nav>
+    </div>
 </header>
 
-<body>
+<body class="body-login">
 
-  <div class="index-background-image">
-    <img src="/img/wallpaper-icheff02.jpg" alt="Wallpaper icheff" width="100%">
-  </div>
+    <!--
+        <div class="index-background-image">
+            <img src="/img/wallpaper-icheff02.jpg" alt="Wallpaper icheff" width="100%">
+        </div>
+    -->
 
-  <div id="main-container">
-    <h1>Fazer login</h1>
-    <form id="userForm" action=""><!-- register-form -->
-      <div class="full-box">
-        <label for="email">E-mail</label>
-        <input type="email" name="email" id="email" placeholder="Digite seu e-mail" data-min-length="5" autocomplete="off" data-email-validate>
-      </div>
-     
-	  <div class="full-box">
-        <label for="password">Senha</label>
-        <input type="password" name="password" id="password" placeholder="Digite sua senha" data-password-validate data-required>
-      </div>
-	  
-      <div class="center-aligment">
-        <br>
-        <input id="btnCadastrar" type="submit" value="Registrar Login"> <!-- btn-submit -->
-      </div>
-	  <div class="full-box">
-          <label for="name"><a href="criar_conta.html" target="_self">Esqueci minha senha?</a></label>
-		  <br>
-          <label for="name"><a href="cadastro.html" target="_self">Criar uma conta?</a></label>
-      </div>
-    </form>
-  </div>
-  <p class="error-validation template"></p>
-  
-  <script src="/js/lib/jquery-3.5.1.min.js"></script>
-	<script src="/js/lib/popper-2.5.3.min.js"></script>
-  <script src="/js/lib/bootstrap-4.5.2.min.js"></script>
-  <script src="/js/lib/fontawesome.all.5.15.1.js"></script>
-  <script src="/js/app/scripts.js"></script>
+    <div id="main-container">
+        <h1>Fazer login</h1>
+        <form id="userForm" action="">
+            
+            <div class="full-box">
+                <label for="email">E-mail</label>
+                <input type="email" name="email" id="email" placeholder="Digite seu e-mail" data-min-length="5" autocomplete="on" data-email-validate>
+            </div>
+
+            <div class="full-box">
+                <label for="password">Senha</label>
+                <input type="password" name="password" id="password" placeholder="Digite sua senha" data-password-validate data-required>
+            </div>
+
+            <div class="center-aligment">
+                <br>
+                <input id="btnCadastrar" type="submit" value="Entrar">
+            </div>
+            <div class="full-box">
+                <!--
+                    <label for="name"><a href="criar_conta.html" target="_self">Esqueci minha senha?</a></label>
+                    <br>
+                -->
+                <label for="name"><a href="cadastro.html" target="_self">Criar uma conta</a></label>
+            </div>
+        </form>
+    </div>
+    <p class="error-validation template"></p>
+
+    <script src="/js/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/lib/popper-2.5.3.min.js"></script>
+    <script src="/js/lib/bootstrap-4.5.2.min.js"></script>
+    <script src="/js/lib/fontawesome.all.5.15.1.js"></script>
+    <script src="/js/app/scripts.js"></script>
 </body>
+
 </html>

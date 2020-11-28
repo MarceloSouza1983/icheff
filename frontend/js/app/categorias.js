@@ -1,3 +1,4 @@
+const BASE_URL = window.location.protocol + '//' + window.location.hostname + (window.location.port != '' ? ':' + window.location.port : '');
 
 $(document).ready(function () {
     var categoria = window.location.hash.substr(1)
@@ -8,13 +9,12 @@ $(document).ready(function () {
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/receitas",
+        url: BASE_URL + "/api/receitas",
         crossDomain: true,
         contentType: "application/json",
         success: function (response) {
-            console.log(response)
+            
             response.forEach((receita, indice) => {
-                console.log(receita)
                 criaCardModal(receita)
             })
 
@@ -55,6 +55,8 @@ $(document).ready(function () {
                 var price = modal.find(".price").text();
             
                 adicionarReceita(amount, desc, price);
+
+                mostrarCarrinho();
          
             });
         }
@@ -85,7 +87,7 @@ function criaCard(idCategoria, idModal, nome, imagem) {
         "<img src=\"" + imagem + "\" class=\"card-img-top\" alt=\"" + nome + "\">" +
         "<div class=\"card-body\">" +
         "<h5 class=\"card-title\">" + nome + "</h5>" +
-        "<button class=\"btn btn-cards\" data-toggle=\"modal\" data-backdrop=\"static\" data-keyboard=\"false\" data-target=\"#modal-" + idModal + "\">" +
+        "<button class=\"btn btn-cards\" data-toggle=\"modal\" data-backdrop=\"static\" data-keyboard=\"false\" onclick=\"montarVideo(this)\" data-target=\"#modal-" + idModal + "\">" +
         "Detalhes" +
         "</button>" +
         "</div>" +
@@ -141,7 +143,7 @@ function criaModal(idModal, nome, porcoes, listaIngredientes, modoPreparo, linkV
         "<div class=\"container\">" +
         "<h4>Modo de preparo <i class=\"fas fa-utensils\"></i></h4>" +
         "<p>" + modoPreparo + "</p></div>" +
-        "<iframe width=\"560\" height=\"315\" src=\"" + linkVideo.replace('watch?v=', 'embed/') + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" +
+        "<noscript><iframe width=\"560\" height=\"315\" src=\"" + linkVideo.replace('watch?v=', 'embed/') + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe></noscript>" +
         "</div>" +
         "</div>" +
         "</div>" +
@@ -167,10 +169,7 @@ function criaModal(idModal, nome, porcoes, listaIngredientes, modoPreparo, linkV
 }
 
 function atualizaPreco(idModal, preco){
-
     const quantidade = parseInt($("#modal-" + idModal).find('input').val());
-    console.log(quantidade)
-    console.log($("#modal-" + idModal + " .price").innerHTML)
     $("#modal-" + idModal + " .price").innerHTML = "R$ " + (preco * quantidade);
 }
 
@@ -179,15 +178,43 @@ function criaCardModal(receita) {
     criaModal(receita.id, receita.nome, receita.porcoes, receita.ingredientes, receita.descricao, receita.linkVideo, receita.preco)
 }
 
+function montarVideo(_this) {
+    let modalTarget = $(_this).attr('data-target'),
+        $modalTarget = $(modalTarget),
+        $noScript = $modalTarget.find('noscript').eq(0),
+        html = $noScript.html();
+
+    $noScript.after($(html));
+
+    document.getElementById("carrinho").style.display = 'none';
+}
+
 function pararVideo() {
-    $('iframe')[0].contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+    var videos = document.querySelectorAll('iframe, video');
+	Array.prototype.forEach.call(videos, function (video) {
+		if (video.tagName.toLowerCase() === 'video') {
+			video.pause();
+		} else {
+			var src = video.src;
+			video.src = src;
+		}
+	});
 }
 
 function mostrarCarrinho() {
-    if (document.getElementById("carrinho").style.display === "block") {
-        document.getElementById("carrinho").style.display = "none";
+
+    let carrinho = document.getElementById("carrinho");
+
+    if (carrinho.style.display === "block") {
+        carrinho.style.display = "none";
     } else {
-        document.getElementById("carrinho").style.display = "block";
+        carrinho.style.display = "block";
+
+        let htmlH = document.querySelector('html').offsetHeight,
+            marginTopCarrinho = document.querySelector('header').offsetHeight + 2;
+
+        carrinho.style.height = (htmlH - marginTopCarrinho) + 'px';
+
     }
 }
 
@@ -205,12 +232,18 @@ function getTotal(list) {
 //criando a tabela
 function setList(list) {
     var table = '<thead><tr><td>Descrição</td><td>Quantidade</td><td>Valor</td><td>Ação</td></tr></thead><tbody>';
+
     for (var key in list) {
-        table += '<tr><td>' + list[key].descricao + '</td><td>' + list[key].quantidade + '</td><td>' + list[key].valor + '</td><td> <button class="btn btn-danger" onclick="deleteData(' + key + ');"><i class="fas fa-eraser"></i> Delete</button></td></tr>';
-        
+        table += '<tr class="text-center">' +
+                    '<td class="text-left">' + list[key].descricao + '</td>' +
+                    '<td>' + list[key].quantidade + '</td>' +
+                    '<td>' + list[key].valor.toString().replace('.',',') + '</td><td>' +
+                    '<button class="btn btn-danger" onclick="deleteData(' + key + ');"><i class="fas fa-eraser"></i> Delete</button>' +
+                    '</td>' +
+                '</tr>';
     }
+
     table += '</tbody>';
-    console.log(list);
 
     document.getElementById('listTable').innerHTML = table;
     getTotal(list);
@@ -254,11 +287,18 @@ function deleteData(id) {
 }
 
 //deletando Pedido
-function deleteList() {
-    if (confirm("Deseja deletar o pedido?")) {
+function deleteList(force) {
+    if(force || confirm("Deseja deletar o pedido?")) {
         list = [];
         setList(list);
+        mostrarCarrinho();
     }
+}
+
+//finalizando o Pedido
+function finalizarPedido() {
+    
+    deleteList(true);
 }
 
 //salvando em storage

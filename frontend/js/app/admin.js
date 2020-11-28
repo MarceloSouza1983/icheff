@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = window.location.protocol + '//' + window.location.hostname + (window.location.port != '' ? ':' + window.location.port : '');
 
 let localDateBR = (date) => {
     if(date == null || date == '' || date.length < 11)
@@ -64,7 +64,8 @@ let localDateBR = (date) => {
 
             //Botão de sair
             $('aside button.btn-sair').on('click', function () {
-                alert('Sair!');
+                localStorage.removeItem("icheff-jwt");
+                window.location.href = BASE_URL;
             });
         },
 
@@ -125,6 +126,7 @@ let localDateBR = (date) => {
                     type: 'DELETE',
                     dataType: 'json',
                     cache: false,
+                    headers: { 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') },
                     success: function(){
                         $modalDelete.modal('hide');
                         _this['consultaLista' + _this.primeiraMaiuscula(secao)]();
@@ -263,6 +265,7 @@ let localDateBR = (date) => {
                 type: 'GET',
                 dataType: 'json',
                 cache: false,
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') },
                 success: function(data){
 
                     //Carregar os dados na tela
@@ -320,6 +323,7 @@ let localDateBR = (date) => {
                 type: 'GET',
                 dataType: 'json',
                 cache: false,
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') },
                 success: function(data){
 
                     let $tabelaBody = $('div#icheff-ingredientes table tbody');
@@ -373,6 +377,7 @@ let localDateBR = (date) => {
                 type: 'GET',
                 dataType: 'json',
                 cache: false,
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') },
                 success: function(data){
 
                     let $tabelaBody = $('div#icheff-categorias table tbody');
@@ -453,6 +458,7 @@ let localDateBR = (date) => {
                 type: 'GET',
                 dataType: 'json',
                 cache: false,
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') },
                 success: function(data){
 
                     let $tabelaBody = $('div#icheff-receitas table tbody').eq(0);
@@ -513,6 +519,7 @@ let localDateBR = (date) => {
                 type: 'GET',
                 dataType: 'json',
                 cache: false,
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') },
                 success: function(data){
 
                     let $tabelaBody = $('div#icheff-usuarios table tbody').eq(0);
@@ -550,10 +557,11 @@ let localDateBR = (date) => {
             let _this = this;
 
             $.ajax({
-                url: BASE_URL + '/newsletter/all',
+                url: BASE_URL + '/api/newsletter/all',
                 type: 'GET',
                 dataType: 'json',
                 cache: false,
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') },
                 success: function(data){
 
                     let $tabelaBody = $('div#icheff-newsletter table tbody').eq(0);
@@ -589,6 +597,7 @@ let localDateBR = (date) => {
                 type: 'GET',
                 dataType: 'json',
                 cache: false,
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') },
                 success: function(data){
 
                     let $tabelaBody = $('div#icheff-vendas table tbody').eq(0);
@@ -756,6 +765,7 @@ let localDateBR = (date) => {
                 method: acao=='cadastrar'?'POST':'PUT',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') },
                 success: function(data){
                     _this.consultaListaIngredientes();
                     $form.parents('div.admin-content').find('div.modal').modal('hide');
@@ -788,6 +798,7 @@ let localDateBR = (date) => {
                 method: acao=='cadastrar'?'POST':'PUT',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') },
                 success: function(data){
                     _this.consultaListaCategorias();
                     $form.parents('div.admin-content').find('div.modal').modal('hide');
@@ -858,6 +869,7 @@ let localDateBR = (date) => {
                 method: acao=='cadastrar'?'POST':'PUT',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') },
                 success: function(data){
                     _this.consultaListaReceitas();
                     $form.parents('div.admin-content').find('div.modal').modal('hide');
@@ -887,8 +899,13 @@ let localDateBR = (date) => {
         },
 
         loadListas: async function(path){
-            return await fetch(BASE_URL + '/api/' + path)
-                .then((response) => response.json());
+            return await fetch(
+                BASE_URL + '/api/' + path,
+                {
+                    methond: 'POST',
+                    headers: new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem('icheff-jwt') })
+                }
+            ).then((response) => response.json());
         },
 
         loadListaCategorias: function(){

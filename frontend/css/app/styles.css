@@ -21,6 +21,11 @@ body {
   background-position-y: -150px;
 }
 
+.body-login{
+    background-image: url('/img/wallpaper-icheff02.jpg');
+    background-size: auto;
+}
+
 /* form */
 #main-container {
   width: 40%;

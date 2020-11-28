@@ -2,227 +2,242 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- estilo pagina index(home) -->
-  <link rel="stylesheet" href="/css/app/index.css" />
+    <!-- estilo pagina index(home) -->
+    <link rel="stylesheet" href="/css/app/index.css" />
 
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/lib/bootstrap.4.5.2.min.css" />
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/css/lib/bootstrap.4.5.2.min.css" />
 
-  <!-- Fontawesome -->
-  <link rel="stylesheet" href="/css/lib/fontawesome.all.5.15.1.css" />
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="/css/lib/fontawesome.all.5.15.1.css" />
 
-  <!-- Bootstrap core JavaScript jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="/js/lib/jquery-3.5.1.min.js"></script>
-  <script src="/js/lib/popper-2.5.3.min.js"></script>
-  <script src="/js/lib/bootstrap-4.5.2.min.js"></script>
-  <script src="/js/app/post_usuario.js"></script>
-  <script src="/js/app/post_news.js"></script>
+    <!-- Bootstrap core JavaScript jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/js/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/lib/popper-2.5.3.min.js"></script>
+    <script src="/js/lib/bootstrap-4.5.2.min.js"></script>
+    <script src="/js/app/post_usuario.js"></script>
+    <script src="/js/app/post_news.js"></script>
 
-  <!-- Fontawesome Library -->
-  <script src="/js/lib/fontawesome.all.5.15.1.js"></script>
+    <!-- Fontawesome Library -->
+    <script src="/js/lib/fontawesome.all.5.15.1.js"></script>
 
-  <title>iCheff - A satisfação em comer bem</title>
+    <title>iCheff - A satisfação em comer bem</title>
 </head>
 
 <body>
 
-  <header>
-    <div class="index-container">
-      <h2 class="index-logo">
-        <img src="/img/logotipo-icheff.png" alt="Logotipo icheff" width="25%">iCheff
-      </h2>
-      <nav>
-        <a href="index.html"><i class="fas fa-home"></i> Home</a>
-				<a href="categorias.html"><i class="fas fa-book"></i> Categorias</a>
-				<a href="login.html"><i class="fas fa-user-lock"></i> Login</a>
-				<a href="#"><i class="fas fa-user-plus"></i> Cadastro</a>
-      </nav>
+    <header>
+        <div class="index-container">
+            <h2 class="index-logo">
+                <img src="/img/logotipo-icheff.png" alt="Logotipo icheff" width="25%">iCheff
+            </h2>
+            <nav>
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="categorias.html"><i class="fas fa-book"></i> Categorias</a>
+                <a href="login.html"><i class="fas fa-user-lock"></i> Login</a>
+                <a href="#"><i class="fas fa-user-plus"></i> Cadastro</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1 class="titulo-cadastro text-center">Criar cadastro</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form class="form-cadastro" id="userForm">
+
+                    <div class="form-row">
+                        <div class="form-group col-md-7">
+                            <label for="usu_nome">Nome completo</label>
+                            <input type="text" class="form-control" id="usu_nome" placeholder="Insira seu nome completo"
+                                data-minlength="8" name="usu_nome" required>
+                        </div>
+                        <div class="form-group col">
+                            <label for="usu_data_nascimento">Data de nascimento</label>
+                            <input type="text" class="form-control" id="usu_data_nascimento"
+                                placeholder="Digite a data no formato 11/11/2000" data-minlength="10"
+                                name="usu_data_nascimento" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="usu_cpf">CPF</label>
+                            <input type="text" class="form-control" id="usu_cpf"
+                                placeholder="Digite o CPF no formato 333.333.333-33" data-minlength="11" name="usu_cpf"
+                                required>
+                        </div>
+                        <div class="form-group col">
+                            <label for="usu_rg">RG</label>
+                            <input type="text" class="form-control" id="usu_rg"
+                                placeholder="Informe o RG no formato 33.333.333-3" data-minlength="9" name="usu_rg"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <label for="usu_logradouro">Logradouro</label>
+                            <input type="text" class="form-control" id="usu_logradouro"
+                                placeholder="Digite seu endereço" name="usu_logradouro" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="usu_numero">Número</label>
+                            <input type="text" class="form-control" id="usu_numero" name="usu_numero" required>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-7">
+                            <label for="usu_complemento">Complemento</label>
+                            <input type="text" class="form-control" id="usu_complemento"
+                                placeholder="Digite o complemento. Ex: Edifício Garden, bloco A, Apartamento 32"
+                                name="usu_complemento">
+                        </div>
+                        <div class="form-group col">
+                            <label for="usu_bairro">Bairro</label>
+                            <input type="text" class="form-control" id="usu_bairro" placeholder="Insira o bairro"
+                                name="usu_bairro" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6">
+                            <label for="usu_cidade">Cidade</label>
+                            <input type="text" class="form-control" id="usu_cidade" placeholder="Informe a cidade"
+                                name="usu_cidade" required>
+                        </div>
+                        <div class="form-group col">
+                            <label for="usu_estado">Estado</label>
+                            <input type="text" class="form-control" id="usu_estado" placeholder="Digite o estado"
+                                name="usu_estado" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="usu_cep">CEP</label>
+                            <input type="text" class="form-control" id="usu_cep" placeholder="Insira o CEP"
+                                name="usu_cep" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="usu_telefone">Telefone</label>
+                            <input type="text" class="form-control" id="usu_telefone" placeholder="Insira o telefone"
+                                name="usu_telefone">
+                        </div>
+                        <div class="form-group col">
+                            <label for="usu_celular">Celular</label>
+                            <input type="text" class="form-control" id="usu_celular" placeholder="Digite o celular"
+                                name="usu_celular" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="email">Email / Login</label>
+                            <input type="email" class="form-control" id="email" placeholder="Informe seu email"
+                                name="email" required>
+                        </div>
+                        <div class="form-group col">
+                            <label for="usu_login">Confirmar email / login</label>
+                            <input type="email" class="form-control" id="usu_login" placeholder="Confirme seu email"
+                                name="usu_login" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="senha">Senha</label>
+                            <input type="password" class="form-control" id="senha"
+                                placeholder="Digite senha com 5 caracteres ou mais" name="senha" data-minlength="5"
+                                required>
+                        </div>
+                        <div class="form-group col">
+                            <label for="usu_senha">Confirmar senha</label>
+                            <input type="password" class="form-control" id="usu_senha" placeholder="Confirme a senha"
+                                name="usu_senha" data-match="#senha" required>
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary" id="btnCadastrar">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </header>
+    <br>
 
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <h1 class="titulo-cadastro"> Criar cadastro </h1>
-      </div>
+    <div class="container-success" id="divSuccess">
+        <div class="row justify-content-center success">
+            <div class="col-sm-7" id="showDivSuccess">
+                <h4 class=sucess>Dados cadastrados com sucesso!!!</h4>
+            </div>
+        </div>
+        <br>
     </div>
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <form class="form-cadastro" id="userForm">
 
-          <div class="form-row">
-            <div class="form-group col-md-7">
-              <label for="usu_nome">Nome completo</label>
-              <input type="text" class="form-control" id="usu_nome" placeholder="Insira seu nome completo"
-                data-minlength="8" name="usu_nome" required>
-            </div>
-            <div class="form-group col">
-              <label for="usu_data_nascimento">Data de nascimento</label>
-              <input type="text" class="form-control" id="usu_data_nascimento"
-                placeholder="Digite a data no formato 11/11/2000" data-minlength="10" name="usu_data_nascimento" required>
-            </div>
-          </div>
+    <footer class="index-site-footer">
+        <div class="index-container-footer">
+            <div class="row">
+                <div class="col-sm-12 col-md-3">
+                    <img src="/img/logotipo-icheff-original.png" alt="Logotipo icheff" width=90%>
+                </div>
 
-          <div class="form-row">
-            <div class="form-group col">
-              <label for="usu_cpf">CPF</label>
-              <input type="text" class="form-control" id="usu_cpf" placeholder="Digite o CPF no formato 333.333.333-33"
-                data-minlength="11" name="usu_cpf" required>
-            </div>
-            <div class="form-group col">
-              <label for="usu_rg">RG</label>
-              <input type="text" class="form-control" id="usu_rg" placeholder="Informe o RG no formato 33.333.333-3"
-                data-minlength="9" name="usu_rg" required>
-            </div>
-          </div>
+                <div class="col-xs-6 col-md-3">
+                    <ul class="index-footer-links">
+                        <li>
+                            <h5><a href="./sobre.html">Sobre</a></h5>
+                        </li>
+                        <li>
+                            <h5><a href="./contatos.html">Contatos</a></h5>
+                        </li>
+                    </ul>
+                </div>
 
-          <div class="form-row">
-            <div class="form-group col-md-10">
-              <label for="usu_logradouro">Logradouro</label>
-              <input type="text" class="form-control" id="usu_logradouro" placeholder="Digite seu endereço" name="usu_logradouro" required>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="usu_numero">Número</label>
-              <input type="text" class="form-control" id="usu_numero" name="usu_numero" required>
+                <div class="col-xs-6 col-md-3">
+                    <ul class="index-footer-links">
+                        <li>
+                            <h5><a href="./perguntas.html">Perguntas Frequentes</a></h5>
+                        </li>
+                        <li>
+                            <h5><a href="./termos.html">Termos e Condições</a></h5>
+                        </li>
+                        <li>
+                            <h5><a href="./politica.html">Política de Privacidade</a></h5>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>Formas de Pagamento</h6>
+                    <ul class="index-footer-links">
+                        <li><img src="/img/icons/visa.png" alt="Visa" width="20%">
+                            <img src="/img/icons/mastercard.png" alt="Mastercard" width="20%">
+                            <img src="/img/icons/maestro.png" alt="Maestro" width="20%">
+                            <img src="/img/icons/paypal.png" alt="Paypal" width="20%">
+                        </li>
+                    </ul>
+                </div>
+                <hr>
             </div>
 
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col-md-7">
-              <label for="usu_complemento">Complemento</label>
-              <input type="text" class="form-control" id="usu_complemento"
-                placeholder="Digite o complemento. Ex: Edifício Garden, bloco A, Apartamento 32" name="usu_complemento">
+            <div class="index-site-footer-2">
+                Copyright &copy; 2020 - Todos os direitos reservados - iChef S.A.
             </div>
-            <div class="form-group col">
-              <label for="usu_bairro">Bairro</label>
-              <input type="text" class="form-control" id="usu_bairro" placeholder="Insira o bairro" name="usu_bairro" required>
-            </div>
-          </div>
-
-          <div class="form-row">
-
-            <div class="form-group col-md-6">
-              <label for="usu_cidade">Cidade</label>
-              <input type="text" class="form-control" id="usu_cidade" placeholder="Informe a cidade" name="usu_cidade" required>
-            </div>
-            <div class="form-group col">
-              <label for="usu_estado">Estado</label>
-              <input type="text" class="form-control" id="usu_estado" placeholder="Digite o estado" name="usu_estado" required>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="usu_cep">CEP</label>
-              <input type="text" class="form-control" id="usu_cep" placeholder="Insira o CEP" name="usu_cep" required>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col">
-              <label for="usu_telefone">Telefone</label>
-              <input type="text" class="form-control" id="usu_telefone" placeholder="Insira o telefone" name="usu_telefone">
-            </div>
-            <div class="form-group col">
-              <label for="usu_celular">Celular</label>
-              <input type="text" class="form-control" id="usu_celular" placeholder="Digite o celular" name="usu_celular" required>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col">
-              <label for="email">Email / Login</label>
-              <input type="email" class="form-control" id="email" placeholder="Informe seu email" name="email" required>
-            </div>
-            <div class="form-group col">
-              <label for="usu_login">Confirmar email / login</label>
-              <input type="email" class="form-control" id="usu_login" placeholder="Confirme seu email" name="usu_login" required>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col">
-              <label for="senha">Senha</label>
-              <input type="password" class="form-control" id="senha" placeholder="Digite senha com 5 caracteres ou mais" name="senha"
-                data-minlength="5" required>
-            </div>
-            <div class="form-group col">
-              <label for="usu_senha">Confirmar senha</label>
-              <input type="password" class="form-control" id="usu_senha" placeholder="Confirme a senha" name="usu_senha" data-match="#senha" required>
-            </div>
-          </div>
-
-          <button type="submit" class="btn btn-primary" id="btnCadastrar">Cadastrar</button>
-        </form>
-      </div>
-    </div>
-  </div>
-  <br>
-
-  <div class="container-success" id="divSuccess" style=overflow:hidden>
-		<div class="row justify-content-center success">
-			<div class="col-sm-7" id="showDivSuccess">
-				
-				<h4 class=sucess>Dados cadastrados com sucesso!!!</h4>
-			</div>
-		</div>
-		<br>
-	</div>
-  
-  <footer class="index-site-footer">
-    <div class="index-container-footer">
-      <div class="row">
-        <div class="col-sm-12 col-md-3">
-          <img src="/img/logotipo-icheff-original.png" alt="Logotipo icheff" width=90%>
 
         </div>
 
-        <div class="col-xs-6 col-md-3">
-          <ul class="index-footer-links">
-            <li>
-              <h5><a href="./sobre.html">Sobre</a></h5>
-            </li>
-            <li>
-              <h5><a href="./contatos.html">Contatos</a></h5>
-            </li>
-          </ul>
-        </div>
-
-        <div class="col-xs-6 col-md-3">
-          <ul class="index-footer-links">
-            <li>
-              <h5><a href="./perguntas.html">Perguntas Frequentes</a></h5>
-            </li>
-            <li>
-              <h5><a href="./termos.html">Termos e Condições</a></h5>
-            </li>
-            <li>
-              <h5><a href="./politica.html">Política de Privacidade</a></h5>
-            </li>
-          </ul>
-        </div>
-
-        <div class="col-xs-6 col-md-3">
-          <h6>Formas de Pagamento</h6>
-          <ul class="index-footer-links">
-            <li><img src="/img/icons/visa.png" alt="Visa" width="20%">
-              <img src="/img/icons/mastercard.png" alt="Mastercard" width="20%">
-              <img src="/img/icons/maestro.png" alt="Maestro" width="20%">
-              <img src="/img/icons/paypal.png" alt="Paypal" width="20%">
-            </li>
-          </ul>
-        </div>
-        <hr>
-      </div>
-
-      <div class="index-site-footer-2">
-        Copyright &copy; 2020 - Todos os direitos reservados - iChef S.A.
-      </div>
-
-    </div>
-
-  </footer>
+    </footer>
 
 </body>
 

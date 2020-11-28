@@ -19,7 +19,6 @@ $(document).ready(function (e) {
 				contentType: "application/json",
 				url: "/api/newsletter",
 				data: JSON.stringify(formData),
-				dataType: 'json',
 				success: function() {
 					resetData();
 					mostrarDiv();
