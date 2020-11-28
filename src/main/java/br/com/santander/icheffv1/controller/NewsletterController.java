@@ -18,7 +18,7 @@ import br.com.santander.icheffv1.model.Newsletter;
 import br.com.santander.icheffv1.service.NewsletterService;
 
 @RestController
-@RequestMapping("/newsletter")
+@RequestMapping("/api/newsletter")
 public class NewsletterController {
 	
 	private final NewsletterService newsletterService;

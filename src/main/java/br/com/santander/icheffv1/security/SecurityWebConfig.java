@@ -40,7 +40,10 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 					"/webjars/**"
 			).permitAll()
 			
-			.antMatchers(HttpMethod.GET, "/produtos").hasAnyRole("code")
+			.antMatchers(HttpMethod.GET,
+					"/*.html",
+					"/api/receitas"
+			).permitAll()
 			
 			.antMatchers(HttpMethod.GET, "/api/**").hasRole("admin")
 			.antMatchers(HttpMethod.POST, "/api/**").hasRole("admin")
@@ -50,10 +53,14 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 					"/favicon.ico",
 					"/css/**",
 					"/img/**",
+					"/imagens/**",
 					"/js/**"
 			).permitAll()
 			
-			.antMatchers(HttpMethod.POST, "/usuarios", "/login").permitAll()
+			.antMatchers(HttpMethod.POST,
+					"/api/login",
+					"/api/newsletter"
+			).permitAll()
 			
 			.anyRequest().authenticated()
 			

@@ -219,6 +219,7 @@ public class IcheffV1Application implements CommandLineRunner {
 		}
 		
 		//Instancia uma receita caso não exista nenhuma ;)
+		/*
 		if(this.receitaRepository.count() == 0) {
 			
 			ReceitaCategoria categoria = this.receitaCategoriaRepository.findAll().get(0);
@@ -373,6 +374,7 @@ public class IcheffV1Application implements CommandLineRunner {
 			this.vendaRelacaoRepository.save(vendaRelacao7);
 			
 		}
+		*/
 		
 		//Newsletter
 		if(this.newsletterRepository.count() == 0) {

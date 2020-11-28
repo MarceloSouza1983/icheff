@@ -17,16 +17,18 @@ $(document).ready(function (e) {
 			$.ajax({
 				type: "POST",
 				contentType: "application/json",
-				url: "newsletter",
+				url: "/api/newsletter",
 				data: JSON.stringify(formData),
 				dataType: 'json',
 				success: function() {
-					
-				}
+					resetData();
+					mostrarDiv();
+				},
+				error: (jqXHR, textStatus, errorThrown) => {
+                    alert('Erro ao realizar a solicitação ao servidor:' + 'Código do Erro: ' + jqXHR.status + ' - ' + jqXHR.statusText);
+                },
 			});
 
-			resetData();
-			mostrarDiv();
 		}
 
 	})
