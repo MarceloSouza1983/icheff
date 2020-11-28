@@ -41,15 +41,6 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 			).permitAll()
 			
 			.antMatchers(HttpMethod.GET,
-					"/*.html",
-					"/api/receitas"
-			).permitAll()
-			
-			.antMatchers(HttpMethod.GET, "/api/**").hasRole("admin")
-			.antMatchers(HttpMethod.POST, "/api/**").hasRole("admin")
-			.antMatchers(HttpMethod.DELETE, "/api/**").hasRole("admin")
-			
-			.antMatchers(HttpMethod.GET,
 					"/favicon.ico",
 					"/css/**",
 					"/img/**",
@@ -57,16 +48,31 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 					"/js/**"
 			).permitAll()
 			
+			.antMatchers(HttpMethod.GET,
+					"/*.html",
+					"/api/receitas"
+			).permitAll()
+			
 			.antMatchers(HttpMethod.POST,
 					"/api/login",
-					"/api/newsletter"
+					"/api/newsletter",
+					"/api/usuarios/save"
 			).permitAll()
+			
+			.antMatchers(HttpMethod.POST, "/api/vendas").hasAnyRole("admin","usuario")
+			.antMatchers(HttpMethod.PUT, "/api/pagamento").hasAnyRole("admin","usuario")
+			
+			.antMatchers(HttpMethod.GET, "/api/**").hasRole("admin")
+			.antMatchers(HttpMethod.POST, "/api/**").hasRole("admin")
+			.antMatchers(HttpMethod.DELETE, "/api/**").hasRole("admin")
 			
 			.anyRequest().authenticated()
 			
 			.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			
-			.and().cors().disable().csrf().disable()
+			.and().cors().disable()
+				  .csrf().disable()
+			
 			.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil));
 	}
 

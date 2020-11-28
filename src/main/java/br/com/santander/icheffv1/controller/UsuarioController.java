@@ -1,6 +1,7 @@
 package br.com.santander.icheffv1.controller;
 
 import java.net.URI;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -35,7 +36,6 @@ public class UsuarioController {
 	@Transactional
 	public ResponseEntity<Void> create(@Valid @RequestBody Usuario usuario) {
 	
-		
 		usuario = this.usuarioService.create(usuario);
 		
 		URI uri = ServletUriComponentsBuilder

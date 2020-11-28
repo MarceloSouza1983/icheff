@@ -4,13 +4,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,6 +23,7 @@ import br.com.santander.icheffv1.model.IngredienteUnidade;
 import br.com.santander.icheffv1.model.Newsletter;
 import br.com.santander.icheffv1.model.Receita;
 import br.com.santander.icheffv1.model.ReceitaCategoria;
+import br.com.santander.icheffv1.model.Role;
 import br.com.santander.icheffv1.model.Tipo;
 import br.com.santander.icheffv1.model.Usuario;
 import br.com.santander.icheffv1.model.Venda;
@@ -30,6 +34,7 @@ import br.com.santander.icheffv1.repository.IngredienteUnidadeRepository;
 import br.com.santander.icheffv1.repository.NewsletterRepository;
 import br.com.santander.icheffv1.repository.ReceitaCategoriaRepository;
 import br.com.santander.icheffv1.repository.ReceitaRepository;
+import br.com.santander.icheffv1.repository.RoleRepository;
 import br.com.santander.icheffv1.repository.UsuarioRepository;
 import br.com.santander.icheffv1.repository.VendaRelacaoRepository;
 import br.com.santander.icheffv1.repository.VendaRepository;
@@ -79,8 +84,26 @@ public class IcheffV1Application implements CommandLineRunner {
 	@Autowired
 	private NewsletterRepository newsletterRepository;
 	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
+	@Autowired
+	private RoleRepository roleRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
+		
+		//Cadastra a role admin
+		if(roleRepository.findByName("admin").orElse(new ArrayList<Role>()).isEmpty()) {
+			Role admin = new Role(null, "admin");
+			roleRepository.save(admin);
+		}
+		
+		//Cadastra a role usuario
+		if(roleRepository.findByName("usuario").orElse(new ArrayList<Role>()).isEmpty()) {
+			Role usuario = new Role(null, "usuario");
+			roleRepository.save(usuario);
+		}
 		
 		//Instancia o admin caso não exista ;)
 		if(usuarioRepository.findByTipo(Tipo.ADMINISTRADOR).orElse(new ArrayList<Usuario>()).isEmpty()){
@@ -104,6 +127,16 @@ public class IcheffV1Application implements CommandLineRunner {
 				"11987654321"
 			);
 			administrador.setTipo(Tipo.ADMINISTRADOR);
+			
+			//bCrypt
+			administrador.setSenha(this.encoder.encode(administrador.getSenha()));
+			
+			//Role
+			Role role = roleRepository.findByName("admin").get().get(0);
+			HashSet<Role> roleUsuario = new HashSet<Role>();
+			roleUsuario.add(role);
+			administrador.setRoles(roleUsuario);
+			
 			usuarioRepository.save(administrador);
 		}
 		
@@ -129,6 +162,15 @@ public class IcheffV1Application implements CommandLineRunner {
 				"11987654321"
 			);
 			
+			//bCrypt
+			usuario1.setSenha(this.encoder.encode(usuario1.getSenha()));
+			
+			//Role
+			Role role = roleRepository.findByName("usuario").get().get(0);
+			HashSet<Role> roleUsuario = new HashSet<Role>();
+			roleUsuario.add(role);
+			usuario1.setRoles(roleUsuario);
+			
 			Usuario usuario2 = new Usuario(
 					null,
 					"José Maria",
@@ -148,6 +190,14 @@ public class IcheffV1Application implements CommandLineRunner {
 					"1155554321",
 					"11987654321"
 			);
+			
+			//bCrypt
+			usuario2.setSenha(this.encoder.encode(usuario2.getSenha()));
+			
+			//Role
+			HashSet<Role> roleUsuario2 = new HashSet<Role>();
+			roleUsuario2.add(role);
+			usuario2.setRoles(roleUsuario2);
 			
 			usuario1.setTipo(Tipo.CLIENTE);
 			usuario2.setTipo(Tipo.CLIENTE);

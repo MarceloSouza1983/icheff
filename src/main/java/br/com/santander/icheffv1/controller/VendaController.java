@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,12 +37,12 @@ public class VendaController {
 	
 	private final VendaService vendaService;
 	
-	private final UsuarioService usuarioService;
+	//private final UsuarioService usuarioService;
 	
 	private final VendaRelacaoService vendaRelacaoService;
 	
 	private final ReceitaService receitaService;
-		
+	
 	public VendaController(
 			VendaService vendaService,
 			UsuarioService usuarioService,
@@ -48,7 +50,7 @@ public class VendaController {
 			ReceitaService receitaService
 	) {
 		this.vendaService = vendaService;
-		this.usuarioService = usuarioService;
+		//this.usuarioService = usuarioService;
 		this.vendaRelacaoService = vendaRelacaoService;
 		this.receitaService = receitaService;
 	}
@@ -57,7 +59,11 @@ public class VendaController {
 	@Transactional
 	public ResponseEntity<Void> create(@Valid @RequestBody List<CarrinhoItem> listaReceitas) {
 		
-		Usuario usuario = this.usuarioService.findById(2L); //JWT??
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		Usuario usuario = (Usuario) authentication.getPrincipal();
+		
+		//Usuario usuario = this.usuarioService.findById(2L); //JWT??
 		
 		for(CarrinhoItem item : listaReceitas) {
 			if(item.getQuantidade() <= 0) {
@@ -90,7 +96,7 @@ public class VendaController {
 				 .buildAndExpand(venda.getId())
 				 .toUri();
 		
-		return ResponseEntity.created(uri).build();
+		return ResponseEntity.created(uri).header("venda_id", venda.getId().toString()).build();
 
 	}
 	

@@ -36,11 +36,11 @@ public class PagamentoController {
 		Venda venda = this.vendaService.findById(pagamento.venda_id);
 		
 		if(venda.getPagamentoRealizado()) {
-			return ResponseEntity.status(400).header("status-pagamento", "Pagamento já efetuado").build();
+			return ResponseEntity.status(200).header("status-pagamento", "Pagamento já efetuado").build();
 		}
 		
 		//Pagamento não aprovado!
-		if(numero <= 80) {
+		if(numero <= 20) {
 			
 			return ResponseEntity.status(401).header("status-pagamento", "Pagamento não aprovado").build();
 			

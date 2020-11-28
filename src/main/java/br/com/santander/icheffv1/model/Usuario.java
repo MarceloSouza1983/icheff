@@ -345,6 +345,10 @@ public class Usuario implements Serializable {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+	
+	public Boolean isAdmin() {
+		return this.getSimpleRoles().contains("admin");
+	}
 
 	@Override
 	public int hashCode() {
