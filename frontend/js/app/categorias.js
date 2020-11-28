@@ -53,8 +53,9 @@ $(document).ready(function () {
                 var amount = modal.find(".contador-carrinho").text();
                 var desc = modal.find("#modalLabel").text();
                 var price = modal.find(".price").text();
+                var receita_id = $button.attr('receita_id');
             
-                adicionarReceita(amount, desc, price);
+                adicionarReceita(amount, desc, price, receita_id);
 
                 mostrarCarrinho();
          
@@ -119,7 +120,7 @@ function getUnidade(ingrediente) {
     return ingrediente.unidadeSingular.toLowerCase() + " de ";
 }
 
-function criaModal(idModal, nome, porcoes, listaIngredientes, modoPreparo, linkVideo, preco) {
+function criaModal(idModal, nome, porcoes, listaIngredientes, modoPreparo, linkVideo, preco, receita_id) {
 
     var modal = document.createElement("div");
     modal.innerHTML = "<div class=\"modal fade\" id=\"modal-" + idModal + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"modalLabel\" aria-hidden=\"true\">" +
@@ -157,7 +158,7 @@ function criaModal(idModal, nome, porcoes, listaIngredientes, modoPreparo, linkV
         "+" +
         "</button>" +
         "</div>" +
-        "<button id=\"comprar\" type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">" +
+        "<button id=\"comprar\" type=\"button\" receita_id=\"" + receita_id + "\" class=\"btn btn-secondary\" data-dismiss=\"modal\">" +
         "<span>R$ </span><span class=\"price\">" + preco + "</span> Adicionar ao carrinho <i class=\"fas fa-shopping-cart\"></i>" +
         "</button>" +
         "</div>" +
@@ -175,7 +176,7 @@ function atualizaPreco(idModal, preco){
 
 function criaCardModal(receita) {
     criaCard(getIdCategoria(receita.categoria), receita.id, receita.nome, receita.imagem)
-    criaModal(receita.id, receita.nome, receita.porcoes, receita.ingredientes, receita.descricao, receita.linkVideo, receita.preco)
+    criaModal(receita.id, receita.nome, receita.porcoes, receita.ingredientes, receita.descricao, receita.linkVideo, receita.preco, receita.id)
 }
 
 function montarVideo(_this) {
@@ -185,6 +186,8 @@ function montarVideo(_this) {
         html = $noScript.html();
 
     $noScript.after($(html));
+
+    $noScript.remove();
 
     document.getElementById("carrinho").style.display = 'none';
 }
@@ -258,7 +261,7 @@ function formatValue(value) {
     return str;
 }
 
-function adicionarReceita(amount, desc, price) {
+function adicionarReceita(amount, desc, price, receita_id) {
     
     if (price.length === 2) {
         price += ".00";
@@ -266,7 +269,22 @@ function adicionarReceita(amount, desc, price) {
 
     var value = price;
 
-    list.push({ "descricao": desc, "quantidade": amount, "valor": value });
+    let alterados = list.filter(function(obj){
+        if(obj.receita_id == receita_id){
+            obj.quantidade = parseInt(obj.quantidade) + parseInt(amount);
+            return true;
+        }
+    }).length;
+
+    if(alterados==0){
+        list.push({
+            "descricao": desc,
+            "quantidade": amount,
+            "valor": value,
+            "receita_id": receita_id
+        });
+    }
+
     setList(list);
 }
 
@@ -291,14 +309,133 @@ function deleteList(force) {
     if(force || confirm("Deseja deletar o pedido?")) {
         list = [];
         setList(list);
-        mostrarCarrinho();
     }
 }
 
 //finalizando o Pedido
 function finalizarPedido() {
     
-    deleteList(true);
+    let lista = JSON.parse(localStorage.getItem('list'));
+    
+    if(lista.length===0){
+        alert('A lista está vazia!');
+        return;
+    }
+    
+    let data = [];
+
+    let valorTotal = 0;
+
+    for(let i=0;i<lista.length;i++){
+        data.push({
+            receita_id: lista[i].receita_id,
+            quantidade: lista[i].quantidade
+        });
+        valorTotal += lista[i].valor * lista[i].quantidade;
+    }
+
+    let jwt = localStorage.getItem('icheff-jwt');
+
+    if(!jwt || jwt == ''){
+        alert("Você não está logado no sistema!");
+        window.location.href = BASE_URL + '/login.html';
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: BASE_URL + '/api/vendas',
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        headers: { 'Authorization': 'Bearer ' + jwt },
+        beforeSend: function(){
+            $('div#carrinho-tabela').hide();
+            $('div#container-valor-total').hide();
+        },
+        success: function (data, textStatus, jqXHR) {
+            $('div#pagamento').show();
+            let venda_id = jqXHR.getResponseHeader('venda_id');
+            $('div#pagamento span#venda_id').html(venda_id);
+            $('div#pagamento span#valor_compra').html(valorTotal);
+            deleteList(true);
+            $('div#pagamento input').eq(0).focus();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+
+            if(jqXHR.status == 403){
+                window.location.href = BASE_URL + '/login.html';
+                return;
+            }
+
+            $('div#carrinho-tabela').show();
+            $('div#container-valor-total').show();
+            alert("Erro ao cadastrar a venda");
+            console.log(JSON.parse(jqXHR.responseText.status));
+        }
+    });
+
+}
+
+function pagar(){
+
+    let data = {
+        venda_id: $('div#pagamento span#venda_id').html(),
+        cartao: {
+            numero: $('div#pagamento input#cartao').val(),
+            validade: $('div#pagamento input#validade').val(),
+            cvv: $('div#pagamento input#cvv').val()
+        }
+    };
+
+    if(data.cartao.numero.length===0){
+        $('div#pagamento input#cartao').focus();
+        return;
+    }
+
+    if(data.cartao.validade.length!==5){
+        $('div#pagamento input#validade').focus();
+        return;
+    }
+    
+    if(data.cartao.cvv.length!==3){
+        $('div#pagamento input#cvv').focus();
+        return;
+    }
+
+    let jwt = localStorage.getItem('icheff-jwt');
+
+    let $alertPagamento = $('#alert-pagamento');
+
+    $.ajax({
+        type: 'PUT',
+        url: BASE_URL + '/api/pagamento',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        headers: { 'Authorization': 'Bearer ' + jwt },
+        beforeSend: function(){
+            $alertPagamento.html('').hide();
+            $('div#container-valor-total').hide();
+        },
+        success: function (data, textStatus, jqXHR) {
+            desistirDaCompra();
+            mostrarCarrinho();
+            alert("Obrigado pela sua compra!");
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            if(jqXHR.status == 401){
+                $alertPagamento.html("Pagamento não aprovado!").show();
+            } else {
+                $alertPagamento.html("Erro ao solicitar o pagamento ao servidor!").show();
+            }
+        }
+    });
+    
+}
+
+function desistirDaCompra(){
+    $('div#pagamento').hide();
+    $('div#carrinho-tabela').show();
+    $('div#container-valor-total').show();
 }
 
 //salvando em storage

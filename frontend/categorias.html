@@ -36,16 +36,56 @@
 
   <div id="carrinho" class="carrinho-oculto">
 
-    <table id="listTable" class="table">
-    </table>
+    <div id="carrinho-tabela">
+
+        <table id="listTable" class="table"></table>
+    
+        <hr>
+    
+        <span id="btnAdd" class="btn-carrinho">
+            <button type="button" class="btn btn-danger" onclick="deleteList()"><i class="fas fa-eraser"></i> Deletar Pedido</button>
+            <button type="button" class="btn btn-success" onclick="finalizarPedido()">Finalizar Pedido</button>
+        </span>
+    
+    </div>
+    
     <hr>
 
-    <span id="btnAdd" class="btn-carrinho">
-      <button type="button" class="btn btn-danger" onclick="deleteList()"><i class="fas fa-eraser"></i> Deletar
-        Pedido</button>
-      <button type="button" class="btn btn-success">Finalizar Pedido</button>
-    </span>
-    <hr>
+    <div id="pagamento">
+        <div class="row mt-2 mx-3">
+
+            <h4 class="text-center w-100 mb-1">Dados de pagamento</h4>
+            <h6 class="text-center w-100 mt-0">ID da venda: #<span id="venda_id"></span></h6>
+            <h6 class="text-center w-100 mt-0">Valor da compra: R$<span id="valor_compra"></span></h6>
+
+            <div class="form-row w-100">
+                <div class="form-group w-100">
+                    <label for="cartao">Número do cartão</label>
+                    <input type="text" class="form-control" id="cartao" placeholder="Número do cartão">
+                </div>
+            </div>
+
+            <div class="form-row w-100">
+                <div class="form-group col-6">
+                    <label for="cartao">Validade</label>
+                    <input type="text" class="form-control" maxlength="5" id="validade" placeholder="mm/aa">
+                </div>
+                <div class="form-group col-6">
+                    <label for="cartao">CVV</label>
+                    <input type="text" class="form-control" maxlength="3" id="cvv" placeholder="xxx">
+                </div>
+            </div>
+
+            <div id="alert-pagamento" class="alert alert-danger w-100"></div>
+
+            <div class="col-12 text-center mb-3">
+                <button type="button" class="btn btn-danger mr-2" onclick="desistirDaCompra()">Desistir da compra</button>
+                <button type="button" class="btn btn-success" onclick="pagar()">Pagar!</button>
+            </div>
+
+        </div>
+        <hr>
+    </div>
 
     <div class="container-valor-total">
       <h4 class="text-center text-success">Total: <span id="totalValue">R$0,00 </span></h4>

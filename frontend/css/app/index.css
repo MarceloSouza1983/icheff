@@ -463,6 +463,11 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     right: 0;
 }
 
+div#alert-pagamento,
+div#pagamento{
+    display: none;
+}
+
 .carrinho-oculto hr {
     margin: 0px;
     padding: 0px;
