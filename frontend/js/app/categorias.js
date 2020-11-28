@@ -70,7 +70,7 @@ function getIdCategoria(categoria) {
             return "cards-peixes";
         case "Fitness":
             return "cards-fitness";
-        case "Vegetarianos":
+        case "Veganos e Vegetarianos":
             return "cards-vegetarianos";
         default:
             ""
@@ -141,7 +141,7 @@ function criaModal(idModal, nome, porcoes, listaIngredientes, modoPreparo, linkV
         "<div class=\"container\">" +
         "<h4>Modo de preparo <i class=\"fas fa-utensils\"></i></h4>" +
         "<p>" + modoPreparo + "</p></div>" +
-        "<iframe width=\"560\" height=\"315\" src=\"" + linkVideo + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" +
+        "<iframe width=\"560\" height=\"315\" src=\"" + linkVideo.replace('watch?v=', 'embed/') + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" +
         "</div>" +
         "</div>" +
         "</div>" +
@@ -166,7 +166,6 @@ function criaModal(idModal, nome, porcoes, listaIngredientes, modoPreparo, linkV
     document.body.appendChild(modal);
 }
 
-
 function atualizaPreco(idModal, preco){
 
     const quantidade = parseInt($("#modal-" + idModal).find('input').val());
@@ -180,39 +179,9 @@ function criaCardModal(receita) {
     criaModal(receita.id, receita.nome, receita.porcoes, receita.ingredientes, receita.descricao, receita.linkVideo, receita.preco)
 }
 
-//Método apenas para teste, excluir depois de cadastrar as receitas no banco de dados
-function criaCardModal2(categoria, idModal, nome, porcoes, descricao, imagem, listaIngredientes, linkVideo, preco) {
-    criaCard(categoria, idModal, nome, imagem)
-    criaModal(idModal, nome, porcoes, listaIngredientes, descricao, linkVideo, preco)
-}
-
 function pararVideo() {
     $('iframe')[0].contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
 }
-
-const lista = [
-    { quantidade: 1, nome: 'cebola pequena', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
-    { quantidade: 3, nome: 'dentes de alho triturados ou picados;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
-    { quantidade: 400, nome: 'carne moída (patinho);', unidadeSingular: 'Grama', unidadePlural: "Gramas" },
-    { quantidade: 1, nome: 'orégano seco;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
-    { quantidade: 1, nome: 'sal;', unidadeSingular: 'Colher de sopa', unidadePlural: "Colheres de sopa" },
-    { quantidade: 1, nome: 'pimenta-do-reino a gosto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
-    { quantidade: 2, nome: 'sachê de molho pronto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
-    { quantidade: 1, nome: 'Massa para lasanha;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
-    { quantidade: 350, nome: 'presunto;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
-    { quantidade: 350, nome: 'queijo Muçarela;', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
-    { quantidade: 1, nome: 'Queijo parmesão a gosto.', unidadeSingular: 'Unidade', unidadePlural: "Unidades" },
-];
-
-const lista2 = [];
-
-criaCardModal2("cards-variados", 10, "Lasanha Bolonhesa", 5, "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", lista, "https://www.youtube.com/embed/-9Wp7NfeTBY?enablejsapi=1", 50)
-criaCardModal2("cards-variados", 20, "Costela Barbecue", 5, "Receita de Costela Barbecue", "img/barbecue.jpg", lista2, "", 38)
-criaCardModal2("cards-variados", 30, "Hamburguer", 5, "Receita de Hamburguer", "img/hamburguer.jpg", lista2, "", 50)
-criaCardModal2("cards-peixes", 40, "Costela Barbecue", 5, "Receita de Costela Barbecue", "img/barbecue.jpg", lista2, "", 38)
-criaCardModal2("cards-fitness", 50, "Hamburguer", 5, "Receita de Hamburguer", "img/hamburguer.jpg", lista2, "", 40)
-criaCardModal2("cards-vegetarianos", 60, "Lasanha Bolonhesa", 5, "Receita de Lasanha Bolonhesa", "img/lasanha.jpg", lista2, "", 45)
-criaCardModal2("cards-variados", 70, "Pizza Marguerita", 5, "Receita de Pizza Marguerita", "img/pizza.jpg", lista2, "", 50)
 
 function mostrarCarrinho() {
     if (document.getElementById("carrinho").style.display === "block") {
