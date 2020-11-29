@@ -205,8 +205,8 @@ function pararVideo() {
 }
 
 function mostrarCarrinho() {
-
-    let carrinho = document.getElementById("carrinho");
+    $(".carrinho-oculto").slideToggle(300);
+    /*let carrinho = document.getElementById("carrinho");
 
     if (carrinho.style.display === "block") {
         carrinho.style.display = "none";
@@ -218,7 +218,7 @@ function mostrarCarrinho() {
 
         carrinho.style.height = (htmlH - marginTopCarrinho) + 'px';
 
-    }
+    }*/
 }
 
 var list = [];
@@ -306,7 +306,9 @@ function deleteData(id) {
 
 //deletando Pedido
 function deleteList(force) {
-    if(force || confirm("Deseja deletar o pedido?")) {
+    if(list.length === 0){
+        return;
+    } else if(force || confirm("Deseja deletar o pedido?")) {
         list = [];
         setList(list);
     }
