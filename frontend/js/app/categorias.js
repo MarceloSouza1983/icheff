@@ -227,7 +227,7 @@ var list = [];
 function getTotal(list) {
     var total = 0;
     for (var key in list) {
-        total += parseFloat(list[key].valor) * parseInt(list[key].quantidade);
+        total += parseFloat(list[key].valor);
     }
     document.getElementById("totalValue").innerHTML = formatValue(total);
 }
