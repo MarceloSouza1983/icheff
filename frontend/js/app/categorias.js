@@ -235,12 +235,12 @@ function getTotal(list) {
 //criando a tabela
 function setList(list) {
     var table = '<thead><tr><td>Descrição</td><td>Quantidade</td><td>Valor</td><td>Ação</td></tr></thead><tbody>';
-
     for (var key in list) {
+        const valor = list[key].valor / list[key].quantidade;
         table += '<tr class="text-center">' +
                     '<td class="text-left">' + list[key].descricao + '</td>' +
                     '<td>' + list[key].quantidade + '</td>' +
-                    '<td>' + list[key].valor.toString().replace('.',',') + '</td><td>' +
+                    '<td>' + valor.toString().replace('.',',') + '</td><td>' +
                     '<button class="btn btn-danger" onclick="deleteData(' + key + ');"><i class="fas fa-eraser"></i> Delete</button>' +
                     '</td>' +
                 '</tr>';
