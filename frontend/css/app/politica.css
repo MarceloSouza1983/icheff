@@ -1,8 +1,288 @@
-div.politica{
+div.politica {
     text-align: justify;
 }
 
-div.politica p{
+div.politica p {
     line-height: 25px;
     margin-bottom: 25px;
+}
+
+@media (max-width: 550px) {
+
+    div.politica p {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    div.politica p {
+        line-height: 25px;
+        margin-bottom: 25px;
+    }
+
+    header .index-logo {
+        background-color: #3B3B3B;
+        margin-left: 5px;
+        margin-top: 8px;
+        color: #FFC30B;
+        font-family: 'Arial Black', Times;
+        font-size: 20px;
+        padding: 0px;
+    }
+
+    header .index-logo .img-logo {
+        width: 25%;
+        margin-right: 0px;
+        padding: 0px;
+    }
+
+    header nav a {
+        padding: 0px;
+        background-color: #3B3B3B;
+        text-decoration: none;
+        font-size: 15px;
+        color: #AAA;
+        margin-right: 10px;
+    }
+
+    .index-social {
+        background-color: #e4e4e4;
+        border-radius: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    
+    .index-social img {
+        background-color: #e4e4e4;
+        margin-left: 20px;
+        margin-bottom: 0px;
+        width: 30px;
+    }
+    
+    .form-group.col-md-7.social {
+        padding: 0%;
+        background-color: #e4e4e4;
+        border-radius: 20px;
+    }
+    
+    .form-group.col-md-4.newsletter {
+        padding: 0%;
+        margin-left: 15px;
+        width: 72%;
+        background-color: #e4e4e4;
+    }
+    
+    .form-inline.newsletter {
+        margin-left: 5px;
+        margin-right: 5px;
+        background-color: #e4e4e4;
+    }
+
+    #cadastrar {
+        position: absolute;
+        left: 370px;
+    }
+    
+    .form-row.social {
+        border-radius: 20px;
+        margin: 0px;
+        background-color: #e4e4e4;
+    }
+
+    #footer-logotipo-icheff {
+        padding: 0px;
+        width: 65%;
+    }
+
+    .index-site-footer {
+        background-color: #3B3B3B;
+        padding: 15px;
+        font-size: 15px;
+        line-height: 24px;
+        color: #737373;
+    }
+
+    #footer-2-itens {
+        position: absolute;
+        margin-left: 10px;
+        padding: 0px;
+    }
+
+    #footer-3-itens {
+        position: absolute;
+        top: -30px;
+        left: 200px;
+        padding: 0px;
+    }
+
+    #footer-pagamento {
+        margin-top: 43%;
+    }
+
+    #footer-pagamento h6 {
+        position: absolute;
+        top: -168px;
+        margin-left: 9%;
+    }
+
+    #footer-pagamento img {
+        left: 9%;
+        position: relative;
+        top: -140px;
+        margin-bottom: 20px;
+    }
+
+}
+
+@media (max-width: 420px) {
+
+    div.politica p {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    div.politica p {
+        line-height: 25px;
+        margin-bottom: 25px;
+    }
+
+    header .index-logo {
+        background-color: #3B3B3B;
+        margin-left: 5px;
+        margin-top: 8px;
+        color: #FFC30B;
+        font-family: 'Arial Black', Times;
+        font-size: 20px;
+        padding: 0px;
+    }
+
+    header nav a {
+        padding: 0px;
+        background-color: #3B3B3B;
+        text-decoration: none;
+        font-size: 12px;
+        color: #AAA;
+        margin-right: 10px;
+        margin-left: 0px;
+    }
+
+    .index-social {
+        background-color: #e4e4e4;
+        border-radius: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    
+    .index-social img {
+        background-color: #e4e4e4;
+        margin-left: 20px;
+        margin-bottom: 0px;
+        width: 30px;
+    }
+    
+    .form-group.col-md-7.social {
+        padding: 0%;
+        background-color: #e4e4e4;
+        border-radius: 20px;
+    }
+    
+    .form-group.col-md-4.newsletter {
+        padding: 0%;
+        margin-left: 10px;
+        width: 62%;
+        background-color: #e4e4e4;
+    }
+
+    .index-h4 {
+        min-width: 240px;
+        margin-left: 20px;
+        margin-top: 15px;
+        background-color: #e4e4e4;
+        color: #d10e0e;
+        font-size: 1.3rem;
+    }
+
+    .index-h4-modificado {
+        min-width: 240px;
+        margin-left: 10px;
+        margin-top: 5px;
+        background-color: #e4e4e4;
+        color: #d10e0e;
+        font-size: 1.3rem;
+    }
+    
+    .form-inline.newsletter {
+        margin-left: 5px;
+        margin-right: 5px;
+        background-color: #e4e4e4;
+    }
+
+    #cadastrar {
+        position: absolute;
+        left: 205px;
+    }
+    
+    .form-row.social {
+        border-radius: 20px;
+        margin: 0px;
+        background-color: #e4e4e4;
+    }
+
+    #footer-logotipo-icheff {
+        padding: 0px;
+        width: 65%;
+    }
+
+    .index-site-footer {
+        background-color: #3B3B3B;
+        padding: 15px;
+        font-size: 15px;
+        line-height: 24px;
+        color: #737373;
+    }
+
+    #footer-2-itens {
+        position: absolute;
+        margin-left: -5px;
+        padding: 0px;
+        font-size: 0.6rem;
+    }
+
+    #footer-3-itens {
+        position: absolute;
+        top: -30px;
+        left: 120px;
+        padding: 0px;
+        font-size: 0.6rem;
+    }
+
+    #footer-pagamento {
+        margin-top: 65%;
+        height: auto;
+        max-height: 0px;
+    }
+
+    #footer-pagamento h6 {
+        position: absolute;
+        top: -168px;
+        margin-left: 9%;
+    }
+
+    #footer-pagamento img {
+        left: 9%;
+        position: relative;
+        top: -140px;
+    }
+
+    .h1-modificado {
+        position: relative;
+        left: -32px;
+        min-width: 300px;
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+    }
+
+    .h3-modificado {
+        font-size: 1.3rem;
+    }
+
 }
