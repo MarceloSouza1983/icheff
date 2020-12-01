@@ -27,6 +27,13 @@ body {
     color: #d10e0e;
 }
 
+.index-h4-modificado {
+    margin-left: 20px;
+    margin-top: 15px;
+    background-color: #e4e4e4;
+    color: #d10e0e;
+}
+
 header {
     background-color: #3B3B3B;
 }
