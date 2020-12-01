@@ -13,11 +13,17 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="/css/lib/bootstrap.4.5.2.min.css" />
 
-    <!-- Lightslider Library -->
-    <link rel="stylesheet" href="/css/lib/lightslider.min.css" />
-
     <!-- Fontawesome -->
     <link rel="stylesheet" href="/css/lib/fontawesome.all.5.15.1.css" />
+
+    <!-- Bootstrap core JavaScript jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/js/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/lib/popper-2.5.3.min.js"></script>
+    <script src="/js/lib/bootstrap-4.5.2.min.js"></script>
+    <script src="/js/app/post_news.js"></script>
+
+    <!-- Fontawesome Library https://kit.fontawesome.com/2c36e9b7b1.js" -->
+    <script src="/js/lib/fontawesome.all.5.15.1.js"></script>
 
 </head>
 
@@ -72,8 +78,54 @@
             </div>
         </div>
     </div>
+    
+    <div class="index-social" id="newsletterSocial">
+
+        <div class="form-row social">
+
+            <div class="form-group col-md-7 social">
+                <h4 class="index-h4">Siga-nos:</h4>
+                <a href="https://www.facebook.com/Lojas.icheff">
+                    <img src="/img/icons/facebook.png" alt="Logotipo facebook">
+                </a>
+                <a href="https://www.instagram.com/icheff/">
+                    <img src="/img/icons/instagram.png" alt="Logotipo instagram">
+                </a>
+                <a href="https://twitter.com/icheff">
+                    <img src="/img/icons/twitter.png" alt="Logotipo twitter">
+                </a>
+                <a href="https://www.youtube.com/user/lojasicheff">
+                    <img src="/img/icons/youtube.png" alt="Logotipo youtube">
+                </a>
+                <a href="https://www.linkedin.com/">
+                    <img src="/img/icons/linkedin.png" alt="Logotipo linkedin">
+                </a>
+            </div>
+
+            <div class="form-group col-md-4 newsletter">
+                <h4 class="index-h4">Assine nossa Newsletter:</h4>
+                <form class="form-inline newsletter" method="post" ajax="true">
+                    <input type="text" id="email" class="form-control col-md-9" placeholder="Digite seu email">
+                    <button type="submit" id="cadastrar" class="btn btn-primary">Cadastrar</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+
+    <div class="container-success hide" id="divSuccess" style=overflow:hidden>
+        <div class="row justify-content-center success">
+            <div class="col-sm-7" id="showDivSuccess">
+
+                <h4 class=sucess>Sucesso!!! Obrigado por cadastrar seu email em nossa newsletter.</h4>
+            </div>
+        </div>
+        <br>
+    </div>
+
     <footer class="index-site-footer">
-        <div class="index-container-footer">
+        <div class="container index-container-footer">
             <div class="row">
                 <div class="col-sm-12 col-md-3">
                     <img src="/img/logotipo-icheff-original.png" alt="Logotipo icheff" width=90%>
@@ -125,11 +177,6 @@
 
     </footer>
 
-    <script src="/js/lib/jquery-3.5.1.min.js"></script>
-    <script src="/js/lib/popper-2.5.3.min.js"></script>
-    <script src="/js/lib/bootstrap-4.5.2.min.js"></script>
-    <script src="/js/lib/fontawesome.all.5.15.1.js"></script>
-    <script src="/js/app/scripts.js"></script>
 </body>
 
 </html>
