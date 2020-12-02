@@ -45,7 +45,7 @@ public class IngredienteService {
 	}
 	
 	public List<Ingrediente> findAll(){
-		return this.ingredienteRepository.findAll();
+		return this.ingredienteRepository.findByOrderByNomeAsc();
 	}
 	
 	public Ingrediente findById(Long id) {

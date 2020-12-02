@@ -1,5 +1,6 @@
 package br.com.santander.icheffv1.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +13,7 @@ import br.com.santander.icheffv1.model.IngredienteUnidade;
 public interface IngredienteRepository extends JpaRepository<Ingrediente, Long>{
 
 	public Optional<Ingrediente> findByNomeAndIngredienteUnidade(String nome, IngredienteUnidade ingredienteUnidade);
+	
+	public List<Ingrediente> findByOrderByNomeAsc();
 	
 }
