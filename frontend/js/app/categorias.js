@@ -52,7 +52,7 @@ $(document).ready(function () {
 
                 var amount = modal.find(".contador-carrinho").text();
                 var desc = modal.find("#modalLabel").text();
-                var price = modal.find(".price").text();
+                var price = parseFloat(modal.find(".price").text()) / amount;
                 var receita_id = $button.attr('receita_id');
             
                 adicionarReceita(amount, desc, price, receita_id);
@@ -159,7 +159,7 @@ function criaModal(idModal, nome, porcoes, listaIngredientes, modoPreparo, linkV
         "</button>" +
         "</div>" +
         "<button id=\"comprar\" type=\"button\" receita_id=\"" + receita_id + "\" class=\"btn btn-secondary\" data-dismiss=\"modal\">" +
-        "<span>R$ </span><span class=\"price\">" + preco + "</span> Adicionar ao carrinho <i class=\"fas fa-shopping-cart\"></i>" +
+        "<span>R$ </span><span class=\"price\">" + preco.toFixed(2) + "</span> Adicionar ao carrinho <i class=\"fas fa-shopping-cart\"></i>" +
         "</button>" +
         "</div>" +
         "</div>" +
@@ -227,7 +227,7 @@ var list = [];
 function getTotal(list) {
     var total = 0;
     for (var key in list) {
-        total += parseFloat(list[key].valor);
+        total += parseFloat(list[key].valor) * list[key].quantidade;
     }
     document.getElementById("totalValue").innerHTML = formatValue(total);
 }
@@ -236,11 +236,10 @@ function getTotal(list) {
 function setList(list) {
     var table = '<thead><tr><td>Descrição</td><td>Quantidade</td><td>Valor</td><td>Ação</td></tr></thead><tbody>';
     for (var key in list) {
-        const valor = list[key].valor / list[key].quantidade;
         table += '<tr class="text-center">' +
                     '<td class="text-left">' + list[key].descricao + '</td>' +
                     '<td>' + list[key].quantidade + '</td>' +
-                    '<td>' + valor.toString().replace('.',',') + '</td><td>' +
+                    '<td>' + list[key].valor.toString().replace('.',',') + '</td><td>' +
                     '<button class="btn btn-danger" onclick="deleteData(' + key + ');"><i class="fas fa-eraser"></i> Delete</button>' +
                     '</td>' +
                 '</tr>';
@@ -360,6 +359,7 @@ function finalizarPedido() {
             $('div#pagamento span#venda_id').html(venda_id);
             $('div#pagamento span#valor_compra').html(valorTotal);
             deleteList(true);
+            $('#totalValue').html(formatValue(valorTotal));
             $('div#pagamento input').eq(0).focus();
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -438,6 +438,7 @@ function desistirDaCompra(){
     $('div#pagamento').hide();
     $('div#carrinho-tabela').show();
     $('div#container-valor-total').show();
+    $('#totalValue').html(formatValue(0));
 }
 
 //salvando em storage
