@@ -358,7 +358,7 @@ function finalizarPedido() {
             let venda_id = jqXHR.getResponseHeader('venda_id');
             $('div#pagamento span#venda_id').html(venda_id);
             $('div#pagamento span#valor_compra').html(valorTotal);
-            deleteList(true);
+            //deleteList(true); // comentado hoje
             $('#totalValue').html(formatValue(valorTotal));
             $('div#pagamento input').eq(0).focus();
         },
@@ -421,7 +421,8 @@ function pagar(){
         success: function (data, textStatus, jqXHR) {
             desistirDaCompra();
             mostrarCarrinho();
-            alert("Obrigado pela sua compra!");
+            enviarEmail();
+            
         },
         error: function(jqXHR, textStatus, errorThrown){
             if(jqXHR.status == 401){
@@ -438,6 +439,7 @@ function desistirDaCompra(){
     $('div#pagamento').hide();
     $('div#carrinho-tabela').show();
     $('div#container-valor-total').show();
+    deleteList(true); // Adicionado hoje
     $('#totalValue').html(formatValue(0));
 }
 
@@ -445,6 +447,30 @@ function desistirDaCompra(){
 function saveListStorage(list) {
     var jsonStr = JSON.stringify(list);
     localStorage.setItem("list", jsonStr);
+}
+
+function enviarEmail(){
+
+    let emailUser = localStorage.getItem('icheff-email-user');
+
+    if(!emailUser || emailUser == ''){
+        alert("Email do usuário não encontrado");
+        return;
+    } else {
+        $.ajax({
+            type: "POST",
+            url: BASE_URL + "/api/email/send",
+            data: emailUser,
+            contentType: "application/json",
+            success: function(response){
+                alert("Obrigado pela compra! Verifique os detalhes do pedido no seu e-mail.");
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                alert("Compra finalizada");
+            }
+        });
+    }
+
 }
 
 //verifica se já tem algo salvo

@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import br.com.santander.icheffv1.model.Usuario;
 import br.com.santander.icheffv1.service.UserDetailsServiceImpl;
 
 @EnableWebSecurity
@@ -50,13 +51,15 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 			
 			.antMatchers(HttpMethod.GET,
 					"/*.html",
-					"/api/receitas"
+					"/api/receitas",
+					"/api/email/send"
 			).permitAll()
 			
 			.antMatchers(HttpMethod.POST,
 					"/api/login",
 					"/api/newsletter",
-					"/api/usuarios/save"
+					"/api/usuarios/save",
+					"/api/email/send"
 			).permitAll()
 			
 			.antMatchers(HttpMethod.POST, "/api/vendas").hasAnyRole("admin","usuario")
@@ -91,6 +94,11 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public Usuario usuario() {
+		return new Usuario();
 	}
 
 }

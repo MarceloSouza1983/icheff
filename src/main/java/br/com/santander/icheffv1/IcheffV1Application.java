@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import br.com.santander.icheffv1.controller.EmailController;
 import br.com.santander.icheffv1.model.Ingrediente;
 import br.com.santander.icheffv1.model.IngredienteReceita;
 import br.com.santander.icheffv1.model.IngredienteUnidade;
@@ -89,6 +90,9 @@ public class IcheffV1Application implements CommandLineRunner {
 	
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private EmailController emailController;
 	
 	@Override
 	public void run(String... args) throws Exception {

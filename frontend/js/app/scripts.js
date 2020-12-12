@@ -72,6 +72,7 @@ class Validator {
                 success: function(response){
                     localStorage.setItem("icheff-jwt", response.token);
                     window.location.href = BASE_URL + response.location;
+                    getEmail();
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     alert("Usuário ou senha incorreta");
@@ -80,6 +81,8 @@ class Validator {
             });
 
         }
+
+        //getEmail();
 
     }
 
@@ -218,8 +221,8 @@ class Validator {
 
 }
 
-let form = document.getElementById('userForm'); // register-form
-let submit = document.getElementById('btnCadastrar'); // btn-submit
+let form = document.getElementById('userForm');
+let submit = document.getElementById('btnCadastrar');
 
 let validator = new Validator();
 
@@ -231,3 +234,12 @@ submit.addEventListener('click', function (e) {
 });
 
 $('input[type="email"]').eq(0).focus();
+
+function getEmail() {
+    let data = {
+        usuario: $('input#email').val()
+    };
+
+    localStorage.setItem("icheff-email-user", JSON.stringify(data));
+
+}
